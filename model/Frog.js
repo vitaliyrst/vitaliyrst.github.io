@@ -39,7 +39,6 @@ class Frog extends Game {
     }
 
 
-
     #drawBullet() {
         let bulletImage = new Image();
         bulletImage.src = this.bulletColor;
@@ -50,7 +49,7 @@ class Frog extends Game {
         this.context.closePath();
         this.context.translate(this.bulletCenterX, this.bulletCenterY);
 
-            this.context.rotate(this.angle);
+        this.context.rotate(this.angle);
 
 
         this.context.beginPath();
@@ -65,7 +64,6 @@ class Frog extends Game {
         this.#updateBullet();
         this.#restartBullet();
     }
-
 
 
     stopBullet() {
@@ -99,7 +97,11 @@ class Frog extends Game {
         this.bulletCenterY += Math.cos(this.bulletAngle) * this.speed;
     }
 
-
+    gunSound() {
+        let gunSound = new Audio();
+        gunSound.src = './storage/sounds/bullet.ogg';
+        return gunSound;
+    }
 }
 
 export {Frog};

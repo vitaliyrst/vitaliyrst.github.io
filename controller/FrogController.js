@@ -28,6 +28,7 @@ class FrogController {
                     clientY - (this.model.frogTop + this.model.frogHeight / 2));
                 this.model.speed = 6;
                 this.model.bulletState = 1;
+                this.model.gunSound().play();
             }
         });
     }
