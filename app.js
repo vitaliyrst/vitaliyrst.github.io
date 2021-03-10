@@ -11,7 +11,13 @@ game.createCanvas();
 let mainMusic = new Audio();
 mainMusic.preload = 'auto';
 mainMusic.src = './storage/sounds/main.mp3';
-mainMusic.play();
+
+let buttonMusic = document.querySelector('.main-music');
+buttonMusic.addEventListener('click', eo => {
+    mainMusic.play();
+})
+
+console.log(mainMusic);
 let gameController = new GameController(game);
 gameController.resize();
 
