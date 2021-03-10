@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<canvas id="canvas" width="800" height="800"></canvas>
+<script>
+    document.addEventListener('click', (eo) => {
+        console.log(eo.clientX, eo.clientY)
+    });
+
+    let canvas = document.getElementById('canvas');
+    let context = canvas.getContext('2d');
+    let image = new Image();
+    image.src = './storage/levels/1-1/Spiral.jpg';
+    context.drawImage(image, 0, 0, 800, 600);
+
+    let bezierArr = [];
+    obj = [
+        {p0: {x: 655, y: 0}, p1: {x: 658, y: 110}, p2: {x: 660, y: 220}, p3: {x: 650, y: 330}},
+        /*{p0: {x: 650, y: 330}, p1: {x: 630, y: 420}, p2: {x: 585, y: 480}, p3: {x: 505, y: 527}},
+        {p0: {x: 505, y: 527}, p1: {x: 412, y: 570}, p2: {x: 312, y: 560}, p3: {x: 235, y: 505}},
+        {p0: {x: 235, y: 505}, p1: {x: 180, y: 464}, p2: {x: 140, y:400}, p3: {x: 136, y: 301}},
+        {p0: {x: 136, y: 301}, p1: {x: 140, y: 200}, p2: {x: 179, y: 145}, p3: {x: 250, y: 97}},
+        {p0: {x: 250, y: 97}, p1: {x: 322, y: 55}, p2: {x: 418, y: 60}, p3: {x: 489, y: 100}},
+        {p0: {x: 489, y: 100}, p1: {x: 590, y: 170}, p2: {x: 590, y: 250}, p3: {x: 590, y: 300}},
+        {p0: {x: 590, y: 300}, p1: {x: 575, y: 420}, p2: {x: 500, y: 475}, p3: {x: 433, y: 491}},
+        {p0: {x: 433, y: 491}, p1: {x: 300, y: 520}, p2: {x: 221, y: 415}, p3: {x: 207, y: 356}},
+        {p0: {x: 207, y: 356}, p1: {x: 180, y: 255}, p2: {x: 222, y: 175}, p3: {x: 320, y: 137}},
+        {p0: {x: 320, y: 137}, p1: {x: 450, y: 100}, p2: {x: 550, y: 215}, p3: {x: 526, y: 324}},
+        {p0: {x: 526, y: 324}, p1: {x: 500, y: 405}, p2: {x: 417, y: 445}, p3: {x: 345, y: 423}},
+        {p0: {x: 345, y: 423}, p1: {x: 265, y: 385}, p2: {x: 260, y: 325}, p3: {x: 266, y: 253}},*/
+    ];
+
+    function bezier(t, p0, p1, p2, p3) {
+        let cX = 3 * (p1.x - p0.x);
+        let bX = 3 * (p2.x - p1.x) - cX;
+        let aX = p3.x - p0.x - cX - bX;
+
+        let cY = 3 * (p1.y - p0.y);
+        let bY = 3 * (p2.y - p1.y) - cY;
+        let aY = p3.y - p0.y - cY - bY;
+
+        let x = (aX * Math.pow(t, 3)) + (bX * Math.pow(t, 2)) + (cX * t) + p0.x;
+        let y = (aY * Math.pow(t, 3)) + (bY * Math.pow(t, 2)) + (cY * t) + p0.y;
+        console.log(x,y);
+        return {x: x, y: y};
+    }
+
+    let count = 0;
+
+    function getBezier(p0, p1, p2, p3) {
+
+
+        let accuracy = 0.1;
+
+        if (count === 0) {
+            context.moveTo(p0.x, p0.y);
+            count++;
+        }
+
+        for (let i = 0; i < 1; i += accuracy) {
+            let data = bezier(i, p0, p1, p2, p3);
+            bezierArr.push([data.x, data.y]);
+            context.lineTo(data.x, data.y);
+            context.lineWidth = 1;
+            context.strokeStyle = 'yellow';
+            context.stroke();
+
+        }
+    }
+
+    for (let i = 0; i < obj.length; i++) {
+        getBezier(obj[i].p0, obj[i].p1, obj[i].p2, obj[i].p3);
+    }
+</script>
+</body>
+</html>
