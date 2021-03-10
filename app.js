@@ -9,15 +9,15 @@ import {Bezier} from "./classes/Bezier.js";
 let game = new Game(dataGame);
 game.createCanvas();
 let mainMusic = new Audio();
-mainMusic.preload = 'auto';
 mainMusic.src = './storage/sounds/main.mp3';
 
 let buttonMusic = document.querySelector('.main-music');
 buttonMusic.addEventListener('click', eo => {
-    mainMusic.play();
-})
+    if (eo.target) {
+        mainMusic.play();
+    }
+});
 
-console.log(mainMusic);
 let gameController = new GameController(game);
 gameController.resize();
 
