@@ -8,7 +8,10 @@ import {Bezier} from "./classes/Bezier.js";
 
 let game = new Game(dataGame);
 game.createCanvas();
-
+let mainMusic = new Audio();
+mainMusic.preload = 'auto';
+mainMusic.src = './storage/sounds/main.mp3';
+mainMusic.play();
 let gameController = new GameController(game);
 gameController.resize();
 
