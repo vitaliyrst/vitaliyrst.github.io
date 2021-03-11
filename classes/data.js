@@ -1,4 +1,4 @@
-let dataGame = {
+let data = {
     level: '1-1',
     levelBg : './storage/levels/1-1/Spiral.jpg',
     canvasWidth: 800,
@@ -30,4 +30,4 @@ let dataGame = {
     ],
 };
 
-export {dataGame};
+export {data};

@@ -1,8 +1,8 @@
 import {Game} from "./Game.js";
 
 class Frog extends Game {
-    constructor(data) {
-        super(data);
+    constructor() {
+        super();
         this.angle = 0;
         this.speed = 0;
         this.bulletCenterX = 408;
@@ -10,20 +10,20 @@ class Frog extends Game {
         this.bulletAngle = 0;
         this.bulletState = 0;
         this.bulletColor = 0;
-        this.#setBulletColor(this.ballsColor);
+        this.getRandomColor(this.ballsColor);
     }
 
-    #setBulletColor(colors) {
+    getRandomColor(colors) {
         let randomColor = Math.floor(Math.random() * colors.length);
         this.bulletColor = colors[randomColor];
     }
 
     draw() {
-        this.#drawFrog();
-        this.#drawBullet();
+        this.drawFrog();
+        this.drawBullet();
     }
 
-    #drawFrog() {
+    drawFrog() {
         let frogImage = new Image();
         frogImage.src = './storage/frog/Frog.gif';
         this.context.save();
@@ -39,7 +39,7 @@ class Frog extends Game {
     }
 
 
-    #drawBullet() {
+    drawBullet() {
         let bulletImage = new Image();
         bulletImage.src = this.bulletColor;
         this.context.save();
@@ -61,8 +61,8 @@ class Frog extends Game {
 
 
         this.context.restore();
-        this.#updateBullet();
-        this.#restartBullet();
+        this.updateBullet();
+        this.restartBullet();
     }
 
 
@@ -71,10 +71,10 @@ class Frog extends Game {
         this.bulletCenterX = 408;
         this.bulletCenterY = 290;
         this.bulletState = 0;
-        this.#setBulletColor(this.ballsColor);
+        this.getRandomColor(this.ballsColor);
     }
 
-    #restartBullet() {
+    restartBullet() {
         if (this.bulletCenterX + this.bulletRadius + this.frogWidth / 2 < this.context.canvas.offsetLeft ||
             this.bulletCenterY + this.bulletRadius + this.frogHeight / 2 < this.context.canvas.offsetTop ||
             this.bulletCenterX - this.bulletRadius - this.frogWidth / 2 > this.context.canvas.width ||
@@ -84,7 +84,7 @@ class Frog extends Game {
             this.bulletState = 0;
             this.bulletCenterX = 408;
             this.bulletCenterY = 290;
-            this.#setBulletColor(this.ballsColor);
+            this.getRandomColor(this.ballsColor);
         }
     }
 
@@ -92,7 +92,7 @@ class Frog extends Game {
         this.angle = angle;
     }
 
-    #updateBullet() {
+    updateBullet() {
         this.bulletCenterX += Math.sin(this.bulletAngle) * this.speed;
         this.bulletCenterY += Math.cos(this.bulletAngle) * this.speed;
     }

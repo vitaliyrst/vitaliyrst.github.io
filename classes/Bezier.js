@@ -1,7 +1,9 @@
+import {data} from "./data.js";
+
 class Bezier {
     /**
      *
-     * @param referencePoints - опорные точки
+     * @property referencePoints - опорные точки
      * @property {Array} pointsArray - массив заполненных точек
      * @property {Number} numberOfTotalPoint - количество точек
      * @property {Array} rowLengthArray - длина одного сегмента точек A B C D  xy
@@ -9,13 +11,13 @@ class Bezier {
      * @property {Array} evenlyDistributedRowLengthArr - длина одного сегмента после равномерного распределения
      * @property {Number} totalPathLength - общая длина пути
      */
-    constructor(referencePoints) {
-        this.referencePoints = referencePoints;
+    constructor() {
+        this.referencePoints = data.pointsPath;
         this.pointsArray = [];
         this.numberOfTotalPoint = this.referencePoints.length * 100;
-        this.rowLengthArray = this.#getRowLengthArray();
-        this.pointsFunctionArray = this.#getXAndYPoint();
-        this.#setSameRowLengthPoints();
+        this.rowLengthArray = this.getRowLengthArray();
+        this.pointsFunctionArray = this.getXAndYPoint();
+        this.setSameRowLengthPoints();
         this.evenlyDistributedRowLengthArr = [];
         this.totalPathLength = 0;
     }
@@ -25,7 +27,7 @@ class Bezier {
      * возвращает массив длин сегментов
      * @returns {Array}
      */
-    #getRowLengthArray() {
+    getRowLengthArray() {
         return Array(this.referencePoints.length).fill(this.numberOfTotalPoint / this.referencePoints.length);
     }
 
@@ -34,7 +36,7 @@ class Bezier {
      * распределяет xy по длине пути
      * @returns {(function(*=): {x: number, y: number})}
      */
-    #getXAndYPoint() {
+    getXAndYPoint() {
         return this.referencePoints.map((row, col) => {
             return (t) => {
                 return {
@@ -60,7 +62,7 @@ class Bezier {
      * выполняет первый посев по длине сегмента (каждый сегмент = 100)
      * @return {VoidFunction}
      */
-    #setSameRowLengthPoints() {
+    setSameRowLengthPoints() {
         this.referencePoints.forEach((row, col) => {
             this.pointsArray[col] = [];
             const dt = 1 / this.rowLengthArray[col];
@@ -78,7 +80,7 @@ class Bezier {
      * @param b
      * @return {number}
      */
-    #getEvenlyDistributedLength(a, b) {
+    getEvenlyDistributedLength(a, b) {
         return Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2));
     }
 
@@ -87,17 +89,17 @@ class Bezier {
      * заполняет массив сегментов с учетом равномерного распределения длины сегмента
      * @return {VoidFunction}
      */
-    #setEvenlyDistributedRowLengthArray() {
+    setEvenlyDistributedRowLengthArray() {
         for (let i = 0; i < this.referencePoints.length; i++) {
             this.evenlyDistributedRowLengthArr[i] = 0;
             for (let j = 0; j < this.rowLengthArray[i] - 1; j++) {
-                this.evenlyDistributedRowLengthArr[i] += this.#getEvenlyDistributedLength(
+                this.evenlyDistributedRowLengthArr[i] += this.getEvenlyDistributedLength(
                     (this.pointsArray[i][j + 1].x - this.pointsArray[i][j].x),
                     (this.pointsArray[i][j + 1].y - this.pointsArray[i][j].y)
                 );
             }
             if (i < this.referencePoints.length - 1) {
-                this.evenlyDistributedRowLengthArr[i] += this.#getEvenlyDistributedLength(
+                this.evenlyDistributedRowLengthArr[i] += this.getEvenlyDistributedLength(
                     (this.pointsArray[i + 1][0].x - this.pointsArray[i][this.rowLengthArray[i] - 1].x),
                     (this.pointsArray[i + 1][0].y - this.pointsArray[i][this.rowLengthArray[i] - 1].y)
                 );
@@ -110,7 +112,7 @@ class Bezier {
      * общая длина пути
      * @return {VoidFunction}
      */
-    #getTotalPathLength() {
+    getTotalPathLength() {
         this.totalPathLength = this.evenlyDistributedRowLengthArr.reduce((a, c) => {
             return a + c;
         });
@@ -121,9 +123,9 @@ class Bezier {
      * выполняет второй посев точек, учитывая равномерное распределение длин
      * @return {VoidFunction}
      */
-    #setEvenlyDistributedRowLengthPoints() {
-        this.#setEvenlyDistributedRowLengthArray();
-        this.#getTotalPathLength();
+    setEvenlyDistributedRowLengthPoints() {
+        this.setEvenlyDistributedRowLengthArray();
+        this.getTotalPathLength();
         this.referencePoints.forEach((row, col) => {
             this.pointsArray[col] = [];
             this.rowLengthArray[col] =
@@ -140,8 +142,8 @@ class Bezier {
      * выполняет параметризацию (r для точности)
      * @return {VoidFunction}
      */
-    #getEqualizationOfDiscontinuities() {
-        this.#setEvenlyDistributedRowLengthPoints();
+    getEqualizationOfDiscontinuities() {
+        this.setEvenlyDistributedRowLengthPoints();
         const averageRowLength = this.totalPathLength / (this.numberOfTotalPoint - 1);
         const step = (1 / this.numberOfTotalPoint) / 10;
 
@@ -153,7 +155,7 @@ class Bezier {
             for (let r = 0; r < 100; r++) {
                 let d = [];
                 for (let j = 0; j < this.rowLengthArray[i] - 1; j++) {
-                    d[j] = this.#getEvenlyDistributedLength(
+                    d[j] = this.getEvenlyDistributedLength(
                         (this.pointsArray[i][j + 1].x - this.pointsArray[i][j].x),
                         (this.pointsArray[i][j + 1].y - this.pointsArray[i][j].y)
                     );
@@ -178,10 +180,10 @@ class Bezier {
      * @return {Array}
      */
     getGamePoints() {
-        this.#setEvenlyDistributedRowLengthArray();
-        this.#getTotalPathLength();
-        this.#setEvenlyDistributedRowLengthPoints();
-        this.#getEqualizationOfDiscontinuities();
+        this.setEvenlyDistributedRowLengthArray();
+        this.getTotalPathLength();
+        this.setEvenlyDistributedRowLengthPoints();
+        this.getEqualizationOfDiscontinuities();
 
         let gamePointsArray = [];
 
@@ -191,6 +193,8 @@ class Bezier {
 
             })
         });
+        console.log(this.totalPathLength)
+        console.log(this.pointsArray)
         return gamePointsArray;
     }
 }

@@ -10,26 +10,45 @@ class Ball extends Game {
     spriteHeight = 180;
     rowCount = 0;
 
-    constructor(dataGame, x, y, path) {
-        super(dataGame);
-        this.x = x;
-        this.y = y;
-        this.speed = 1;
+    constructor(path) {
+        super();
+        /*this.x = x;
+        this.y = y;*/
+        this.speed = 2;
         this.color = 0;
         this.path = path;
         this.pathSection = 0;
-        this.#setColor(this.ballsColor);
+
         this.angle = 0;
-        this.canNext = 0;
-        this.id = 0;
+        this.moved = 0;
+        this.getRandomColor(this.ballsColor);
     }
 
-    #setColor(colors) {
+    init(point) {
+        this.x = this.path[point].x;
+        this.y = this.path[point].y;
+        this.pathSection = point;
+    }
+
+
+
+    setPosition(x, y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    getVector(first, second) {
+        let dx = first.x - second.x;
+        let dy = first.y - second.y;
+        return Math.sqrt((dx * dx) + (dy * dy));
+    }
+
+    getRandomColor(colors) {
         let randomColor = Math.floor(Math.random() * colors.length);
         this.color = colors[randomColor];
     }
 
-    #animateColor(image) {
+    animateColor(image) {
         this.context.translate(this.x - this.ballRadius, this.y - this.ballRadius);
         this.context.drawImage(image,
             this.frame * this.spriteWidth / this.numberOfRows,
@@ -62,14 +81,16 @@ class Ball extends Game {
         this.context.closePath();
         this.context.clip();
 
-        this.#animateColor(ballImage)
+        this.animateColor(ballImage)
 
         this.context.restore();
     }
 
     update() {
-        if (this.path.length < 2) {
-            return;
+        if (this.pathSection >= this.path.length) {
+            this.pathSection = 0;
+            this.setPosition(this.path[this.pathSection].x, this.path[this.pathSection].y);
+            this.speed = 0;
         }
         let angle = Math.atan2(this.path[this.pathSection].x - this.x, this.path[this.pathSection].y - this.y);
         this.angle = angle;
@@ -81,13 +102,6 @@ class Ball extends Game {
         } else {
             this.x += Math.sin(angle) * this.speed;
             this.y += Math.cos(angle) * this.speed;
-        }
-    }
-
-    changeState() {
-        if (this.x > this.context.canvas.offsetLeft + this.ballRadius &&
-            this.y > this.context.canvas.offsetTop + this.ballRadius) {
-            this.canNext = 1;
         }
     }
 }

@@ -1,6 +1,8 @@
+import {data} from "../classes/data.js";
+
 class Game {
-    constructor(data) {
-        this.state = 700;
+
+    constructor() {
         this.level = data.level;
         this.levelBg = data.levelBg;
         this.canvasWidth = data.canvasWidth;
@@ -14,7 +16,7 @@ class Game {
         this.frogWidth = data.frogWidth;
         this.frogHeight = data.frogHeight;
         this.ballsColor = data.ballsColor;
-        this.pointsPath = data.pointsPath;
+        this.pointsPath =  data.pointsPath;
         this.context = document.getElementById('zuma-canvas').getContext('2d');
     }
 
