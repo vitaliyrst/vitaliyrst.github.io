@@ -1,6 +1,6 @@
-import {Game} from "./Game.js";
+import {GameModel} from "./GameModel.js";
 
-class Ball extends Game {
+class BallModel extends GameModel {
     frame = 0;
     numberOfRows = 10;
     numberOfCols = 6;
@@ -12,16 +12,17 @@ class Ball extends Game {
 
     constructor(path) {
         super();
-        /*this.x = x;
-        this.y = y;*/
-        this.speed = 2;
         this.color = 0;
         this.path = path;
         this.pathSection = 0;
-
+        this.radius = 15;
         this.angle = 0;
         this.moved = 0;
         this.getRandomColor(this.ballsColor);
+    }
+
+    getPathSection() {
+        return this.pathSection;
     }
 
     init(point) {
@@ -31,16 +32,9 @@ class Ball extends Game {
     }
 
 
-
     setPosition(x, y) {
         this.x = x;
         this.y = y;
-    }
-
-    getVector(first, second) {
-        let dx = first.x - second.x;
-        let dy = first.y - second.y;
-        return Math.sqrt((dx * dx) + (dy * dy));
     }
 
     getRandomColor(colors) {
@@ -88,22 +82,14 @@ class Ball extends Game {
 
     update() {
         if (this.pathSection >= this.path.length) {
-            this.pathSection = 0;
+
             this.setPosition(this.path[this.pathSection].x, this.path[this.pathSection].y);
-            this.speed = 0;
+            this.pathSection = 0;
         }
-        let angle = Math.atan2(this.path[this.pathSection].x - this.x, this.path[this.pathSection].y - this.y);
-        this.angle = angle;
-        if (Math.abs(this.x - this.path[this.pathSection].x) < this.speed &&
-            Math.abs(this.y - this.path[this.pathSection].y) < this.speed) {
-            this.x = this.path[this.pathSection].x;
-            this.y = this.path[this.pathSection].y;
-            this.pathSection++;
-        } else {
-            this.x += Math.sin(angle) * this.speed;
-            this.y += Math.cos(angle) * this.speed;
-        }
+        this.x = this.path[this.pathSection].x;
+        this.y = this.path[this.pathSection].y;
+        this.pathSection++;
     }
 }
 
-export {Ball};
+export {BallModel};

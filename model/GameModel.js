@@ -1,8 +1,12 @@
 import {data} from "../classes/data.js";
+import {BallModel} from "./BallModel.js";
+import {FrogModel} from "./FrogModel.js";
+import {Path} from "../classes/Path.js";
 
-class Game {
+class GameModel {
 
     constructor() {
+        this.path = this.getPath();
         this.level = data.level;
         this.levelBg = data.levelBg;
         this.canvasWidth = data.canvasWidth;
@@ -20,6 +24,11 @@ class Game {
         this.context = document.getElementById('zuma-canvas').getContext('2d');
     }
 
+    getPath () {
+        let bezier = new Path();
+        return bezier.getPath();
+    }
+
     createCanvas() {
         this.context.canvas.width = this.canvasWidth;
         this.context.canvas.height = this.canvasHeight;
@@ -30,6 +39,14 @@ class Game {
         levelBg.src = this.levelBg;
         this.context.drawImage(levelBg, 0, 0, this.canvasWidth, this.canvasHeight);
     }
+
+    getBall() {
+        return new BallModel(this.path);
+    }
+
+    getFrog() {
+        return new FrogModel();
+    }
 }
 
-export {Game};
+export {GameModel};

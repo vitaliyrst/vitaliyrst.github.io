@@ -1,202 +1,97 @@
-import {data} from "./data.js";
-
 class Bezier {
-    /**
-     *
-     * @property referencePoints - опорные точки
-     * @property {Array} pointsArray - массив заполненных точек
-     * @property {Number} numberOfTotalPoint - количество точек
-     * @property {Array} rowLengthArray - длина одного сегмента точек A B C D  xy
-     * @property {Function} pointsFunctionArray - функции для вычисления xy на сегменте
-     * @property {Array} evenlyDistributedRowLengthArr - длина одного сегмента после равномерного распределения
-     * @property {Number} totalPathLength - общая длина пути
-     */
-    constructor() {
-        this.referencePoints = data.pointsPath;
-        this.pointsArray = [];
-        this.numberOfTotalPoint = this.referencePoints.length * 100;
-        this.rowLengthArray = this.getRowLengthArray();
-        this.pointsFunctionArray = this.getXAndYPoint();
-        this.setSameRowLengthPoints();
-        this.evenlyDistributedRowLengthArr = [];
-        this.totalPathLength = 0;
-    }
+    step;
+    point0;
+    point1;
+    point2;
+    ax;
+    ay;
+    bx;
+    by;
+    A;
+    B;
+    C;
+    totalLength;
 
-    /**
-     * @method
-     * возвращает массив длин сегментов
-     * @returns {Array}
-     */
-    getRowLengthArray() {
-        return Array(this.referencePoints.length).fill(this.numberOfTotalPoint / this.referencePoints.length);
-    }
+    init(point0, point1, point2, speed) {
+        this.point0 = point0;
+        this.point1 = point1;
+        this.point2 = point2;
 
-    /**
-     * @method
-     * распределяет xy по длине пути
-     * @returns {(function(*=): {x: number, y: number})}
-     */
-    getXAndYPoint() {
-        return this.referencePoints.map((row, col) => {
-            return (t) => {
-                return {
-                    x: (
-                        (Math.pow(1 - t, 3) * row.A.x) +
-                        (3 * Math.pow(1 - t, 2) * t * row.B.x) +
-                        (3 * (1 - t) * Math.pow(t, 2) * row.C.x) +
-                        (Math.pow(t, 3) * row.D.x)
-                    ),
-                    y: (
-                        (Math.pow(1 - t, 3) * row.A.y) +
-                        (3 * Math.pow(1 - t, 2) * t * row.B.y) +
-                        (3 * (1 - t) * Math.pow(t, 2) * row.C.y) +
-                        (Math.pow(t, 3) * row.D.y)
-                    ),
-                };
-            };
-        });
-    }
+        this.ax = this.point0.x - 2 * this.point1.x + this.point2.x;
+        this.ay = this.point0.y - 2 * this.point1.y + this.point2.y;
+        this.bx = 2 * this.point1.x - 2 * this.point0.x;
+        this.by = 2 * this.point1.y - 2 * this.point0.y;
 
-    /**
-     * @method
-     * выполняет первый посев по длине сегмента (каждый сегмент = 100)
-     * @return {VoidFunction}
-     */
-    setSameRowLengthPoints() {
-        this.referencePoints.forEach((row, col) => {
-            this.pointsArray[col] = [];
-            const dt = 1 / this.rowLengthArray[col];
+        this.A = 4 * (Math.pow(this.ax, 2) + Math.pow(this.ay, 2));
+        this.B = 4 * (this.ax * this.bx + this.ay * this.by);
+        this.C = Math.pow(this.bx, 2) + Math.pow(this.by, 2);
 
-            for (let t = 0; t < 1; t += dt) {
-                this.pointsArray[col].push(this.pointsFunctionArray[col](t));
-            }
-        });
-    }
+        this.totalLength = this.length(1);
+        this.step = Math.floor(this.totalLength / speed);
 
-    /**
-     * @method
-     * равномерное распределение по длине сегмента
-     * @param a
-     * @param b
-     * @return {number}
-     */
-    getEvenlyDistributedLength(a, b) {
-        return Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2));
-    }
-
-    /**
-     * @method
-     * заполняет массив сегментов с учетом равномерного распределения длины сегмента
-     * @return {VoidFunction}
-     */
-    setEvenlyDistributedRowLengthArray() {
-        for (let i = 0; i < this.referencePoints.length; i++) {
-            this.evenlyDistributedRowLengthArr[i] = 0;
-            for (let j = 0; j < this.rowLengthArray[i] - 1; j++) {
-                this.evenlyDistributedRowLengthArr[i] += this.getEvenlyDistributedLength(
-                    (this.pointsArray[i][j + 1].x - this.pointsArray[i][j].x),
-                    (this.pointsArray[i][j + 1].y - this.pointsArray[i][j].y)
-                );
-            }
-            if (i < this.referencePoints.length - 1) {
-                this.evenlyDistributedRowLengthArr[i] += this.getEvenlyDistributedLength(
-                    (this.pointsArray[i + 1][0].x - this.pointsArray[i][this.rowLengthArray[i] - 1].x),
-                    (this.pointsArray[i + 1][0].y - this.pointsArray[i][this.rowLengthArray[i] - 1].y)
-                );
-            }
+        if (this.totalLength % speed > speed / 2) {
+            this.step++;
         }
+
+        return this.step;
+    };
+
+    speed(t) {
+        return Math.sqrt(this.A * t * t + this.B * t + this.C);
+    };
+
+    length(t) {
+        let temp1 = Math.sqrt(this.C + t * (this.B + this.A * t));
+        let temp2 = (2 * this.A * t * temp1 + this.B * (temp1 - Math.sqrt(this.C)));
+        let temp3 = Math.log(this.B + 2 * Math.sqrt(this.A) * Math.sqrt(this.C));
+        let temp4 = Math.log(this.B + 2 * this.A * t + 2 * Math.sqrt(this.A) * temp1);
+        let temp5 = 2 * Math.sqrt(this.A) * temp2;
+        let temp6 = (this.B * this.B - 4 * this.A * this.C) * (temp3 - temp4);
+
+        return (temp5 + temp6) / (8 * Math.pow(this.A, 1.5));
+    };
+
+    invertL(t, l) {
+        let t1 = t;
+        let t2;
+        do {
+            t2 = t1 - (this.length(t1) - l) / this.speed(t1);
+            if (Math.abs(t1 - t2) < 0.000001) break;
+            t1 = t2;
+        } while (true);
+        return t2;
+    };
+
+    getPoint(x, y) {
+        return {x: x, y: y};
     }
 
-    /**
-     * @method
-     * общая длина пути
-     * @return {VoidFunction}
-     */
-    getTotalPathLength() {
-        this.totalPathLength = this.evenlyDistributedRowLengthArr.reduce((a, c) => {
-            return a + c;
-        });
-    }
+    getAnchorPoint(index) {
+        if (index >= 0 && index <= this.step) {
+            let t = index / this.step;
+            let l = t * this.totalLength;
+            t = this.invertL(t, l);
 
-    /**
-     * @method
-     * выполняет второй посев точек, учитывая равномерное распределение длин
-     * @return {VoidFunction}
-     */
-    setEvenlyDistributedRowLengthPoints() {
-        this.setEvenlyDistributedRowLengthArray();
-        this.getTotalPathLength();
-        this.referencePoints.forEach((row, col) => {
-            this.pointsArray[col] = [];
-            this.rowLengthArray[col] =
-                Math.floor((this.evenlyDistributedRowLengthArr[col] / this.totalPathLength) * this.numberOfTotalPoint);
-            const dt = 1 / this.rowLengthArray[col];
-            for (let t = 0; t < 1; t += dt) {
-                this.pointsArray[col].push(this.pointsFunctionArray[col](t));
-            }
-        });
-    }
+            let xx = Math.pow(1 - t, 2) * this.point0.x + 2 * (1 - t) * t * this.point1.x + t * t * this.point2.x;
+            let yy = Math.pow(1 - t, 2) * this.point0.y + 2 * (1 - t) * t * this.point1.y + t * t * this.point2.y;
 
-    /**
-     * @method
-     * выполняет параметризацию (r для точности)
-     * @return {VoidFunction}
-     */
-    getEqualizationOfDiscontinuities() {
-        this.setEvenlyDistributedRowLengthPoints();
-        const averageRowLength = this.totalPathLength / (this.numberOfTotalPoint - 1);
-        const step = (1 / this.numberOfTotalPoint) / 10;
+            let Q0 = this.getPoint(
+                (1 - t) * this.point0.x + t * this.point1.x,
+                (1 - t) * this.point0.y + t * this.point1.y);
 
-        for (let i = 0; i < this.referencePoints.length; i++) {
-            let t = [];
-            for (let j = 0; j < this.rowLengthArray[i]; j++) {
-                t[j] = j / this.rowLengthArray[i];
-            }
-            for (let r = 0; r < 100; r++) {
-                let d = [];
-                for (let j = 0; j < this.rowLengthArray[i] - 1; j++) {
-                    d[j] = this.getEvenlyDistributedLength(
-                        (this.pointsArray[i][j + 1].x - this.pointsArray[i][j].x),
-                        (this.pointsArray[i][j + 1].y - this.pointsArray[i][j].y)
-                    );
-                }
-                const d_err = d.map((row) => {
-                    return (row - averageRowLength);
-                });
-                let offset = 0;
-                const cutoff = (i === this.referencePoints.length - 1) ? 0 : 1;
-                for (let j = 1; j < this.rowLengthArray[i] - cutoff; j++) {
-                    offset += d_err[j - 1];
-                    t[j] -= step * offset;
-                    this.pointsArray[i][j] = this.pointsFunctionArray[i](t[j]);
-                }
-            }
+            let Q1 = this.getPoint(
+                (1 - t) * this.point1.x + t * this.point2.x,
+                (1 - t) * this.point1.y + t * this.point2.y);
+
+            let dx = Q1.x - Q0.x;
+            let dy = Q1.y - Q0.y;
+            let radians = Math.atan2(dy, dx);
+            let degrees = radians * 180 / Math.PI;
+            return {x: xx, y: yy, degrees: degrees};
+        } else {
+            return {};
         }
-    }
-
-    /**
-     * @method
-     * возвращает точки для игры
-     * @return {Array}
-     */
-    getGamePoints() {
-        this.setEvenlyDistributedRowLengthArray();
-        this.getTotalPathLength();
-        this.setEvenlyDistributedRowLengthPoints();
-        this.getEqualizationOfDiscontinuities();
-
-        let gamePointsArray = [];
-
-        this.pointsArray.forEach(function (value, key) {
-            value.forEach(function (value) {
-                gamePointsArray.push(value);
-
-            })
-        });
-        console.log(this.totalPathLength)
-        console.log(this.pointsArray)
-        return gamePointsArray;
-    }
+    };
 }
 
-export {Bezier};
+export {Bezier}

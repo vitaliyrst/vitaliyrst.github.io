@@ -2,12 +2,132 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Sorc</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <canvas id="canvas" width="800" height="800"></canvas>
 <script>
+    class Bezier {
+
+        p0;
+        p1;
+        p2;
+        step;
+
+        ax;
+        ay;
+        bx;
+        by;
+
+        A;
+        B;
+        C;
+
+        total_length;
+
+        init(oPoint0, oPoint1, oPoint2, iSpeed) {
+            this.p0 = oPoint0;
+            this.p1 = oPoint1;
+            this.p2 = oPoint2;
+
+            this.ax = this.p0.x - 2 * this.p1.x + this.p2.x;
+            this.ay = this.p0.y - 2 * this.p1.y + this.p2.y;
+            this.bx = 2 * this.p1.x - 2 * this.p0.x;
+            this.by = 2 * this.p1.y - 2 * this.p0.y;
+
+            this.A = 4 * (this.ax * this.ax + this.ay * this.ay);
+            this.B = 4 * (this.ax * this.bx + this.ay * this.by);
+            this.C = this.bx * this.bx + this.by * this.by;
+
+            this.total_length = this.length(1);
+            this.step = Math.floor(this.total_length / iSpeed);
+
+            if (this.total_length % iSpeed > iSpeed / 2) this.step++;
+
+            return this.step;
+        };
+
+        speed(t) {
+            return Math.sqrt(this.A * t * t + this.B * t + this.C);
+        };
+
+        length(t) {
+            let temp1 = Math.sqrt(this.C + t * (this.B + this.A * t));
+            let temp2 = (2 * this.A * t * temp1 + this.B * (temp1 - Math.sqrt(this.C)));
+            let temp3 = Math.log(this.B + 2 * Math.sqrt(this.A) * Math.sqrt(this.C));
+            let temp4 = Math.log(this.B + 2 * this.A * t + 2 * Math.sqrt(this.A) * temp1);
+            let temp5 = 2 * Math.sqrt(this.A) * temp2;
+            let temp6 = (this.B * this.B - 4 * this.A * this.C) * (temp3 - temp4);
+
+            return (temp5 + temp6) / (8 * Math.pow(this.A, 1.5));
+        };
+
+        invertL(t, l) {
+            let t1 = t;
+            let t2;
+            do {
+                t2 = t1 - (this.length(t1) - l) / this.speed(t1);
+                if (Math.abs(t1 - t2) < 0.000001) break;
+                t1 = t2;
+            } while (true);
+            return t2;
+        };
+
+        point(x, y) {
+            return {x: x, y: y};
+        }
+
+        getAnchorPoint(nIndex) {
+            if (nIndex >= 0 && nIndex <= this.step) {
+                let t = nIndex / this.step;
+                let l = t * this.total_length;
+                t = this.invertL(t, l);
+
+                let xx = (1 - t) * (1 - t) * this.p0.x + 2 * (1 - t) * t * this.p1.x + t * t * this.p2.x;
+                let yy = (1 - t) * (1 - t) * this.p0.y + 2 * (1 - t) * t * this.p1.y + t * t * this.p2.y;
+
+                let Q0 = this.point((1 - t) * this.p0.x + t * this.p1.x, (1 - t) * this.p0.y + t * this.p1.y);
+                let Q1 = this.point((1 - t) * this.p1.x + t * this.p2.x, (1 - t) * this.p1.y + t * this.p2.y);
+
+                let dx = Q1.x - Q0.x;
+                let dy = Q1.y - Q0.y;
+                let radians = Math.atan2(dy, dx);
+                let degrees = radians * 180 / Math.PI;
+                return {x: xx, y: yy, dg: degrees};
+            } else {
+                return [];
+            }
+        };
+    }
+
+
+    let obj = [{"x": 653, "y": -30}, {"x": 656, "y": 20}, {"x": 657, "y": 70}, {"x": 657, "y": 120},
+        {"x": 658, "y": 170}, {"x": 656, "y": 220}, {"x": 656, "y": 250}, {"x": 654, "y": 280},
+        {"x": 650, "y": 330}, {"x": 638, "y": 380}, {"x": 628, "y": 400}, {"x": 600, "y": 450},
+        {"x": 551, "y": 505}, {"x": 452, "y": 552}, {"x": 356, "y": 557}, {"x": 310, "y": 543},
+        {"x": 263, "y": 525}, {"x": 217, "y": 490}, {"x": 180, "y": 448}, {"x": 157, "y": 399},
+        {"x": 143, "y": 353}, {"x": 137, "y": 312}, {"x": 138, "y": 267}, {"x": 154, "y": 215},
+        {"x": 175, "y": 170}, {"x": 210, "y": 130}, {"x": 240, "y": 105}, {"x": 272, "y": 87},
+        {"x": 325, "y": 70}, {"x": 378, "y": 67}, {"x": 414, "y": 70}, {"x": 453, "y": 82},
+        {"x": 486, "y": 100}, {"x": 517, "y": 120}, {"x": 544, "y": 150}, {"x": 567, "y": 191},
+        {"x": 583, "y": 226}, {"x": 592, "y": 266}, {"x": 593, "y": 306}, {"x": 579, "y": 353},
+        {"x": 562, "y": 393}, {"x": 538, "y": 428}, {"x": 505, "y": 460}, {"x": 470, "y": 477},
+        {"x": 435, "y": 490}, {"x": 380, "y": 495}, {"x": 336, "y": 488}, {"x": 292, "y": 468},
+        {"x": 265, "y": 448}, {"x": 239, "y": 421}, {"x": 220, "y": 391}, {"x": 207, "y": 355},
+        {"x": 200, "y": 327}, {"x": 199, "y": 299}, {"x": 202, "y": 275}, {"x": 211, "y": 242},
+        {"x": 222, "y": 221}, {"x": 236, "y": 201}, {"x": 254, "y": 180}, {"x": 272, "y": 164},
+        {"x": 292, "y": 150}, {"x": 312, "y": 142}, {"x": 337, "y": 134}, {"x": 362, "y": 130},
+        {"x": 386, "y": 131}, {"x": 409, "y": 135}, {"x": 428, "y": 141}, {"x": 452, "y": 153},
+        {"x": 490, "y": 184}, {"x": 520, "y": 232}, {"x": 530, "y": 284}, {"x": 524, "y": 330},
+        {"x": 512, "y": 358}, {"x": 498, "y": 377}, {"x": 478, "y": 398}, {"x": 457, "y": 412},
+        {"x": 428, "y": 425}, {"x": 406, "y": 430}, {"x": 380, "y": 431}, {"x": 352, "y": 425},
+        {"x": 333, "y": 416}, {"x": 314, "y": 405}, {"x": 297, "y": 391}, {"x": 284, "y": 374},
+        {"x": 274, "y": 357}, {"x": 266, "y": 337}, {"x": 262, "y": 314}, {"x": 262, "y": 293},
+        {"x": 264, "y": 277}, {"x": 269, "y": 252},
+    ];
+
+    let bezierArr = [];
     document.addEventListener('click', (eo) => {
         console.log(eo.clientX, eo.clientY)
     });
@@ -18,64 +138,52 @@
     image.src = './storage/levels/1-1/Spiral.jpg';
     context.drawImage(image, 0, 0, 800, 600);
 
-    let bezierArr = [];
-    obj = [
-        {p0: {x: 655, y: 0}, p1: {x: 658, y: 110}, p2: {x: 660, y: 220}, p3: {x: 650, y: 330}},
-        /*{p0: {x: 650, y: 330}, p1: {x: 630, y: 420}, p2: {x: 585, y: 480}, p3: {x: 505, y: 527}},
-        {p0: {x: 505, y: 527}, p1: {x: 412, y: 570}, p2: {x: 312, y: 560}, p3: {x: 235, y: 505}},
-        {p0: {x: 235, y: 505}, p1: {x: 180, y: 464}, p2: {x: 140, y:400}, p3: {x: 136, y: 301}},
-        {p0: {x: 136, y: 301}, p1: {x: 140, y: 200}, p2: {x: 179, y: 145}, p3: {x: 250, y: 97}},
-        {p0: {x: 250, y: 97}, p1: {x: 322, y: 55}, p2: {x: 418, y: 60}, p3: {x: 489, y: 100}},
-        {p0: {x: 489, y: 100}, p1: {x: 590, y: 170}, p2: {x: 590, y: 250}, p3: {x: 590, y: 300}},
-        {p0: {x: 590, y: 300}, p1: {x: 575, y: 420}, p2: {x: 500, y: 475}, p3: {x: 433, y: 491}},
-        {p0: {x: 433, y: 491}, p1: {x: 300, y: 520}, p2: {x: 221, y: 415}, p3: {x: 207, y: 356}},
-        {p0: {x: 207, y: 356}, p1: {x: 180, y: 255}, p2: {x: 222, y: 175}, p3: {x: 320, y: 137}},
-        {p0: {x: 320, y: 137}, p1: {x: 450, y: 100}, p2: {x: 550, y: 215}, p3: {x: 526, y: 324}},
-        {p0: {x: 526, y: 324}, p1: {x: 500, y: 405}, p2: {x: 417, y: 445}, p3: {x: 345, y: 423}},
-        {p0: {x: 345, y: 423}, p1: {x: 265, y: 385}, p2: {x: 260, y: 325}, p3: {x: 266, y: 253}},*/
-    ];
-
-    function bezier(t, p0, p1, p2, p3) {
-        let cX = 3 * (p1.x - p0.x);
-        let bX = 3 * (p2.x - p1.x) - cX;
-        let aX = p3.x - p0.x - cX - bX;
-
-        let cY = 3 * (p1.y - p0.y);
-        let bY = 3 * (p2.y - p1.y) - cY;
-        let aY = p3.y - p0.y - cY - bY;
-
-        let x = (aX * Math.pow(t, 3)) + (bX * Math.pow(t, 2)) + (cX * t) + p0.x;
-        let y = (aY * Math.pow(t, 3)) + (bY * Math.pow(t, 2)) + (cY * t) + p0.y;
-        console.log(x,y);
+    function point(x, y) {
         return {x: x, y: y};
     }
 
+    function curve() {
+        let mapCurve = obj;
+
+        let bezier = new Bezier();
+
+        for (let i = 0; i < mapCurve.length - 2; ++i) {
+            let p0 = (i === 0)
+                ? point(mapCurve[0].x, mapCurve[0].y)
+                : point((mapCurve[i].x + mapCurve[i + 1].x) / 2, (mapCurve[i].y + mapCurve[i + 1].y) / 2);
+            let p1 = point(mapCurve[i + 1].x, mapCurve[i + 1].y);
+            let p2 = (i <= mapCurve.length - 4)
+                ? point((mapCurve[i + 1].x + mapCurve[i + 2].x) / 2, (mapCurve[i + 1].y + mapCurve[i + 2].y) / 2)
+                : point(mapCurve[i + 2].x, mapCurve[i + 2].y);
+
+            let steps = bezier.init(p0, p1, p2, 1);
+
+            for (let m = 1; m <= steps; ++m) {
+                let data = bezier.getAnchorPoint(m);
+
+                bezierArr.push(data);
+            }
+        }
+    }
+
+    curve();
+
+
     let count = 0;
-
-    function getBezier(p0, p1, p2, p3) {
-
-
-        let accuracy = 0.1;
-
-        if (count === 0) {
-            context.moveTo(p0.x, p0.y);
-            count++;
-        }
-
-        for (let i = 0; i < 1; i += accuracy) {
-            let data = bezier(i, p0, p1, p2, p3);
-            bezierArr.push([data.x, data.y]);
-            context.lineTo(data.x, data.y);
-            context.lineWidth = 1;
-            context.strokeStyle = 'yellow';
-            context.stroke();
-
-        }
+    if (count === 0) {
+        context.moveTo(bezierArr[0].x, bezierArr[0].y);
+        count++;
     }
 
-    for (let i = 0; i < obj.length; i++) {
-        getBezier(obj[i].p0, obj[i].p1, obj[i].p2, obj[i].p3);
+    for (let i = 1; i < bezierArr.length - 1; i++) {
+        context.lineTo(bezierArr[i].x, bezierArr[i].y);
+        context.lineWidth = 1;
+        context.strokeStyle = 'yellow';
+        context.stroke();
     }
+
+    let json = JSON.stringify(bezierArr);
+    console.log(json)
 </script>
 </body>
 </html>

@@ -1,6 +1,6 @@
-import {Game} from "./Game.js";
+import {GameModel} from "./GameModel.js";
 
-class Frog extends Game {
+class FrogModel extends GameModel {
     constructor() {
         super();
         this.angle = 0;
@@ -25,7 +25,7 @@ class Frog extends Game {
 
     drawFrog() {
         let frogImage = new Image();
-        frogImage.src = './storage/frog/Frog.gif';
+        frogImage.src = './storage/frog/FrogModel.gif';
         this.context.save();
         this.context.beginPath();
         this.context.arc(this.frogLeft + this.frogWidth / 2, this.frogTop + this.frogHeight / 2,
@@ -104,4 +104,4 @@ class Frog extends Game {
     }
 }
 
-export {Frog};
+export {FrogModel};
