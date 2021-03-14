@@ -1,6 +1,108 @@
 body {
     margin: 0;
     padding: 0;
+
+    font-family: "Ustroke Regular", sans-serif;
+    font-size: 24px;
+    line-height: 32px;
+
+    background: url("storage/backgrounds/bg.jpg");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100vw 100vh;
+    overflow-y: hidden;
+}
+
+@font-face {
+    font-family: 'Ustroke Regular';
+    src: url('./fonts/ustroke.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.menu-container {
+    width: 70vw;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.menu-list {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 20px;
+    justify-content: space-between;
+}
+
+.menu-item {
+    flex: 1 1 200px;
+    margin: 10px;
+
+    border: 10px solid;
+    border-image: url("./storage/link.png") 30 30 round;
+    list-style: none;
+    text-align: center;
+}
+
+.menu-item div {
+    width: 100%;
+    opacity: 70%;
+    background-color: burlywood;
+}
+
+.menu-item a {
+    font-size: 30px;
+    text-decoration: none;
+    color: black;
+}
+
+.rules-container {
+    margin-top: 100px;
+    width: 50vw;
+    margin-left: auto;
+    margin-right: auto;
+    color: white;
+    border: 5px solid black;
+    background-color: black;
+    opacity: 80%;
+    font-size: 30px;
+}
+
+.rules-container h2 {
+    text-align: center;
+    color: white;
+}
+
+.rules-item {
+    margin-top: 10px;
+}
+
+.records-container {
+    width: 500px;
+    margin-top: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    color: white;
+    border: 5px solid black;
+    background-color: black;
+    text-align: center;
+    font-size: 30px;
+    opacity: 80%;
+}
+
+.records-table {
+    margin: auto;
+}
+
+.records-table td {
+    word-wrap: break-word;
+    padding-top: 30px;
+    padding-left: 30px;
+    padding-right: 30px;
+    text-align: center;
 }
 
 @media screen and (min-width: 900px) {
@@ -8,8 +110,8 @@ body {
         width: 100vw;
         height: 100vh;
 
-        background-image: url("storage/backgrounds/bg.jpg");
-        background-size: 100% 100%;
+        /*background-image: url("storage/backgrounds/bg.jpg");
+        background-size: 100% 100%;*/
 
         position: relative;
     }
@@ -20,7 +122,7 @@ body {
         border: 10px solid black;
 
         position: absolute;
-        top: 50%;
+        top: 40%;
         left: 50%;
         transform: translate(-50%, -50%);
     }

@@ -1,21 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html>
+<head lang="en">
     <meta charset="UTF-8">
     <title>Zuma</title>
     <link rel="stylesheet" href="style.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
+<section class="menu-container">
+    <ul class="menu-list">
+        <li class="menu-item">
+            <div><a href="#home">На главную</a></div>
+        </li>
+        <li class="menu-item">
+            <div><a class="play-button" href="#game">Играть</a></div>
+        </li>
+        <li class="menu-item">
+            <div><a href="#rules">Правила</a></div>
+        </li>
+        <li class="menu-item">
+            <div><a href="#records">Рекорды</a></div>
+        </li>
+        <li class="menu-item">
+            <div><a href="#about">О проекте</a></div>
+        </li>
+    </ul>
+</section>
 
-<div class="zuma-main-container">
-    <button style="position: absolute; top: 200px; left: 200px" class="main-music"> музыка</button>
-    <div class="zuma-container">
-        <canvas id="zuma-canvas"></canvas>
-    </div>
+<div id="app">
 
 </div>
-<script type="module" src="app.js">
-</script>
+
+<script type="module" src="app.js"></script>
 </body>
 </html>

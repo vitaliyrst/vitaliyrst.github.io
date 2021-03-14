@@ -12,7 +12,7 @@ let data = {
 
     ballRadius: 15,
     ballsColor: ['./storage/colors/BlueBall1.jpg', './storage/colors/GreenBall1.jpg', './storage/colors/PurpleBall1.jpg',
-        './storage/colors/RedBall1.jpg',/* './storage/colors/WhiteBall1.jpg', './storage/colors/YellowBall1.jpg'*/],
+        './storage/colors/RedBall1.jpg', './storage/colors/WhiteBall1.jpg', './storage/colors/YellowBall1.jpg'],
     pointsPath: [
         {"x": 653, "y": -30}, {"x": 656, "y": 20}, {"x": 657, "y": 70}, {"x": 657, "y": 120},
         {"x": 658, "y": 170}, {"x": 656, "y": 220}, {"x": 656, "y": 250}, {"x": 654, "y": 280},

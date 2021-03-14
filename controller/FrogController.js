@@ -1,19 +1,32 @@
 class FrogController {
-    constructor(model) {
+    constructor(model, view) {
         this.model = model;
-        this.move();
+        this.view = view;
+        this.moveFrog();
+        this.moveBullet();
         this.shot();
     }
 
-    move() {
+    moveFrog() {
         let canvas = document.getElementById('zuma-canvas');
         canvas.addEventListener('mousemove', (eo) => {
             let clientX = eo.clientX - canvas.getBoundingClientRect().x;
             let clientY = eo.clientY - canvas.getBoundingClientRect().y;
-            let angle = Math.atan2(-(clientX - (this.model.frogLeft + this.model.frogWidth / 2)),
-                clientY - (this.model.frogTop + this.model.frogHeight / 2));
             if (this.model.bulletState === 0) {
-                this.model.updateFrogAngle(angle);
+                this.model.frogAngle = Math.atan2(-(clientX - (this.view.frogLeft + this.view.frogWidth / 2)),
+                    clientY - (this.view.frogTop + this.view.frogHeight / 2));
+            }
+        });
+    }
+
+    moveBullet() {
+        let canvas = document.getElementById('zuma-canvas');
+        canvas.addEventListener('mousemove', (eo) => {
+            let clientX = eo.clientX - canvas.getBoundingClientRect().x;
+            let clientY = eo.clientY - canvas.getBoundingClientRect().y;
+            if (this.model.bulletState === 0) {
+                this.model.bulletAngle = Math.atan2(-(clientX - (this.view.frogLeft + this.view.frogWidth / 2)),
+                    clientY - (this.view.frogTop + this.view.frogHeight / 2));
             }
         });
     }
@@ -24,13 +37,36 @@ class FrogController {
             if (!this.model.bulletState) {
                 let clientX = eo.clientX - canvas.getBoundingClientRect().x;
                 let clientY = eo.clientY - canvas.getBoundingClientRect().y;
-                this.model.bulletAngle = Math.atan2((clientX - (this.model.frogLeft + this.model.frogWidth / 2)),
-                    clientY - (this.model.frogTop + this.model.frogHeight / 2));
-                this.model.speed = 6;
+                this.model.bulletAngle = Math.atan2((clientX - (this.view.frogLeft + this.view.frogWidth / 2)),
+                    clientY - (this.view.frogTop + this.view.frogHeight / 2));
+
+                this.model.bulletSpeed = 7;
                 this.model.bulletState = 1;
-                this.model.gunSound().play();
+                this.gunSound().play();
             }
         });
+    }
+
+    gunSound() {
+        let gunSound = new Audio();
+        gunSound.src = './storage/sounds/bullet.ogg';
+        return gunSound;
+    }
+
+    restartBullet() {
+        if (this.model.bulletCenterX + this.view.bulletRadius + this.view.frogWidth / 2 < this.view.context.canvas.offsetLeft ||
+            this.model.bulletCenterY + this.view.bulletRadius + this.view.frogHeight / 2 < this.view.context.canvas.offsetTop ||
+            this.model.bulletCenterX - this.view.bulletRadius - this.view.frogWidth / 2 > this.view.context.canvas.width ||
+            this.model.bulletCenterY - this.view.bulletRadius - this.view.frogHeight / 2 > this.view.context.canvas.height) {
+            this.view.getRandomColor();
+            this.model.restartBullet();
+        }
+    }
+
+    draw() {
+        this.restartBullet();
+        this.model.updateBullet()
+        this.view.draw();
     }
 }
 

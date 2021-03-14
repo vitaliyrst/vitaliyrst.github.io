@@ -1,6 +1,4 @@
-import {GameView} from "./GameView.js";
-
-class BallView extends GameView{
+class BallView{
     frame = 0;
     numberOfRows = 10;
     numberOfCols = 6;
@@ -11,7 +9,6 @@ class BallView extends GameView{
     rowCount = 0;
 
     constructor(ball) {
-        super();
         this.ball = ball;
         this.color = 0;
     }
@@ -61,4 +58,3 @@ class BallView extends GameView{
     }
 }
 
-export {BallView}

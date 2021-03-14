@@ -18,6 +18,7 @@ class BallModel extends GameModel {
         this.radius = 15;
         this.angle = 0;
         this.moved = 0;
+        this.speed = 1;
         this.getRandomColor(this.ballsColor);
     }
 
@@ -80,6 +81,10 @@ class BallModel extends GameModel {
         this.context.restore();
     }
 
+    updatePathSection(tick) {
+        this.pathSection += tick;
+    }
+
     update() {
         if (this.pathSection >= this.path.length) {
 
@@ -88,7 +93,7 @@ class BallModel extends GameModel {
         }
         this.x = this.path[this.pathSection].x;
         this.y = this.path[this.pathSection].y;
-        this.pathSection++;
+        this.pathSection += this.speed;
     }
 }
 
