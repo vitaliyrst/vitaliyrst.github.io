@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Zuma</title>
     <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
 <section class="menu-container">
@@ -27,9 +28,75 @@
 </section>
 
 <div id="app">
+    <!--<div class="level-setting" hidden>
+        <div><button type="button" value="1">LEVEL 1</button></div>
+        <div><button type="button" value="2">LEVEL 2</button></div>
+        <div><button type="button" value="3">LEVEL 3</button></div>
+    </div>-->
+
 
 </div>
-
+    <!--<button style="position: absolute; top: 200px; left: 200px" class="main-music"> музыка</button>-->
+    <div class="zuma-container">
+        <canvas id="zuma-canvas" width="800" height="600"></canvas>
+    </div>
 <script type="module" src="app.js"></script>
+<script>
+    function resizeGame() {
+        let gameArea = document.querySelector('.zuma-container');
+        let newWidth = innerWidth;
+        let newHeight = innerHeight;
+        console.log(newWidth , newHeight)
+        let gameCanvas = document.getElementById('zuma-canvas');
+        if (newHeight >= 700 && newHeight <= 800 && newWidth >= 800 && newWidth <= 900) {
+
+            gameCanvas.width = 700;
+            gameCanvas.height = 526;
+        } else if(newHeight >= 800 && newWidth >= 900) {
+            console.log(1)
+            gameCanvas.width = 800;
+            gameCanvas.height = 600;
+        }
+
+        /*gameArea.style.marginTop = (-newHeight / 2) + 'px';
+        gameArea.style.marginLeft = (-newWidth / 2) + 'px';*/
+
+        /*let gameCanvas = document.getElementById('zuma-canvas');
+        gameCanvas.width = newWidth;
+        gameCanvas.height = newHeight;*/
+    }
+
+    window.addEventListener('resize', resizeGame, false);
+    window.addEventListener('orientationchange', resizeGame, false);
+
+    /*
+        window.onhashchange = function () {
+            window.onload = function () {
+                let div = document.querySelector('.level-setting');
+                console.log(div);
+                for (let i = 0; i < div.length; i++ ) {
+                    console.log(div[i]);
+            }
+
+            }
+        }*/
+
+    /*    document.addEventListener('DOMContentLoaded', () => {
+            const images = [];
+
+            function preloadImages(...images) {
+                images.forEach((image, i) => {
+                    image = new Image();
+                    image.src = preloadImages.arguments[i];
+                });
+            };
+
+            // Предварительная загрузка нужных картинок
+            preloadImages(
+                '{Изображение}.png',
+                '{Другое изображение}.jpg'
+            );
+        });*/
+</script>
 </body>
 </html>

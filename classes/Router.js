@@ -23,6 +23,7 @@ class Router {
             for (let i = 0, length = routes.length; i < length; i++) {
                 let route = routes[i];
                 if (route.isActiveRoute(window.location.hash.substr(1))) {
+                    console.log(route)
                     scope.goToRoute(route.htmlName);
                 }
             }

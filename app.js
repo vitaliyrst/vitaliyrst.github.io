@@ -8,30 +8,14 @@ import {FrogView} from "./view/FrogView.js";
 import {Route} from "./classes/Route.js";
 import {Router} from "./classes/Router.js";
 
-function init() {
-    new Router([
-        new Route('home', 'home.html', true),
-        new Route('about', 'about.html'),
-        new Route('rules', 'rules.html'),
-        new Route('records', 'records.html'),
-        new Route('game', 'game.html'),
-    ]);
-}
-
-init();
-
-
-let play = document.querySelector('.play-button');
-play.addEventListener('click', run);
-
-function run() {
+console.log(innerHeight)
     let game = new GameModel();
     game.createCanvas();
 
     let path = new Path();
     let getPath = path.getPath();
 
-    let mainMusic = new Audio();
+/*    let mainMusic = new Audio();
     mainMusic.src = './storage/sounds/main.mp3';
 
     let buttonMusic = document.querySelector('.main-music');
@@ -39,7 +23,7 @@ function run() {
         if (eo.target) {
             mainMusic.play();
         }
-    });
+    });*/
 
 
     let frog = new FrogModel();
@@ -105,7 +89,17 @@ function run() {
         }
         window.requestAnimationFrame(work);
     }
-
     window.requestAnimationFrame(work);
 
+/*
+function init() {
+    new Router([
+        new Route('home', 'home.html'),
+        new Route('about', 'about.html'),
+        new Route('rules', 'rules.html'),
+        new Route('records', 'records.html'),
+        new Route('game', 'game.html', true),
+    ]);
 }
+
+init();*/
