@@ -42,35 +42,65 @@
     </div>
 <script type="module" src="app.js"></script>
 <script>
+    location.hash = '';
 
-    /*
-        window.onhashchange = function () {
-            window.onload = function () {
-                let div = document.querySelector('.level-setting');
-                console.log(div);
-                for (let i = 0; i < div.length; i++ ) {
-                    console.log(div[i]);
-            }
+    setTimeout(() => {
+        switchToMenuPage('Menu')
+    }, 2000);
 
-            }
-        }*/
+    let logo = document.querySelector('.game_name');
+    logo.addEventListener('click', (eo) => {
+        eo.preventDefault();
+        switchToMenuPage('Menu');
+    });
 
-    /*    document.addEventListener('DOMContentLoaded', () => {
-            const images = [];
+    let buttonGame = document.querySelector('.game_button');
+    buttonGame.addEventListener('click', () => {
+        switchToGamePage('Game');
+    });
 
-            function preloadImages(...images) {
-                images.forEach((image, i) => {
-                    image = new Image();
-                    image.src = preloadImages.arguments[i];
-                });
-            };
+    let buttonRecords = document.querySelector('.records_button');
+    buttonRecords.addEventListener('click', () => {
+        switchToRecordsPage('Records');
+    });
 
-            // Предварительная загрузка нужных картинок
-            preloadImages(
-                '{Изображение}.png',
-                '{Другое изображение}.jpg'
-            );
-        });*/
+    let buttonRules = document.querySelector('.rules_button');
+    buttonRules.addEventListener('click', () => {
+        switchToRulesPage('Rules');
+    });
+
+    let buttonAbout = document.querySelector('.about_button');
+    buttonAbout.addEventListener('click', () => {
+        switchToAboutPage('About');
+    });
+
+
+    window.addEventListener('resize', resize);
+
+    function resize() {
+        let container = document.querySelector('.zuma_field');
+        let offsetWidth = container.clientWidth;
+        let offsetHeight = container.clientHeight;
+
+        let canvas = document.getElementById('canvas');
+        let canvasRatio = 384 / 569;
+        let windowRatio = (offsetWidth > offsetHeight) ? offsetHeight / offsetWidth : offsetWidth / offsetHeight;
+
+        let width;
+        let height;
+
+        if (windowRatio < canvasRatio) {
+            height = offsetHeight;
+            width = height / canvasRatio;
+        } else {
+
+            width = offsetWidth;
+            height = width * canvasRatio;
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+    }
 </script>
 </body>
 </html>

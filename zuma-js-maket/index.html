@@ -53,7 +53,7 @@
         </div>
         <div class="zuma_game hidden">
             <div class="zuma_field">
-                <canvas width="800" height="600" style="background-color: black"></canvas>
+                <canvas id="canvas" width="1138" height="768" style="background-color: black"></canvas>
             </div>
         </div>
         <div class="zuma_records hidden">
@@ -138,6 +138,34 @@
     buttonAbout.addEventListener('click', () => {
         switchToAboutPage('About');
     });
+
+
+    window.addEventListener('resize', resize);
+
+    function resize() {
+        let container = document.querySelector('.zuma_field');
+        let offsetWidth = container.clientWidth;
+        let offsetHeight = container.clientHeight;
+
+        let canvas = document.getElementById('canvas');
+        let canvasRatio = 384 / 569;
+        let windowRatio = (offsetWidth > offsetHeight) ? offsetHeight / offsetWidth : offsetWidth / offsetHeight;
+
+        let width;
+        let height;
+
+        if (windowRatio < canvasRatio) {
+            height = offsetHeight;
+            width = height / canvasRatio;
+        } else {
+
+            width = offsetWidth;
+            height = width * canvasRatio;
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+    }
 </script>
 </body>
 </html>

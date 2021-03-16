@@ -21,6 +21,7 @@ function switchToStateFromURLHash() {
     let rules = document.querySelector('.zuma_rules');
     let about = document.querySelector('.zuma_about');
     let game = document.querySelector('.zuma_game');
+    let name = document.querySelector('.game_name');
 
     switch (spaState.pageName) {
         case 'Load':
@@ -44,7 +45,9 @@ function switchToStateFromURLHash() {
             records.classList.add('hidden');
             rules.classList.add('hidden');
             about.classList.add('hidden');
+            name.classList.add('hidden');
             game.classList.remove('hidden');
+
             break;
         case 'Records':
             menu.classList.add('hidden');

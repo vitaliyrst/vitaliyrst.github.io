@@ -385,18 +385,24 @@ a {
 
 /* Game */
 
-.game_zuma_container {
-    width: 100%;
-    flex-grow: 1;
+.zuma_game {
     display: flex;
-    flex-direction: column
 }
 
 .zuma_field {
-    width: 100vh;
-    height: 60vh;
-    max-width: calc(100vw - 4vh);
-    max-height: calc(100vw - 4vh);
+    width: 100%;
+    height: 100%;
+    margin-bottom: 20px;
+    min-width: 569px;
+    min-height: 384px;
+    max-width: 1138px;
+    max-height: 768px;
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
 }
 
 @media (max-width: 767px) {
