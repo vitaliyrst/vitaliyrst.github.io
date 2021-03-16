@@ -154,6 +154,17 @@ body {
     height: 100%;
 }*/
 
+.zuma-container {
+    width: 1138px;
+    height: 768px;
+    border: 10px solid black;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+/*
 @media screen and (min-width: 900px) and (min-height: 800px){
 
     .zuma-container {
@@ -208,4 +219,5 @@ body {
         margin-right: auto;
     }
 }
+*/
 

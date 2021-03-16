@@ -14,7 +14,7 @@ console.log(innerHeight)
 
     let path = new Path();
     let getPath = path.getPath();
-
+console.log(getPath)
 /*    let mainMusic = new Audio();
     mainMusic.src = './storage/sounds/main.mp3';
 

@@ -1,0 +1,419 @@
+@font-face {
+    font-family: 'Ustroke Regular';
+    src: url('./fonts/ustroke.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+
+    width: 100%;
+    height: 100%;
+
+    border: 0;
+
+    font-family: "Ustroke Regular", sans-serif;
+    font-size: 16px;
+    line-height: 22px;
+    font-style: italic;
+    text-align: center;
+
+    background: url("storage/backgrounds/bg.jpg");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100vw 100vh;
+    overflow: hidden;
+}
+
+a {
+    text-decoration: none
+}
+
+/* Loading */
+
+.loading_container {
+    display: flex;
+}
+
+.loading_container div {
+    width: 4vh;
+    height: 4vh;
+    margin: 1vh;
+
+    border-radius: 50%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    animation: loadBall 1s infinite;
+}
+
+
+.loading_blue_ball {
+    background-image: url("./storage/load/loadBlueBall.jpg");
+    background-size: contain;
+}
+
+.loading_green_ball {
+    background-image: url("./storage/load/loadGreenBall.jpg");
+    background-size: contain;
+}
+
+.loading_purple_ball {
+    background-image: url("./storage/load/loadPurpleBall.jpg");
+    background-size: contain;
+}
+
+.loading_yellow_ball {
+    background-image: url("./storage/load/loadYellowBall.jpg");
+    background-size: contain;
+}
+
+.loading_white_ball {
+    background-image: url("./storage/load/loadWhiteBall.jpg");
+    background-size: contain;
+}
+
+.loading_red_ball {
+    background-image: url("./storage/load/loadRedBall.jpg");
+    background-size: contain;
+}
+
+@media (orientation: portrait) {
+    .loading_container div {
+        width: 8vw;
+        height: 8vw;
+        margin: 2vw
+    }
+}
+
+@keyframes loadBall {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.game {
+    margin: auto;
+
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.main_game_container {
+    max-height: 100vh;
+    min-height: 90vh;
+
+    box-sizing: border-box;
+    padding: 5vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+
+/* Header */
+
+.game_name {
+    max-height: 10vh;
+    margin-top: 10vh;
+
+    box-sizing: border-box;
+    color: darkorange;
+    text-shadow: 2px 2px 2px black;
+
+    font-size: calc(3em + 4vh);
+
+    font-weight: 300;
+    cursor: pointer;
+}
+
+
+/* Player */
+
+.game_player {
+    margin-top: 0;
+    margin-bottom: 3vh;
+    box-sizing: border-box;
+
+    display: flex;
+    align-items: center;
+    justify-content: center
+}
+
+.game_player input {
+    width: 90%;
+    margin: 0;
+    padding: 5px 10px;
+
+    box-sizing: border-box;
+    border: 1px solid black;
+    display: block;
+
+    font: inherit;
+    font-size: calc(1em + 1vh);
+    line-height: 100%;
+
+    background-color: rgba(255, 255, 255, 0.2);
+    color: black;
+    border-radius: 5px;
+}
+
+.game_player input::placeholder {
+    color: black;
+}
+
+.game_player input:focus {
+    outline: none;
+    border-color: white;
+}
+
+
+/* Menu */
+
+.main_menu {
+    width: auto;
+
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column
+}
+
+.menu {
+    margin-top: 10px;
+
+    border: 10px solid;
+    border-image: url("./storage/backgrounds/border.png") 30 30 round;
+
+    text-align: center;
+}
+
+.menu div {
+    width: 100%;
+
+    background-color: burlywood;
+    opacity: 70%;
+}
+
+.menu button {
+    width: 35vh;
+    height: 6vh;
+    min-width: 150px;
+    min-height: 40px;
+    margin: auto;
+
+    font: inherit;
+    font-size: calc(2em);
+
+    outline: none;
+    border: none;
+
+    background: transparent;
+    cursor: pointer;
+}
+
+/* Rules */
+
+.zuma_rules {
+    margin-top: 1vh;
+    font-size: calc(1em + 1vw);
+
+    display: flex;
+    flex-direction: column;
+
+    background-color: black;
+    color: white;
+    opacity: 80%;
+}
+
+.zuma_rules h2 {
+    font-size: calc(1em + 1vh);
+    text-align: center;
+
+    color: red;
+}
+
+.rules_list {
+    width: 60vw;
+    margin: 0;
+    padding: 0;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.rules_item {
+    margin-bottom: 3vh;
+
+    font-size: calc(1em);
+    line-height: 100%;
+    text-align: left;
+    word-break: break-all;
+
+    list-style: none;
+}
+
+/* Records */
+
+.zuma_records {
+    padding-top: 3vh;
+
+    font-size: calc(1em + 1vw);
+
+    display: flex;
+    flex-direction: column;
+
+    background-color: black;
+    color: white;
+    opacity: 80%;
+}
+
+.records_table {
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+}
+
+.records_table td {
+    word-wrap: break-word;
+    padding: 3vh;
+    text-align: left;
+}
+
+.records_table :nth-child(2) :nth-child(1n) {
+    color: red;
+}
+
+
+/* About */
+
+.zuma_about {
+    margin-top: 1vh;
+    font-size: calc(1em + 1vw);
+
+    display: flex;
+    flex-direction: column;
+
+    background-color: black;
+    color: white;
+    opacity: 80%;
+}
+
+.zuma_about h2 {
+    font-size: calc(1em + 1vh);
+    text-align: center;
+
+    color: red;
+}
+
+.about_list {
+    width: 60vw;
+    margin: 0;
+    padding: 0;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.about_item {
+    margin-bottom: 3vh;
+
+    font-size: calc(1em);
+    line-height: 100%;
+    text-align: left;
+    word-break: break-all;
+
+    list-style: none;
+}
+
+
+/* Social */
+
+.main_social {
+    margin-top: 2vh;
+    margin-bottom: 5vh;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.social_button {
+    margin: 0;
+    padding: 0;
+    min-height: 6vh;
+
+    min-width: 6vh;
+    display: block;
+    cursor: pointer;
+    border: 0;
+    border-radius: 50%;
+    background-size: 100%;
+    outline: none;
+}
+
+.social_button_github {
+    background-image: url("./storage/social/linkedin.png");
+}
+
+.social_button_linkedin {
+    background-image: url("./storage/social/github.png");
+}
+
+.social_button_sound {
+    background-image: url("./storage/social/volume-off.png");
+}
+
+/* Game */
+
+.game_zuma_container {
+    width: 100%;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column
+}
+
+.zuma_field {
+    width: 100vh;
+    height: 60vh;
+    max-width: calc(100vw - 4vh);
+    max-height: calc(100vw - 4vh);
+}
+
+@media (max-width: 767px) {
+    .game_name {
+        margin: 1vh auto 4vh;
+        font-size: calc(1em + 3vh)
+    }
+
+    .rules_item {
+        font-size: calc(3vw);
+    }
+
+    .zuma_rules h2 {
+        font-size: calc(1em);
+    }
+}
+
+.hidden {
+    display: none /*!important*/
+}

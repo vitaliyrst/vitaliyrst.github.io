@@ -3,8 +3,8 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>Zuma</title>
-    <link rel="stylesheet" href="style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <section class="menu-container">
@@ -38,36 +38,10 @@
 </div>
     <!--<button style="position: absolute; top: 200px; left: 200px" class="main-music"> музыка</button>-->
     <div class="zuma-container">
-        <canvas id="zuma-canvas" width="800" height="600"></canvas>
+        <canvas id="zuma-canvas" width="1138" height="768"></canvas>
     </div>
 <script type="module" src="app.js"></script>
 <script>
-    function resizeGame() {
-        let gameArea = document.querySelector('.zuma-container');
-        let newWidth = innerWidth;
-        let newHeight = innerHeight;
-        console.log(newWidth , newHeight)
-        let gameCanvas = document.getElementById('zuma-canvas');
-        if (newHeight >= 700 && newHeight <= 800 && newWidth >= 800 && newWidth <= 900) {
-
-            gameCanvas.width = 700;
-            gameCanvas.height = 526;
-        } else if(newHeight >= 800 && newWidth >= 900) {
-            console.log(1)
-            gameCanvas.width = 800;
-            gameCanvas.height = 600;
-        }
-
-        /*gameArea.style.marginTop = (-newHeight / 2) + 'px';
-        gameArea.style.marginLeft = (-newWidth / 2) + 'px';*/
-
-        /*let gameCanvas = document.getElementById('zuma-canvas');
-        gameCanvas.width = newWidth;
-        gameCanvas.height = newHeight;*/
-    }
-
-    window.addEventListener('resize', resizeGame, false);
-    window.addEventListener('orientationchange', resizeGame, false);
 
     /*
         window.onhashchange = function () {
