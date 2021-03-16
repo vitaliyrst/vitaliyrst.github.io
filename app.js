@@ -15,11 +15,24 @@ fetch('https://vitaliyrst.github.io/images.json', {
         return response.json()
     })
     .then((data) => {
+        setTimeout(() => {
+
+        }, 2000);
         data.forEach(function (value) {
-            console.log(value)
-let image = new Image();
-image.src = value;
+            let image = new Image();
+            image.src = value;
+
         })
+    })
+    .then(() => {
+        let oldHash = window.location.hash;
+
+        if (oldHash) {
+            location.hash = oldHash.substr(1);
+        } else {
+            location.hash = 'Menu';
+        }
+
     })
 
 
@@ -107,10 +120,6 @@ function run() {
     window.requestAnimationFrame(work);
 }
 
-setTimeout(() => {
-    switchToMenuPage('Menu')
-}, 2000);
-
 let logo = document.querySelector('.game_name');
 logo.addEventListener('click', (eo) => {
     switchToMenuPage('Menu');
@@ -171,7 +180,7 @@ let spaState = {};
 
 function switchToStateFromURLHash() {
     let URLHash = window.location.hash;
-    console.log(URLHash)
+
     let state = URLHash.substr(1);
     if (state !== '') {
         let parts = state.split("_");
