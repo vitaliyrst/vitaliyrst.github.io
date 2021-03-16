@@ -5,7 +5,10 @@ import {FrogController} from "./controller/FrogController.js";
 import {Path} from "./classes/Path.js";
 import {FrogView} from "./view/FrogView.js";
 
-function run () {
+fetch('')
+
+
+function run() {
     let game = new GameModel();
     game.createCanvas();
 
@@ -21,13 +24,13 @@ function run () {
             }
         });*/
 
-
     let frog = new FrogModel();
     let frogView = new FrogView(frog);
-    let frogController = new FrogController(frog,frogView);
+    let frogController = new FrogController(frog, frogView);
 
     let balls = [];
     let ballView;
+
     function getBall() {
         let ball = new BallModel(getPath);
         ball.init(0);
@@ -62,7 +65,7 @@ function run () {
                     ball.color = frog.bulletColor;
                     for (let j = 0; j < i; j++) {
                         setTimeout(() => {
-                            balls[j].speed +=  2;
+                            balls[j].speed += 2;
                             setTimeout(() => {
                                 balls[j].speed = 1;
                             }, 130)
@@ -85,12 +88,9 @@ function run () {
         }
         window.requestAnimationFrame(work);
     }
+
     window.requestAnimationFrame(work);
 }
-
-
-
-location.hash = '';
 
 setTimeout(() => {
     switchToMenuPage('Menu')
@@ -98,7 +98,6 @@ setTimeout(() => {
 
 let logo = document.querySelector('.game_name');
 logo.addEventListener('click', (eo) => {
-    eo.preventDefault();
     switchToMenuPage('Menu');
 });
 
@@ -157,13 +156,14 @@ let spaState = {};
 
 function switchToStateFromURLHash() {
     let URLHash = window.location.hash;
+    console.log(URLHash)
     let state = URLHash.substr(1);
-
     if (state !== '') {
         let parts = state.split("_");
-        spaState = {pageName: parts[0]}; // первая часть закладки - номер страницы
+        spaState = {pageName: parts[0]};
+
     } else {
-        spaState = {pageName: 'Load'}; // иначе показываем главную страницу
+        spaState = {pageName: 'Load'};
     }
 
     let loading = document.querySelector('.loading_container');
@@ -176,50 +176,59 @@ function switchToStateFromURLHash() {
 
     switch (spaState.pageName) {
         case 'Load':
-            loading.classList.remove('hidden');
             menu.classList.add('hidden');
+            game.classList.add('hidden');
             records.classList.add('hidden');
             rules.classList.add('hidden');
             about.classList.add('hidden');
-            game.classList.add('hidden');
+            name.classList.remove('hidden');
+            loading.classList.remove('hidden');
             break;
         case 'Menu':
+            console.log(1111);
             loading.classList.add('hidden');
-            menu.classList.remove('hidden');
+            game.classList.add('hidden');
             records.classList.add('hidden');
             rules.classList.add('hidden');
             about.classList.add('hidden');
-            game.classList.add('hidden');
+            menu.classList.remove('hidden');
+            name.classList.remove('hidden');
             break;
         case 'Game':
+            loading.classList.add('hidden');
             menu.classList.add('hidden');
             records.classList.add('hidden');
             rules.classList.add('hidden');
             about.classList.add('hidden');
             name.classList.add('hidden');
             game.classList.remove('hidden');
-
             break;
         case 'Records':
+            loading.classList.add('hidden');
             menu.classList.add('hidden');
-            records.classList.remove('hidden');
+            game.classList.add('hidden');
             rules.classList.add('hidden');
             about.classList.add('hidden');
-            game.classList.add('hidden');
+            name.classList.remove('hidden');
+            records.classList.remove('hidden');
             break;
         case 'Rules':
+            loading.classList.add('hidden');
             menu.classList.add('hidden');
-            records.classList.add('hidden');
-            rules.classList.remove('hidden');
-            about.classList.add('hidden');
             game.classList.add('hidden');
+            records.classList.add('hidden');
+            about.classList.add('hidden');
+            name.classList.remove('hidden');
+            rules.classList.remove('hidden');
             break;
         case 'About':
+            loading.classList.add('hidden');
             menu.classList.add('hidden');
+            game.classList.add('hidden');
             records.classList.add('hidden');
             rules.classList.add('hidden');
+            name.classList.remove('hidden');
             about.classList.remove('hidden');
-            game.classList.add('hidden');
             break;
     }
 }
@@ -229,23 +238,24 @@ function switchToState(newState) {
 }
 
 function switchToMenuPage() {
-    switchToState( { pageName:'Menu' } );
+    switchToState({pageName: 'Menu'});
 }
 
 function switchToGamePage() {
-    switchToState( { pageName:'Game'} );
+    switchToState({pageName: 'Game'});
 }
 
 function switchToRecordsPage() {
-    switchToState( { pageName:'Records'} );
+    switchToState({pageName: 'Records'});
 }
 
 function switchToRulesPage() {
-    switchToState( { pageName:'Rules'} );
+    switchToState({pageName: 'Rules'});
 }
 
 function switchToAboutPage() {
-    switchToState( { pageName:'About' } );
+    switchToState({pageName: 'About'});
 }
+
 
 switchToStateFromURLHash();
