@@ -1,106 +1,110 @@
 <!DOCTYPE html>
-<html>
-<head lang="en">
+<html lang="en">
+<head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zuma</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<section class="menu-container">
-    <ul class="menu-list">
-        <li class="menu-item">
-            <div><a href="#home">На главную</a></div>
-        </li>
-        <li class="menu-item">
-            <div><a class="play-button" href="#game">Играть</a></div>
-        </li>
-        <li class="menu-item">
-            <div><a href="#rules">Правила</a></div>
-        </li>
-        <li class="menu-item">
-            <div><a href="#records">Рекорды</a></div>
-        </li>
-        <li class="menu-item">
-            <div><a href="#about">О проекте</a></div>
-        </li>
-    </ul>
-</section>
-
-<div id="app">
-    <!--<div class="level-setting" hidden>
-        <div><button type="button" value="1">LEVEL 1</button></div>
-        <div><button type="button" value="2">LEVEL 2</button></div>
-        <div><button type="button" value="3">LEVEL 3</button></div>
-    </div>-->
-
-
-</div>
-    <!--<button style="position: absolute; top: 200px; left: 200px" class="main-music"> музыка</button>-->
-    <div class="zuma-container">
-        <canvas id="zuma-canvas" width="1138" height="768"></canvas>
+<section class="game">
+    <div class="main_game_container">
+        <h1 class="game_name">ZUMA</h1>
+        <div class="loading_container">
+            <div class="loading_blue_ball"></div>
+            <div class="loading_green_ball"></div>
+            <div class="loading_purple_ball"></div>
+            <div class="loading_yellow_ball"></div>
+            <div class="loading_white_ball"></div>
+            <div class="loading_red_ball"></div>
+        </div>
+        <div class="main_menu hidden">
+            <form class="game_player" name="formName">
+                <input type="text" name="name" maxlength="30" placeholder="Введите имя...">
+            </form>
+            <div class="menu menu_game">
+                <div>
+                    <button class="game_button">Играть</button>
+                </div>
+            </div>
+            <div class="menu menu_records">
+                <div>
+                    <button class="records_button">Рекорды</button>
+                </div>
+            </div>
+            <div class="menu menu_rules">
+                <div>
+                    <button class="rules_button">Правила</button>
+                </div>
+            </div>
+            <div class="menu menu_about">
+                <div>
+                    <button class="about_button">О проекте</button>
+                </div>
+            </div>
+            <div class="main_social">
+                <button class="social_button social_button_github"
+                        onclick="location.href = 'https://www.linkedin.com/in/vitaliy-klubkou/'
+                        "></button>
+                <button class="social_button social_button_linkedin"
+                        onclick="location.href = 'https://github.com/vitaliyrst'"></button>
+                <button class="social_button social_button_sound"></button>
+            </div>
+        </div>
+        <div class="zuma_game hidden">
+            <div class="zuma_field">
+                <canvas id="canvas" width="1138" height="768"></canvas>
+            </div>
+        </div>
+        <div class="zuma_records hidden">
+            <table class="records_table">
+                <tbody>
+                <tr>ТОП 5 ИГРОКОВ:</tr>
+                <tr>
+                    <td>Ваш рекорд</td>
+                    <td>100</td>
+                </tr>
+                <tr>
+                    <td>Алексей</td>
+                    <td>1500</td>
+                </tr>
+                <tr>
+                    <td>Николай</td>
+                    <td>1300</td>
+                </tr>
+                <tr>
+                    <td>Петр</td>
+                    <td>1150</td>
+                </tr>
+                <tr>
+                    <td>Виталий</td>
+                    <td>1000</td>
+                </tr>
+                <tr>
+                    <td>Александр</td>
+                    <td>800</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="zuma_rules hidden">
+            <h2>ПРАВИЛА:</h2>
+            <ul class="rules_list">
+                <li class="rules_item">Цель игры сбить как можно больше шаров</li>
+                <li class="rules_item">При сбивании 3 и более шаров возрастает количество получаемых очков</li>
+                <li class="rules_item">Если шары дойдут до черепа, Вы проиграли</li>
+            </ul>
+        </div>
+        <div class="zuma_about hidden">
+            <h2>Zuma Project</h2>
+            <ul class="about_list">
+                <li class="about_item">Анимации: css, canvas</li>
+                <li class="about_item">ООП</li>
+                <li class="about_item">MVC</li>
+            </ul>
+        </div>
     </div>
+</section>
 <script type="module" src="app.js"></script>
-<script>
-    location.hash = '';
-
-    setTimeout(() => {
-        switchToMenuPage('Menu')
-    }, 2000);
-
-    let logo = document.querySelector('.game_name');
-    logo.addEventListener('click', (eo) => {
-        eo.preventDefault();
-        switchToMenuPage('Menu');
-    });
-
-    let buttonGame = document.querySelector('.game_button');
-    buttonGame.addEventListener('click', () => {
-        switchToGamePage('Game');
-    });
-
-    let buttonRecords = document.querySelector('.records_button');
-    buttonRecords.addEventListener('click', () => {
-        switchToRecordsPage('Records');
-    });
-
-    let buttonRules = document.querySelector('.rules_button');
-    buttonRules.addEventListener('click', () => {
-        switchToRulesPage('Rules');
-    });
-
-    let buttonAbout = document.querySelector('.about_button');
-    buttonAbout.addEventListener('click', () => {
-        switchToAboutPage('About');
-    });
-
-
-    window.addEventListener('resize', resize);
-
-    function resize() {
-        let container = document.querySelector('.zuma_field');
-        let offsetWidth = container.clientWidth;
-        let offsetHeight = container.clientHeight;
-
-        let canvas = document.getElementById('canvas');
-        let canvasRatio = 384 / 569;
-        let windowRatio = (offsetWidth > offsetHeight) ? offsetHeight / offsetWidth : offsetWidth / offsetHeight;
-
-        let width;
-        let height;
-
-        if (windowRatio < canvasRatio) {
-            height = offsetHeight;
-            width = height / canvasRatio;
-        } else {
-
-            width = offsetWidth;
-            height = width * canvasRatio;
-        }
-
-        canvas.width = width;
-        canvas.height = height;
-    }
-</script>
 </body>
 </html>

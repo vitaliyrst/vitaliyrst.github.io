@@ -15,7 +15,7 @@ class GameModel {
         this.pointsPath = this.data.pointsPath;
         this.ballRadius = this.data.ballRadius;
         this.bulletRadius = this.data.bulletRadius;
-        this.context = document.getElementById('zuma-canvas').getContext('2d');
+        this.context = document.getElementById('canvas').getContext('2d');
     }
 
     createCanvas() {

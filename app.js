@@ -3,27 +3,23 @@ import {BallModel} from "./model/BallModel.js";
 import {FrogModel} from "./model/FrogModel.js";
 import {FrogController} from "./controller/FrogController.js";
 import {Path} from "./classes/Path.js";
-import {MainModel} from "./model/MainModel.js";
 import {FrogView} from "./view/FrogView.js";
-import {Route} from "./classes/Route.js";
-import {Router} from "./classes/Router.js";
 
-console.log(innerHeight)
+function run () {
     let game = new GameModel();
     game.createCanvas();
 
     let path = new Path();
     let getPath = path.getPath();
-console.log(getPath)
-/*    let mainMusic = new Audio();
-    mainMusic.src = './storage/sounds/main.mp3';
+    /*    let mainMusic = new Audio();
+        mainMusic.src = './storage/sounds/main.mp3';
 
-    let buttonMusic = document.querySelector('.main-music');
-    buttonMusic.addEventListener('click', eo => {
-        if (eo.target) {
-            mainMusic.play();
-        }
-    });*/
+        let buttonMusic = document.querySelector('.main-music');
+        buttonMusic.addEventListener('click', eo => {
+            if (eo.target) {
+                mainMusic.play();
+            }
+        });*/
 
 
     let frog = new FrogModel();
@@ -90,20 +86,70 @@ console.log(getPath)
         window.requestAnimationFrame(work);
     }
     window.requestAnimationFrame(work);
-
-/*
-function init() {
-    new Router([
-        new Route('home', 'home.html'),
-        new Route('about', 'about.html'),
-        new Route('rules', 'rules.html'),
-        new Route('records', 'records.html'),
-        new Route('game', 'game.html', true),
-    ]);
 }
 
-init();*/
 
+
+location.hash = '';
+
+setTimeout(() => {
+    switchToMenuPage('Menu')
+}, 2000);
+
+let logo = document.querySelector('.game_name');
+logo.addEventListener('click', (eo) => {
+    eo.preventDefault();
+    switchToMenuPage('Menu');
+});
+
+let buttonGame = document.querySelector('.game_button');
+buttonGame.addEventListener('click', () => {
+    switchToGamePage('Game');
+    run();
+});
+
+let buttonRecords = document.querySelector('.records_button');
+buttonRecords.addEventListener('click', () => {
+    switchToRecordsPage('Records');
+});
+
+let buttonRules = document.querySelector('.rules_button');
+buttonRules.addEventListener('click', () => {
+    switchToRulesPage('Rules');
+});
+
+let buttonAbout = document.querySelector('.about_button');
+buttonAbout.addEventListener('click', () => {
+    switchToAboutPage('About');
+});
+
+
+window.addEventListener('resize', resize);
+
+function resize() {
+    let container = document.querySelector('.zuma_field');
+    let offsetWidth = container.clientWidth;
+    let offsetHeight = container.clientHeight;
+
+    let canvas = document.getElementById('canvas');
+    let canvasRatio = 384 / 569;
+    let windowRatio = (offsetWidth > offsetHeight) ? offsetHeight / offsetWidth : offsetWidth / offsetHeight;
+
+    let width;
+    let height;
+
+    if (windowRatio < canvasRatio) {
+        height = offsetHeight;
+        width = height / canvasRatio;
+    } else {
+
+        width = offsetWidth;
+        height = width * canvasRatio;
+    }
+
+    canvas.width = width;
+    canvas.height = height;
+}
 
 window.addEventListener('hashchange', switchToStateFromURLHash);
 

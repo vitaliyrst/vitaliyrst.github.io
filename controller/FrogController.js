@@ -8,7 +8,7 @@ class FrogController {
     }
 
     moveFrog() {
-        let canvas = document.getElementById('zuma-canvas');
+        let canvas = document.getElementById('canvas');
         canvas.addEventListener('mousemove', (eo) => {
             let clientX = eo.clientX - canvas.getBoundingClientRect().x;
             let clientY = eo.clientY - canvas.getBoundingClientRect().y;
@@ -20,7 +20,7 @@ class FrogController {
     }
 
     moveBullet() {
-        let canvas = document.getElementById('zuma-canvas');
+        let canvas = document.getElementById('canvas');
         canvas.addEventListener('mousemove', (eo) => {
             let clientX = eo.clientX - canvas.getBoundingClientRect().x;
             let clientY = eo.clientY - canvas.getBoundingClientRect().y;
@@ -32,7 +32,7 @@ class FrogController {
     }
 
     shot() {
-        let canvas = document.getElementById('zuma-canvas');
+        let canvas = document.getElementById('canvas');
         canvas.addEventListener('click', (eo) => {
             if (!this.model.bulletState) {
                 let clientX = eo.clientX - canvas.getBoundingClientRect().x;

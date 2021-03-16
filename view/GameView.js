@@ -16,7 +16,7 @@ class GameView {
         this.frogWidth = this.data.frogWidth;
         this.frogHeight = this.data.frogHeight;
         this.ballsColor = this.data.ballsColor;
-        this.context = document.getElementById('zuma-canvas').getContext('2d');
+        this.context = document.getElementById('canvas').getContext('2d');
     }
 }
 

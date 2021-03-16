@@ -10,7 +10,7 @@ let data = {
     frogHeight: 150,
     bulletRadius: 15,
 
-    ballRadius: 17.5,
+    ballRadius: 15,
     ballsColor: ['./storage/colors/BlueBall1.jpg', './storage/colors/GreenBall1.jpg', './storage/colors/PurpleBall1.jpg',
         './storage/colors/RedBall1.jpg', './storage/colors/WhiteBall1.jpg', './storage/colors/YellowBall1.jpg'],
     pointsPath: [
