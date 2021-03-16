@@ -5,7 +5,22 @@ import {FrogController} from "./controller/FrogController.js";
 import {Path} from "./classes/Path.js";
 import {FrogView} from "./view/FrogView.js";
 
-fetch('')
+fetch('https://vitaliyrst.github.io/images.json', {
+    method: "GET",
+    headers: {
+        'Accept': 'application/json',
+    },
+})
+    .then(response => {
+        return response.json()
+    })
+    .then((data) => {
+        data.forEach(function (value) {
+            console.log(value)
+let image = new Image();
+image.src = value;
+        })
+    })
 
 
 function run() {
@@ -185,7 +200,6 @@ function switchToStateFromURLHash() {
             loading.classList.remove('hidden');
             break;
         case 'Menu':
-            console.log(1111);
             loading.classList.add('hidden');
             game.classList.add('hidden');
             records.classList.add('hidden');
