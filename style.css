@@ -144,6 +144,12 @@ a {
 
     font-weight: 300;
     cursor: pointer;
+
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
 }
 
 
@@ -299,6 +305,7 @@ a {
 }
 
 .records_table :nth-child(2) :nth-child(1n) {
+    font-size: 1.5em;
     color: red;
 }
 
@@ -405,21 +412,69 @@ a {
 
 }
 
-@media (max-width: 767px) {
+@media (max-width: 768px) {
     .game_name {
-        margin: 1vh auto 4vh;
-        font-size: calc(1em + 3vh)
+        max-height: 8vh;
+        margin-top: 8vh;
+
+        box-sizing: border-box;
+        color: darkorange;
+        text-shadow: 2px 2px 2px black;
+
+        font-size: calc(3em + 4vh);
+
+        font-weight: 300;
     }
 
-    .rules_item {
-        font-size: calc(3vw);
+    .zuma_records {
+        font-size: 1em;
+        width: 80vw;
     }
 
-    .zuma_rules h2 {
-        font-size: calc(1em);
+    .zuma_rules {
+        font-size: 1em;
+        width: 80vw;
     }
+
+    .zuma_about {
+        font-size: 1em;
+        width: 80vw;
+    }
+
+
 }
 
 .hidden {
     display: none /*!important*/
 }
+
+
+/*@media only screen and (min-width: 415px) and (max-width: 1279px) {
+    body {
+        display: none
+    }
+
+    html:before {
+        content: 'Переверните устройство в портретный режим или откройте сайт с компьютера.';
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto;
+        background: #fff;
+        z-index: 999;
+        text-align: center;
+        width: 80%;
+        height: 100px
+    }
+}*/
+
+/*
+@media all and (orientation: portrait) {
+    html,body {
+        transform: rotate(-90deg);
+        transform-origin: left top;
+        width: 100vh;
+    }
+}*/

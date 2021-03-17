@@ -5,30 +5,12 @@ import {FrogController} from "./controller/FrogController.js";
 import {Path} from "./classes/Path.js";
 import {FrogView} from "./view/FrogView.js";
 
-/*fetch('https://vitaliyrst.github.io/images.json', {
-    method: "GET",
-    headers: {
-        'Accept': 'application/json',
-    },
-})
-    .then(response => {
-        return response.json()
-    })
-    .then((data) => {
-        setTimeout(() => {
 
-        }, 2000);
-        data.forEach(function (value) {
-            let image = new Image();
-            image.src = value;
-            console.log(image);
+fetch("https://fe.it-academy.by/AjaxStringStorage2.php", requestOptions)
+    .then(response => response.text())
+    .then(result => /*console.log(result)*/ false)
+    .catch(error => console.log('error', error));
 
-        })
-    })
-    .then(() => {
-
-
-    })*/
 
 let oldHash = window.location.hash;
 
@@ -204,15 +186,6 @@ function switchToStateFromURLHash() {
     let name = document.querySelector('.game_name');
 
     switch (spaState.pageName) {
-        case 'Load':
-            menu.classList.add('hidden');
-            game.classList.add('hidden');
-            records.classList.add('hidden');
-            rules.classList.add('hidden');
-            about.classList.add('hidden');
-            name.classList.remove('hidden');
-            loading.classList.remove('hidden');
-            break;
         case 'Menu':
             loading.classList.add('hidden');
             game.classList.add('hidden');
@@ -257,6 +230,14 @@ function switchToStateFromURLHash() {
             rules.classList.add('hidden');
             name.classList.remove('hidden');
             about.classList.remove('hidden');
+            break;
+        case 'Load':
+            menu.classList.add('hidden');
+            game.classList.add('hidden');
+            records.classList.add('hidden');
+            rules.classList.add('hidden');
+            about.classList.add('hidden');
+            name.classList.remove('hidden');
             break;
     }
 }
