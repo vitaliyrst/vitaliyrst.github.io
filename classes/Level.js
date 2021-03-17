@@ -8,7 +8,6 @@ class Level {
     }
 
     getData() {
-        console.log(1);
         return this.data
     }
 
