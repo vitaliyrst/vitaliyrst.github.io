@@ -68,7 +68,8 @@ class FrogView extends GameView {
         this.context.arc(this.frogLeft + this.frogWidth / 2, this.frogTop + this.frogHeight / 2,
             this.frogWidth / 2, 0, Math.PI * 2, false);
         this.context.closePath();
-        this.context.translate(this.bulletCenterX, this.bulletCenterY);
+        this.context.translate(this.frog.bulletCenterX, this.frog.bulletCenterY);
+
         this.context.rotate(this.frog.frogAngle);
         this.context.beginPath();
         this.context.arc(0, -35, this.bulletRadius, 0, Math.PI * 2, false)

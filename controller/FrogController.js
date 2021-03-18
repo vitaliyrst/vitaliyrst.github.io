@@ -3,7 +3,6 @@ class FrogController {
         this.model = model;
         this.view = view;
         this.moveFrog();
-        this.moveBullet();
         this.shot();
     }
 
@@ -19,7 +18,7 @@ class FrogController {
         });
     }
 
-    moveBullet() {
+/*    moveBullet() {
         let canvas = document.getElementById('canvas');
         canvas.addEventListener('mousemove', (eo) => {
             let clientX = eo.clientX - canvas.getBoundingClientRect().x;
@@ -29,7 +28,7 @@ class FrogController {
                     clientY - (this.view.frogTop + this.view.frogHeight / 2));
             }
         });
-    }
+    }*/
 
     shot() {
         let canvas = document.getElementById('canvas');

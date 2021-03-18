@@ -4,24 +4,7 @@ import {FrogModel} from "./model/FrogModel.js";
 import {FrogController} from "./controller/FrogController.js";
 import {Path} from "./classes/Path.js";
 import {FrogView} from "./view/FrogView.js";
-
-
-/*fetch("https://fe.it-academy.by/AjaxStringStorage2.php", requestOptions)
-    .then(response => response.text())
-    .then(result => console.log(result))
-    .catch(error => console.log('error', error));*/
-
-
-let oldHash = window.location.hash;
-
-if (oldHash) {
-    console.log(oldHash)
-    location.hash = oldHash.substr(1);
-} else {
-    location.hash = 'Menu';
-}
-
-let game = new GameModel();
+import {GameController} from "./controller/GameController.js";
 
 let mainMusic = new Audio();
 mainMusic.src = './storage/sounds/main.mp3';
@@ -33,17 +16,26 @@ buttonMusic.addEventListener('click', eo => {
     }
 });
 
+
 function run() {
 
+    let game = new GameModel();
+    let gameController = new GameController(game);
+    gameController.init();
+    window.addEventListener('resize', () => {
+        setTimeout(() => {
+            gameController.resize();
+        }, 500);
+    });
     game.createCanvas();
 
     let path = new Path();
     let getPath = path.getPath();
 
 
-    /*let frog = new FrogModel();
+    let frog = new FrogModel();
     let frogView = new FrogView(frog);
-    let frogController = new FrogController(frog, frogView);*/
+    let frogController = new FrogController(frog, frogView);
 
     let balls = [];
     let ballView;
@@ -51,6 +43,7 @@ function run() {
     function getBall() {
         let ball = new BallModel(getPath);
         ball.init(0);
+        gameController.balls.push(ball);
         balls.push(ball);
     }
 
@@ -58,7 +51,7 @@ function run() {
 
     function work() {
         game.updateCanvas();
-        /*frogController.draw();*/
+        frogController.draw();
 
         for (let i = 0; i < balls.length; i++) {
             if (balls[balls.length - 1].pathSection === 16 && balls.length < 50) {
@@ -109,6 +102,16 @@ function run() {
     window.requestAnimationFrame(work);
 }
 
+
+let oldHash = window.location.hash;
+
+if (oldHash && oldHash === 'Game') {
+    console.log(1);
+    location.hash = oldHash.substr(1);
+} else {
+    location.hash = 'Menu';
+}
+
 let logo = document.querySelector('.game_name');
 logo.addEventListener('click', (eo) => {
     switchToMenuPage('Menu');
@@ -134,35 +137,6 @@ let buttonAbout = document.querySelector('.about_button');
 buttonAbout.addEventListener('click', () => {
     switchToAboutPage('About');
 });
-
-
-window.addEventListener('resize', resize);
-
-function resize() {
-    let container = document.querySelector('.zuma_field');
-    let offsetWidth = container.clientWidth;
-    let offsetHeight = container.clientHeight;
-
-    let canvas = document.getElementById('canvas');
-    let canvasRatio = 384 / 569;
-    let windowRatio = (offsetWidth > offsetHeight) ? offsetHeight / offsetWidth : offsetWidth / offsetHeight;
-
-    let width;
-    let height;
-
-    if (windowRatio < canvasRatio) {
-        height = offsetHeight;
-        width = height / canvasRatio;
-    } else {
-
-        width = offsetWidth;
-        height = width * canvasRatio;
-    }
-    canvas.width = width;
-    canvas.height = height
-    game.canvasWidth = width;
-    game.canvasHeight = height;
-}
 
 window.addEventListener('hashchange', switchToStateFromURLHash);
 

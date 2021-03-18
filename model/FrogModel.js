@@ -5,8 +5,8 @@ class FrogModel extends GameModel {
         super();
         this.frogAngle = 0;
         this.bulletSpeed = 0;
-        this.bulletCenterX = 408;
-        this.bulletCenterY = 290;
+        this.bulletCenterX = 506;
+        this.bulletCenterY = 323;
         this.bulletAngle = 0;
         this.bulletState = 0;
     }
@@ -20,8 +20,8 @@ class FrogModel extends GameModel {
         this.bulletAngle = this.frogAngle;
         this.bulletSpeed = 0;
         this.bulletState = 0;
-        this.bulletCenterX = 408;
-        this.bulletCenterY = 290;
+        this.bulletCenterX = 506;
+        this.bulletCenterY = 323;
     }
 }
 

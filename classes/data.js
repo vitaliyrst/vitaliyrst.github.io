@@ -4,13 +4,13 @@ let data = {
     canvasWidth: 1138,
     canvasHeight: 768,
 
-    frogLeft: 333,
-    frogTop: 215,
+    frogLeft: 430,
+    frogTop: 250,
     frogWidth: 150,
     frogHeight: 150,
     bulletRadius: 15,
 
-    ballRadius: 15,
+    ballRadius: 20,
     ballsColor: ['./storage/colors/BlueBall1.jpg', './storage/colors/GreenBall1.jpg', './storage/colors/PurpleBall1.jpg',
         './storage/colors/RedBall1.jpg', './storage/colors/WhiteBall1.jpg', './storage/colors/YellowBall1.jpg'],
     pointsPath: [

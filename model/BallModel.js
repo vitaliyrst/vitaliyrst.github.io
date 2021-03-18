@@ -15,15 +15,9 @@ class BallModel extends GameModel {
         this.color = 0;
         this.path = path;
         this.pathSection = 0;
-        this.radius = 15;
-        this.angle = 0;
-        this.moved = 0;
         this.speed = 1;
         this.getRandomColor(this.ballsColor);
-    }
-
-    getPathSection() {
-        return this.pathSection;
+        this.ballRadius = 15;
     }
 
     init(point) {
@@ -68,7 +62,6 @@ class BallModel extends GameModel {
     draw() {
         let ballImage = new Image();
         ballImage.src = this.color;
-
         this.context.save();
         this.context.beginPath();
         this.context.arc(this.x, this.y, this.ballRadius, 0, Math.PI * 2, false);
