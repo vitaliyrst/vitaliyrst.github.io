@@ -10,12 +10,9 @@ class GameController {
         this.frog = frog;
         this.balls = [];
         this.ratio = 384 / 569;
-        this.ballRadius = null;
-
-        this.init();
     }
 
-    init() {
+    /*init() {
         let canvasWidth = (innerWidth < 569) ? 569 :
             (innerWidth > 1138 && innerHeight > 768) ? 1138 :
                 (innerWidth > 1138 && innerHeight < 384) ? 384 / this.ratio :
@@ -35,7 +32,7 @@ class GameController {
                                     innerWidth * this.ratio;
 
         this.game.update(canvasWidth, canvasHeight);
-    }
+    }*/
 
     resize() {
         let container = document.querySelector('.zuma_field');

@@ -10,9 +10,9 @@ class FrogView extends GameView {
     spriteHeight = 180;
     rowCount = 0;*/
 
-    constructor(frog) {
+    constructor(model) {
         super();
-        this.frog = frog;
+        this.model = model;
         this.color = 0;
         this.colors = this.data.ballsColor;
         this.getRandomColor();
@@ -28,13 +28,24 @@ class FrogView extends GameView {
         frogImage.src = './storage/frog/frog.gif';
         this.context.save();
         this.context.beginPath();
-        this.context.arc(this.frogLeft + this.frogWidth / 2, this.frogTop + this.frogHeight / 2,
-            this.frogWidth / 2, 0, Math.PI * 2, false);
+        this.context.arc(
+            this.model.frogLeft + this.model.frogWidth / 2,
+            this.model.frogTop + this.model.frogHeight / 2,
+            this.model.frogWidth / 2, 0, Math.PI * 2, false
+        );
         this.context.closePath();
         this.context.clip();
-        this.context.translate(this.frogLeft + this.frogWidth / 2, this.frogTop + this.frogHeight / 2);
-        this.context.rotate(this.frog.frogAngle);
-        this.context.drawImage(frogImage, -this.frogWidth / 2, -this.frogHeight / 2, this.frogWidth, this.frogHeight);
+        this.context.translate(
+            this.model.frogLeft + this.model.frogWidth / 2,
+            this.model.frogTop + this.model.frogHeight / 2
+        );
+        this.context.rotate(this.model.frogAngle);
+        this.context.drawImage(
+            frogImage,
+            -this.model.frogWidth / 2,
+            -this.model.frogHeight / 2, this.model.frogWidth,
+            this.model.frogHeight
+        );
         this.context.restore();
     }
 
@@ -65,14 +76,17 @@ class FrogView extends GameView {
         bulletImage.src = this.color;
         this.context.save();
         this.context.beginPath();
-        this.context.arc(this.frogLeft + this.frogWidth / 2, this.frogTop + this.frogHeight / 2,
-            this.frogWidth / 2, 0, Math.PI * 2, false);
+        this.context.arc(
+            this.model.frogLeft + this.model.frogWidth / 2,
+            this.model.frogTop + this.model.frogHeight / 2,
+            this.model.frogWidth / 2, 0, Math.PI * 2, false
+        );
         this.context.closePath();
-        this.context.translate(this.frog.bulletCenterX, this.frog.bulletCenterY);
+        this.context.translate(this.model.bulletCenterX, this.model.bulletCenterY);
 
-        this.context.rotate(this.frog.frogAngle);
+        this.context.rotate(this.model.frogAngle);
         this.context.beginPath();
-        this.context.arc(0, -35, this.bulletRadius, 0, Math.PI * 2, false)
+        this.context.arc(0, -35, this.model.bulletRadius, 0, Math.PI * 2, false)
         this.context.closePath();
         this.context.clip();
 

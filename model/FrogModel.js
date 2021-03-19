@@ -9,6 +9,10 @@ class FrogModel extends GameModel {
         this.bulletCenterY = 323;
         this.bulletAngle = 0;
         this.bulletState = 0;
+        this.frogWidth = this.frog.width;
+        this.frogHeight = this.frog.height;
+        this.frogLeft = this.frog.left;
+        this.frogTop = this.frog.top;
     }
 
     updateBullet() {

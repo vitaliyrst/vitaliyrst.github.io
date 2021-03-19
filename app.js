@@ -5,8 +5,12 @@ import {FrogController} from "./controller/FrogController.js";
 import {Path} from "./classes/Path.js";
 import {FrogView} from "./view/FrogView.js";
 import {GameController} from "./controller/GameController.js";
+import {Spa} from "./classes/Spa.js";
 
-let mainMusic = new Audio();
+let spa = new Spa()
+spa.run(run);
+
+/*let mainMusic = new Audio();
 mainMusic.src = './storage/sounds/main.mp3';
 
 let buttonMusic = document.querySelector('.game_button');
@@ -14,23 +18,21 @@ buttonMusic.addEventListener('click', eo => {
     if (eo.target) {
         mainMusic.play();
     }
-});
+});*/
+
 
 
 function run() {
 
     let game = new GameModel();
     let gameController = new GameController(game);
-    gameController.init();
+
     window.addEventListener('resize', () => {
         setTimeout(() => {
             gameController.resize();
         }, 500);
     });
     game.createCanvas();
-
-    let path = new Path();
-    let getPath = path.getPath();
 
 
     let frog = new FrogModel();
@@ -41,8 +43,7 @@ function run() {
     let ballView;
 
     function getBall() {
-        let ball = new BallModel(getPath);
-        ball.init(0);
+        let ball = new BallModel();
         gameController.balls.push(ball);
         balls.push(ball);
     }
@@ -54,7 +55,7 @@ function run() {
         frogController.draw();
 
         for (let i = 0; i < balls.length; i++) {
-            if (balls[balls.length - 1].pathSection === 16 && balls.length < 50) {
+            if (balls[balls.length - 1].pathSection === 18 && balls.length < 50) {
                 getBall();
             }
 
@@ -101,147 +102,3 @@ function run() {
 
     window.requestAnimationFrame(work);
 }
-
-
-let oldHash = window.location.hash;
-
-if (oldHash && oldHash === 'Game') {
-    console.log(1);
-    location.hash = oldHash.substr(1);
-} else {
-    location.hash = 'Menu';
-}
-
-let logo = document.querySelector('.game_name');
-logo.addEventListener('click', (eo) => {
-    switchToMenuPage('Menu');
-});
-
-let buttonGame = document.querySelector('.game_button');
-buttonGame.addEventListener('click', () => {
-    switchToGamePage('Game');
-    run();
-});
-
-let buttonRecords = document.querySelector('.records_button');
-buttonRecords.addEventListener('click', () => {
-    switchToRecordsPage('Records');
-});
-
-let buttonRules = document.querySelector('.rules_button');
-buttonRules.addEventListener('click', () => {
-    switchToRulesPage('Rules');
-});
-
-let buttonAbout = document.querySelector('.about_button');
-buttonAbout.addEventListener('click', () => {
-    switchToAboutPage('About');
-});
-
-window.addEventListener('hashchange', switchToStateFromURLHash);
-
-let spaState = {};
-
-function switchToStateFromURLHash() {
-    let URLHash = window.location.hash;
-
-    let state = URLHash.substr(1);
-    if (state !== '') {
-        let parts = state.split("_");
-        spaState = {pageName: parts[0]};
-
-    } else {
-        spaState = {pageName: 'Load'};
-    }
-
-    let loading = document.querySelector('.loading_container');
-    let menu = document.querySelector('.main_menu');
-    let records = document.querySelector('.zuma_records');
-    let rules = document.querySelector('.zuma_rules');
-    let about = document.querySelector('.zuma_about');
-    let game = document.querySelector('.zuma_game');
-    let name = document.querySelector('.game_name');
-
-    switch (spaState.pageName) {
-        case 'Menu':
-            loading.classList.add('hidden');
-            game.classList.add('hidden');
-            records.classList.add('hidden');
-            rules.classList.add('hidden');
-            about.classList.add('hidden');
-            menu.classList.remove('hidden');
-            name.classList.remove('hidden');
-            break;
-        case 'Game':
-            loading.classList.add('hidden');
-            menu.classList.add('hidden');
-            records.classList.add('hidden');
-            rules.classList.add('hidden');
-            about.classList.add('hidden');
-            name.classList.add('hidden');
-            game.classList.remove('hidden');
-            break;
-        case 'Records':
-            loading.classList.add('hidden');
-            menu.classList.add('hidden');
-            game.classList.add('hidden');
-            rules.classList.add('hidden');
-            about.classList.add('hidden');
-            name.classList.remove('hidden');
-            records.classList.remove('hidden');
-            break;
-        case 'Rules':
-            loading.classList.add('hidden');
-            menu.classList.add('hidden');
-            game.classList.add('hidden');
-            records.classList.add('hidden');
-            about.classList.add('hidden');
-            name.classList.remove('hidden');
-            rules.classList.remove('hidden');
-            break;
-        case 'About':
-            loading.classList.add('hidden');
-            menu.classList.add('hidden');
-            game.classList.add('hidden');
-            records.classList.add('hidden');
-            rules.classList.add('hidden');
-            name.classList.remove('hidden');
-            about.classList.remove('hidden');
-            break;
-        case 'Load':
-            menu.classList.add('hidden');
-            game.classList.add('hidden');
-            records.classList.add('hidden');
-            rules.classList.add('hidden');
-            about.classList.add('hidden');
-            name.classList.remove('hidden');
-            break;
-    }
-}
-
-function switchToState(newState) {
-    location.hash = newState.pageName;
-}
-
-function switchToMenuPage() {
-    switchToState({pageName: 'Menu'});
-}
-
-function switchToGamePage() {
-    switchToState({pageName: 'Game'});
-}
-
-function switchToRecordsPage() {
-    switchToState({pageName: 'Records'});
-}
-
-function switchToRulesPage() {
-    switchToState({pageName: 'Rules'});
-}
-
-function switchToAboutPage() {
-    switchToState({pageName: 'About'});
-}
-
-
-switchToStateFromURLHash();

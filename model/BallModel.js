@@ -6,26 +6,17 @@ class BallModel extends GameModel {
     numberOfCols = 6;
     tickPerFrame = 1;
     tickCount = 0;
-    spriteWidth = 300;
-    spriteHeight = 180;
+    spriteWidth = /*this.ballRadius * 2 * 10*/ 300;
+    spriteHeight = /*this.ballRadius * 2 * 6*/ 180;
     rowCount = 0;
 
-    constructor(path) {
+    constructor() {
         super();
         this.color = 0;
-        this.path = path;
         this.pathSection = 0;
-        this.speed = 1;
+        this.speed = 2;
         this.getRandomColor(this.ballsColor);
-        this.ballRadius = 15;
     }
-
-    init(point) {
-        this.x = this.path[point].x;
-        this.y = this.path[point].y;
-        this.pathSection = point;
-    }
-
 
     setPosition(x, y) {
         this.x = x;
@@ -38,13 +29,15 @@ class BallModel extends GameModel {
     }
 
     animateColor(image) {
+
         this.context.translate(this.x - this.ballRadius, this.y - this.ballRadius);
-        this.context.drawImage(image,
-            this.frame * this.spriteWidth / this.numberOfRows,
-            this.rowCount * this.spriteHeight / this.numberOfCols,
+        this.context.drawImage(
+            image,
+            this.frame * this.spriteWidth / this.numberOfRows, this.rowCount * this.spriteHeight / this.numberOfCols,
             this.spriteWidth / this.numberOfRows, this.spriteHeight,
             0, 0,
-            this.spriteWidth / this.numberOfRows, this.spriteHeight);
+            this.ballRadius * 2 * 10 / this.numberOfRows, this.ballRadius * 2 * 6
+        );
 
         if (this.tickCount > this.tickPerFrame) {
             this.tickCount = 0;
@@ -74,15 +67,11 @@ class BallModel extends GameModel {
         this.context.restore();
     }
 
-    updatePathSection(tick) {
-        this.pathSection += tick;
-    }
-
     update() {
         if (this.pathSection >= this.path.length) {
-
-            this.setPosition(this.path[this.pathSection].x, this.path[this.pathSection].y);
             this.pathSection = 0;
+            this.setPosition(this.path[this.pathSection].x, this.path[this.pathSection].y);
+
         }
         this.x = this.path[this.pathSection].x;
         this.y = this.path[this.pathSection].y;
