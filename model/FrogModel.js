@@ -27,7 +27,7 @@ class FrogModel extends GameModel {
 
     updateBulletAngle(x, y) {
         this.bulletAngle = Math.atan2(
-            (x - (this.bulletLeft + this.ballRadius)),
+            -(x - (this.bulletLeft + this.ballRadius)),
             y - (this.bulletTop + this.ballRadius)
         );
     }

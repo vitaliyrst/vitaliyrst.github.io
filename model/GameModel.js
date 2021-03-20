@@ -7,10 +7,11 @@ class GameModel {
 
     constructor() {
         this.settings = new Level(1);
-        this.path = this.settings.getPath();
+
         this.data = this.settings.getData();
         this.ratio = 384 / 569;
         this.setCanvasSize();
+        this.path = this.setPath();
         this.ballRadius = this.setBallRadius();
         this.bullet = this.setBulletSize();
         this.frog = this.setFrogSize();
@@ -60,8 +61,8 @@ class GameModel {
     setBulletSize() {
         return {
             radius: this.canvasWidth / 65,
-            left: this.canvasWidth/ this.data.offsetBulletLeft,
-            top: this.canvasHeight/ this.data.offsetBulletTop,
+            left: this.canvasWidth / this.data.offsetBulletLeft,
+            top: this.canvasHeight / this.data.offsetBulletTop,
         }
     }
 
@@ -74,7 +75,17 @@ class GameModel {
         };
     }
 
+    setPath() {
+        let path = this.settings.getPath();
 
+        let ratioW = this.canvasWidth / 1138;
+        let ratioH = this.canvasHeight / 768;
+        let newPath = [];
+        for (let i = 0; i < path.length; i++) {
+            newPath.push({x: path[i].x * ratioW, y: path[i].y * ratioH});
+        }
+        return newPath;
+    }
 
     updateCanvasSize(width, height) {
         this.canvasWidth = width;

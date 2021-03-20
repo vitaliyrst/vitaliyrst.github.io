@@ -18,9 +18,9 @@ class FrogController {
         canvas.addEventListener('mousemove', (eo) => {
             let clientX = eo.clientX - canvas.getBoundingClientRect().x;
             let clientY = eo.clientY - canvas.getBoundingClientRect().y;
-            console.log(clientX)
+
             this.model.updateFrogAngle(clientX, clientY);
-            if (!this.model.bulletState) {
+            if (this.model.bulletState === 0) {
                 this.model.updateBulletAngle(clientX, clientY);
             }
         });

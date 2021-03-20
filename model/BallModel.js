@@ -28,6 +28,18 @@ class BallModel extends GameModel {
         this.color = colors[randomColor];
     }
 
+    updatePath() {
+        let path = this.path;
+
+        let ratioW = this.canvasWidth / 1138;
+        let ratioH = this.canvasHeight / 768;
+        let newPath = [];
+        for (let i = 0; i < path.length; i++) {
+            newPath.push({x: path[i].x * ratioW, y: path[i].y * ratioH});
+        }
+        return newPath;
+    }
+
     animateColor(image) {
 
         this.context.translate(this.x - this.ballRadius, this.y - this.ballRadius);

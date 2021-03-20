@@ -93,7 +93,7 @@ class FrogView extends GameView {
             this.model.frogLeft + this.model.frogWidth / 2,
             this.model.frogTop + this.model.frogHeight / 2
         );
-        this.context.rotate(this.model.frogAngle);
+        this.context.rotate(this.model.bulletAngle);
 
 
         this.context.translate(
