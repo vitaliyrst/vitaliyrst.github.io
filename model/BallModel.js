@@ -6,15 +6,15 @@ class BallModel extends GameModel {
     numberOfCols = 6;
     tickPerFrame = 1;
     tickCount = 0;
-    spriteWidth = /*this.ballRadius * 2 * 10*/ 300;
-    spriteHeight = /*this.ballRadius * 2 * 6*/ 180;
+    spriteWidth =  300;
+    spriteHeight =  180;
     rowCount = 0;
 
     constructor() {
         super();
         this.color = 0;
         this.pathSection = 0;
-        this.speed = 2;
+        this.speed = 1;
         this.getRandomColor(this.ballsColor);
     }
 

@@ -2,8 +2,9 @@ import {data} from "./data.js";
 import {Bezier} from "./Bezier.js";
 
 class Path {
-    constructor() {
+    constructor(level) {
         this.path = [];
+        this.level = level;
     }
 
     getPoint(x, y) {
@@ -11,7 +12,7 @@ class Path {
     }
 
     getPoints() {
-        let mapCurve = data.pointsPath;
+        let mapCurve = data[this.level].points;
 
         let bezier = new Bezier();
 

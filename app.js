@@ -1,5 +1,6 @@
 import {GameModel} from "./model/GameModel.js";
 import {BallModel} from "./model/BallModel.js";
+/*import {BallView} from  "./view/BallView.js";*/
 import {FrogModel} from "./model/FrogModel.js";
 import {FrogController} from "./controller/FrogController.js";
 import {Path} from "./classes/Path.js";
@@ -20,10 +21,7 @@ buttonMusic.addEventListener('click', eo => {
     }
 });*/
 
-
-
 function run() {
-
     let game = new GameModel();
     let gameController = new GameController(game);
 
@@ -35,15 +33,11 @@ function run() {
     game.createCanvas();
 
 
-    let frog = new FrogModel();
-    let frogView = new FrogView(frog);
-    let frogController = new FrogController(frog, frogView);
-
     let balls = [];
-    let ballView;
 
     function getBall() {
         let ball = new BallModel();
+        /*let ballView = new BallView(ball);*/
         gameController.balls.push(ball);
         balls.push(ball);
     }
@@ -52,7 +46,7 @@ function run() {
 
     function work() {
         game.updateCanvas();
-        frogController.draw();
+        gameController.draw();
 
         for (let i = 0; i < balls.length; i++) {
             if (balls[balls.length - 1].pathSection === 18 && balls.length < 50) {

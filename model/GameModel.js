@@ -1,24 +1,23 @@
 import {Level} from "../classes/Level.js";
 
 class GameModel {
+    /**
+     *
+     */
 
     constructor() {
-        this.settings = new Level();
-        this.data = this.settings.getData();
+        this.settings = new Level(1);
         this.path = this.settings.getPath();
+        this.data = this.settings.getData();
         this.ratio = 384 / 569;
         this.setCanvasSize();
         this.ballRadius = this.setBallRadius();
-        this.bulletRadius = this.setBulletRadius();
+        this.bullet = this.setBulletSize();
         this.frog = this.setFrogSize();
         this.level = this.data.level;
         this.levelBg = this.data.levelBg;
         this.ballsColor = this.data.ballsColor;
-
-
         this.context = document.getElementById('canvas').getContext('2d');
-
-
     }
 
     setCanvasSize() {
@@ -49,24 +48,6 @@ class GameModel {
             width = innerWidth;
             height = width * this.ratio;
         }
-        /*console.log(width,height)
-        let canvasWidth = (innerWidth < 569) ? 569 :
-            (innerWidth > 1138 && innerHeight > 768) ? 1138 :
-                (innerWidth > 1138 && innerHeight < 384) ? 384 / this.ratio :
-                    (innerWidth < 1138 && innerHeight > 768) ? innerWidth :
-                        (innerWidth < 1138 && innerHeight < 384) ? 384 / this.ratio :
-                            (innerWidth > 1138 && innerHeight < 768) ? innerHeight / this.ratio :
-                                (innerWidth < 1138 && innerHeight < 768 && innerWidth > 768) ? innerWidth :
-                                    innerHeight / this.ratio;
-
-        let canvasHeight = (innerHeight < 384) ? 384 :
-            (innerHeight > 768 && innerWidth > 1138) ? 768 :
-                (innerHeight > 768 && innerWidth < 569) ? 569 * this.ratio :
-                    (innerHeight < 768 && innerWidth > 1138) ? innerHeight :
-                        (innerHeight < 768 && innerWidth < 569) ? 569 * this.ratio :
-                            (innerHeight > 768 && innerWidth < 1138) ? innerWidth * this.ratio :
-                                (innerHeight < 768 && innerWidth < 1138 && innerHeight > 569) ? innerHeight :
-                                    innerWidth * this.ratio;*/
 
         this.canvasWidth = width;
         this.canvasHeight = height;
@@ -76,17 +57,28 @@ class GameModel {
         return this.canvasWidth / 65;
     }
 
-    setBulletRadius() {
-        return this.canvasWidth / 65;
+    setBulletSize() {
+        return {
+            radius: this.canvasWidth / 65,
+            left: this.canvasWidth/ this.data.offsetBulletLeft,
+            top: this.canvasHeight/ this.data.offsetBulletTop,
+        }
     }
 
     setFrogSize() {
         return {
             width: this.canvasWidth / 6.15,
             height: this.canvasWidth / 6.15,
-            left: this.canvasWidth / 2.70,
-            top: this.canvasWidth / 4.74
+            left: this.canvasWidth / this.data.offsetFrogLeft,
+            top: this.canvasHeight / this.data.offsetFrogTop,
         };
+    }
+
+
+
+    updateCanvasSize(width, height) {
+        this.canvasWidth = width;
+        this.canvasHeight = height;
     }
 
     createCanvas() {
@@ -101,10 +93,7 @@ class GameModel {
         this.context.drawImage(levelBg, 0, 0, this.canvasWidth, this.canvasHeight);
     }
 
-    update(width, height) {
-        this.canvasWidth = width;
-        this.canvasHeight = height;
-    }
+
 }
 
 export {GameModel};

@@ -2,7 +2,7 @@ import {Level} from "../classes/Level.js";
 
 class GameView {
     constructor() {
-        this.settings = new Level();
+        this.settings = new Level(2);
         this.data = this.settings.getData();
         this.level = this.data.level;
         this.levelBg = this.data.levelBg;

@@ -168,8 +168,7 @@ a {
         transform: scale(0);
     }
     90% {
-        transform: scale(1.3);
-        ;
+        transform: scale(1.3);;
     }
     100% {
         transform: scale(1);
@@ -268,22 +267,28 @@ a {
     display: flex;
     flex-direction: column;
 
-    background-color: black;
-    color: white;
+    border: 10px solid;
+    border-image: url("./storage/backgrounds/border.png") 30 30 round;
+}
+
+.zuma_rules div {
+    background-color: #b3814b;
     opacity: 80%;
 }
 
 .zuma_rules h2 {
     font-size: calc(1em + 1vh);
     text-align: center;
-
-    color: red;
+    color: white;
 }
 
 .rules_list {
     width: 60vw;
     margin: 0;
     padding: 0;
+
+    background-color: #b3814b;
+    opacity: 80%;
 
     display: flex;
     flex-direction: column;
@@ -304,21 +309,20 @@ a {
 /* Records */
 
 .zuma_records {
-    padding-top: 3vh;
+    margin-top: 3vh;
 
     font-size: calc(1em + 1vw);
 
     display: flex;
     flex-direction: column;
 
-    background-color: black;
-    color: white;
-    opacity: 80%;
+    border: 10px solid;
+    border-image: url("./storage/backgrounds/border.png") 30 30 round;
 }
 
 .records_table {
-    padding-top: 1vh;
-    padding-bottom: 1vh;
+    background-color: #b3814b;
+    opacity: 80%;
 }
 
 .records_table td {
@@ -327,11 +331,13 @@ a {
     text-align: left;
 }
 
-.records_table :nth-child(2) :nth-child(1n) {
-    font-size: 1.5em;
-    color: red;
+.records_table td:nth-child(2) {
+    text-align: right;
 }
 
+.records_table tr:first-child {
+    color: white;
+}
 
 /* About */
 
@@ -342,8 +348,12 @@ a {
     display: flex;
     flex-direction: column;
 
-    background-color: black;
-    color: white;
+    border: 10px solid;
+    border-image: url("./storage/backgrounds/border.png") 30 30 round;
+}
+
+.zuma_about div {
+    background-color: #b3814b;
     opacity: 80%;
 }
 
@@ -351,7 +361,7 @@ a {
     font-size: calc(1em + 1vh);
     text-align: center;
 
-    color: red;
+    color: white;
 }
 
 .about_list {
@@ -362,6 +372,9 @@ a {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+
+    background-color: #b3814b;
+    opacity: 80%;
 }
 
 .about_item {
@@ -423,12 +436,13 @@ a {
     width: 100%;
     height: 100%;
     margin-bottom: 20px;
+
     min-width: 569px;
     min-height: 384px;
     max-width: 1138px;
     max-height: 768px;
-    position: absolute;
 
+    position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);

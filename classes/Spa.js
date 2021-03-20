@@ -5,12 +5,11 @@ class Spa {
 
     switchToStateFromURLHash() {
         let URLHash = window.location.hash;
-
         let state = URLHash.substr(1);
+
         if (state !== '') {
             let parts = state.split("_");
             this.spaState = {pageName: parts[0]};
-
         } else {
             this.spaState = {pageName: 'Load'};
         }
@@ -82,6 +81,10 @@ class Spa {
 
     switchToState(newState) {
         location.hash = newState.pageName;
+        /*console.log(location.href)
+        let clearHash = location.href.replace(/#/, '/');
+        console.log(clearHash)
+        history.replaceState({}, '', clearHash);*/
     }
 
     switchToMenuPage() {

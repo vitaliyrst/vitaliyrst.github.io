@@ -1,4 +1,6 @@
-class BallView{
+import {GameView} from "./GameView.js";
+
+class BallView extends GameView{
     frame = 0;
     numberOfRows = 10;
     numberOfCols = 6;
@@ -8,9 +10,12 @@ class BallView{
     spriteHeight = 180;
     rowCount = 0;
 
-    constructor(ball) {
-        this.ball = ball;
+    constructor(model) {
+        super();
+        this.model = model;
         this.color = 0;
+        this.colors = this.data.ballsColor;
+        this.getRandomColor();
     }
 
     getRandomColor(colors) {
@@ -19,7 +24,7 @@ class BallView{
     }
 
     animateColor(image) {
-        this.context.translate(this.ball.x - this.ball.ballRadius, this.ball.y - this.ball.ballRadius);
+        this.context.translate(this.model.x - this.model.ballRadius, this.model.y - this.model.ballRadius);
         this.context.drawImage(image,
             this.frame * this.spriteWidth / this.numberOfRows,
             this.rowCount * this.spriteHeight / this.numberOfCols,
@@ -47,7 +52,7 @@ class BallView{
 
         this.context.save();
         this.context.beginPath();
-        this.context.arc(this.ball.x, this.ball.y, this.ball.ballRadius, 0, Math.PI * 2, false);
+        this.context.arc(this.model.x, this.model.y, this.model.ballRadius, 0, Math.PI * 2, false);
         this.context.fill();
         this.context.closePath();
         this.context.clip();
@@ -57,4 +62,6 @@ class BallView{
         this.context.restore();
     }
 }
+
+/*export {BallView}*/
 
