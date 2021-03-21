@@ -8,6 +8,7 @@ class FrogModel extends GameModel {
         this.bulletAngle = 0;
         this.bulletState = 0;
 
+        this.bulletColors = this.colors;
         this.bulletRadius = this.bullet.radius;
         this.bulletLeft = this.bullet.left;
         this.bulletTop = this.bullet.top;
@@ -42,7 +43,7 @@ class FrogModel extends GameModel {
         this.bulletSpeed = 0;
         this.bulletState = 0;
         this.bulletLeft = this.frogLeft + this.frogWidth / 2;
-        this.bulletTop = this.frogTop + this.frogHeight /2;
+        this.bulletTop = this.frogTop + this.frogHeight / 2;
     }
 
     updateSize(width, height) {
@@ -52,7 +53,7 @@ class FrogModel extends GameModel {
         this.frogLeft = width / this.data.offsetFrogLeft;
         this.frogTop = height / this.data.offsetFrogTop;
         this.bulletLeft = this.frogLeft + this.frogWidth / 2;
-        this.bulletTop = this.frogTop + this.frogHeight /2;
+        this.bulletTop = this.frogTop + this.frogHeight / 2;
     }
 }
 

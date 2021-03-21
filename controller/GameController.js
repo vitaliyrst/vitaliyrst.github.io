@@ -1,14 +1,15 @@
 import {GameModel} from "../model/GameModel.js";
 import {GameView} from "../view/GameView.js";
-import {BallModel} from "../model/BallModel.js";
 import {FrogController} from "./FrogController.js";
+import {BallController} from "./BallController.js";
 
 class GameController {
-    constructor(game, frog) {
-        this.game = game;
-        this.frog = frog;
+    constructor() {
+        this.game = new GameModel();
+        this.view = new GameView(this.game);
         this.frogController = new FrogController();
-        this.balls = [];
+        this.ballController = new BallController(this.game.totalBalls);
+        this.view.createCanvas();
     }
 
     resize() {
@@ -32,12 +33,15 @@ class GameController {
         }
         canvas.width = width;
         canvas.height = height;
-        this.game.updateCanvasSize(width, height);
-        this.frogController.updateSize(width,height);
+        this.game.updateSize(width, height);
+        this.frogController.updateSize(width, height);
+        this.ballController.updateSize(width, height);
     }
 
     draw() {
+        this.view.draw();
         this.frogController.draw();
+        this.ballController.draw();
     }
 }
 

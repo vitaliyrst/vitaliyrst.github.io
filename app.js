@@ -1,10 +1,3 @@
-import {GameModel} from "./model/GameModel.js";
-import {BallModel} from "./model/BallModel.js";
-/*import {BallView} from  "./view/BallView.js";*/
-import {FrogModel} from "./model/FrogModel.js";
-import {FrogController} from "./controller/FrogController.js";
-import {Path} from "./classes/Path.js";
-import {FrogView} from "./view/FrogView.js";
 import {GameController} from "./controller/GameController.js";
 import {Spa} from "./classes/Spa.js";
 
@@ -22,36 +15,22 @@ buttonMusic.addEventListener('click', eo => {
 });*/
 
 function run() {
-    let game = new GameModel();
-    let gameController = new GameController(game);
+    let gameController = new GameController();
 
     window.addEventListener('resize', () => {
         setTimeout(() => {
             gameController.resize();
-        }, 500);
+        }, 1000);
     });
-    game.createCanvas();
 
-
-    let balls = [];
-
-    function getBall() {
-        let ball = new BallModel();
-        /*let ballView = new BallView(ball);*/
-        gameController.balls.push(ball);
-        balls.push(ball);
-    }
-
-    getBall();
 
     function work() {
-        game.updateCanvas();
         gameController.draw();
 
-        for (let i = 0; i < balls.length; i++) {
-            if (balls[balls.length - 1].pathSection === 18 && balls.length < 50) {
+
+           /* if (balls[balls.length - 1].pathSection === 18 && balls.length < 50) {
                 getBall();
-            }
+            }*/
 
             /*let xMax = Math.max(frog.bulletCenterX, balls[i].x);
             let xMin = Math.min(frog.bulletCenterX, balls[i].x);
@@ -85,12 +64,6 @@ function run() {
                 frog.stopBullet();
                 continue
             }*/
-
-            if (balls.length !== 0) {
-                balls[i].draw();
-                balls[i].update();
-            }
-        }
         window.requestAnimationFrame(work);
     }
 

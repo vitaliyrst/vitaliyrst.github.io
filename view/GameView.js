@@ -1,22 +1,19 @@
-import {Level} from "../classes/Level.js";
-
 class GameView {
-    constructor() {
-        this.settings = new Level(2);
-        this.data = this.settings.getData();
-        this.level = this.data.level;
-        this.levelBg = this.data.levelBg;
-        this.canvasWidth = this.data.canvasWidth;
-        this.canvasHeight = this.data.canvasHeight;
-        this.ballsColor = this.data.ballsColor;
-        this.ballRadius = this.data.ballRadius;
-        this.bulletRadius = this.data.bulletRadius;
-        this.frogLeft = this.data.frogLeft;
-        this.frogTop = this.data.frogTop;
-        this.frogWidth = this.data.frogWidth;
-        this.frogHeight = this.data.frogHeight;
-        this.ballsColor = this.data.ballsColor;
+    constructor(model) {
+        this.model = model;
         this.context = document.getElementById('canvas').getContext('2d');
+    }
+
+    createCanvas() {
+        let canvas = document.getElementById('canvas');
+        canvas.width = this.model.canvasWidth;
+        canvas.height = this.model.canvasHeight;
+    }
+
+    draw() {
+        let levelBg = new Image();
+        levelBg.src = this.model.levelBg;
+        this.context.drawImage(levelBg, 0, 0, this.model.canvasWidth, this.model.canvasHeight);
     }
 }
 

@@ -14,7 +14,7 @@ class FrogView extends GameView {
         super();
         this.model = model;
         this.color = 0;
-        this.colors = this.ballsColor;
+        this.colors = this.model.bulletColors;
         this.getRandomColor();
     }
 

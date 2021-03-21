@@ -6,8 +6,8 @@ class BallModel extends GameModel {
     numberOfCols = 6;
     tickPerFrame = 1;
     tickCount = 0;
-    spriteWidth =  300;
-    spriteHeight =  180;
+    spriteWidth = 300;
+    spriteHeight = 180;
     rowCount = 0;
 
     constructor() {
@@ -15,7 +15,10 @@ class BallModel extends GameModel {
         this.color = 0;
         this.pathSection = 0;
         this.speed = 1;
-        this.getRandomColor(this.ballsColor);
+        this.ballId = 0;
+        this.getRandomColor(this.colors);
+        this.width = this.canvasWidth;
+        this.height = this.canvasHeight;
     }
 
     setPosition(x, y) {
@@ -86,9 +89,29 @@ class BallModel extends GameModel {
             this.setPosition(this.path[this.pathSection].x, this.path[this.pathSection].y);
 
         }
+
         this.x = this.path[this.pathSection].x;
         this.y = this.path[this.pathSection].y;
+
         this.pathSection += this.speed;
+    }
+
+    updateSize(width, height) {
+        this.ballRadius = width / 70;
+        let path = this.path;
+        let ratioW = width / this.width;
+        let ratioH = height / this.height;
+
+        let newPath = [];
+        for (let i = 0; i < path.length; i++) {
+            newPath.push({x: path[i].x * ratioW, y: path[i].y * ratioH});
+        }
+
+        if (newPath.length === this.path.length) {
+            this.path = newPath;
+            this.width = width;
+            this.height = height;
+        }
     }
 }
 

@@ -1,27 +1,26 @@
 import {Level} from "../classes/Level.js";
 
 class GameModel {
-    /**
-     *
-     */
 
     constructor() {
         this.settings = new Level(1);
-
         this.data = this.settings.getData();
+
         this.ratio = 384 / 569;
-        this.setCanvasSize();
-        this.path = this.setPath();
-        this.ballRadius = this.setBallRadius();
-        this.bullet = this.setBulletSize();
-        this.frog = this.setFrogSize();
+
+        this.setCanvasData();
+        this.frog = this.setFrogData();
+        this.bullet = this.setBulletData();
+        this.ballRadius = this.setBallData();
+        this.path = this.setPathData();
         this.level = this.data.level;
         this.levelBg = this.data.levelBg;
-        this.ballsColor = this.data.ballsColor;
+        this.colors = this.data.ballsColor;
+        this.totalBalls = this.data.totalBalls;
         this.context = document.getElementById('canvas').getContext('2d');
     }
 
-    setCanvasSize() {
+    setCanvasData() {
         let windowRatio = (innerWidth > innerHeight) ? innerHeight / innerWidth : innerWidth / innerHeight;
 
         let width;
@@ -54,21 +53,20 @@ class GameModel {
         this.canvasHeight = height;
     }
 
-    setBallRadius() {
-        return this.canvasWidth / 65;
+    setBallData() {
+        return this.canvasWidth / 70;
     }
 
-    setBulletSize() {
+    setBulletData() {
         return {
-            radius: this.canvasWidth / 65,
+            radius: this.canvasWidth / 70,
             left: this.canvasWidth / this.data.offsetFrogLeft + this.canvasWidth / 6.15 / 2,
             top: this.canvasHeight / this.data.offsetFrogTop + this.canvasWidth / 6.15 / 2,
         }
     }
 
-    setFrogSize() {
+    setFrogData() {
         return {
-            speed : this.canvasWidth / 113,
             width: this.canvasWidth / 6.15,
             height: this.canvasWidth / 6.15,
             left: this.canvasWidth / this.data.offsetFrogLeft,
@@ -76,7 +74,7 @@ class GameModel {
         };
     }
 
-    setPath() {
+    setPathData() {
         let path = this.settings.getPath();
         let ratioW = this.canvasWidth / 1138;
         let ratioH = this.canvasHeight / 768;
@@ -87,22 +85,18 @@ class GameModel {
         return newPath;
     }
 
-    updateCanvasSize(width, height) {
+    updateSize(width, height) {
         this.canvasWidth = width;
         this.canvasHeight = height;
     }
 
-    createCanvas() {
-        let canvas = document.getElementById('canvas');
-        canvas.width = this.canvasWidth;
-        canvas.height = this.canvasHeight;
-    }
-
-    updateCanvas() {
-        let levelBg = new Image();
-        levelBg.src = this.levelBg;
-        this.context.drawImage(levelBg, 0, 0, this.canvasWidth, this.canvasHeight);
-    }
+/*    setData() {
+        this.setCanvasData();
+        this.setFrogData();
+        this.setBulletData();
+        this.setPathData();
+        this.setBallData();
+    }*/
 }
 
 export {GameModel};

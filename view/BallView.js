@@ -12,13 +12,13 @@ class BallView extends GameView{
 
     constructor(model) {
         super();
-        this.model = model;
+/*        this.model = model;
         this.color = 0;
         this.colors = this.data.ballsColor;
-        this.getRandomColor();
+        this.getRandomColor();*/
     }
 
-    getRandomColor(colors) {
+/*    getRandomColor(colors) {
         let randomColor = Math.floor(Math.random() * colors.length);
         this.color = colors[randomColor];
     }
@@ -60,8 +60,8 @@ class BallView extends GameView{
         this.animateColor(ballImage)
 
         this.context.restore();
-    }
+    }*/
 }
 
-/*export {BallView}*/
+export {BallView}
 
