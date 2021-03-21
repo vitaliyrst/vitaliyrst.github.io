@@ -53,30 +53,6 @@ class FrogView extends GameView {
         this.context.restore();
     }
 
-    animateColor(image) {
-        this.context.translate(0, 0);
-
-        this.context.drawImage(
-            image,
-            this.frame * this.spriteWidth / this.numberOfRows, this.rowCount * this.spriteHeight / this.numberOfCols,
-            this.spriteWidth / this.numberOfRows, this.spriteHeight,
-            -this.model.bulletRadius, -this.model.bulletRadius + this.model.frogHeight / 4,
-            this.model.bulletRadius * 2 * 10 / this.numberOfRows, this.model.bulletRadius * 2 * 6
-        );
-
-        if (this.tickCount > this.tickPerFrame) {
-            this.tickCount = 0;
-            if (this.frame === this.numberOfRows - 1) {
-                this.rowCount++;
-            }
-            if (this.rowCount === 6) {
-                this.rowCount = 0;
-            }
-            this.frame = (this.frame < this.numberOfRows - 1) ? this.frame += 1 : this.frame = 0;
-        }
-        this.tickCount++;
-    }
-
     drawBullet() {
         let bulletImage = new Image();
         bulletImage.src = this.color;
@@ -108,6 +84,30 @@ class FrogView extends GameView {
         this.animateColor(bulletImage);
 
         this.context.restore();
+    }
+
+    animateColor(image) {
+        this.context.translate(0, 0);
+
+        this.context.drawImage(
+            image,
+            this.frame * this.spriteWidth / this.numberOfRows, this.rowCount * this.spriteHeight / this.numberOfCols,
+            this.spriteWidth / this.numberOfRows, this.spriteHeight,
+            -this.model.bulletRadius, -this.model.bulletRadius + this.model.frogHeight / 4,
+            this.model.bulletRadius * 2 * 10 / this.numberOfRows, this.model.bulletRadius * 2 * 6
+        );
+
+        if (this.tickCount > this.tickPerFrame) {
+            this.tickCount = 0;
+            if (this.frame === this.numberOfRows - 1) {
+                this.rowCount++;
+            }
+            if (this.rowCount === 6) {
+                this.rowCount = 0;
+            }
+            this.frame = (this.frame < this.numberOfRows - 1) ? this.frame += 1 : this.frame = 0;
+        }
+        this.tickCount++;
     }
 
     draw() {

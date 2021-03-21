@@ -38,20 +38,27 @@ class FrogModel extends GameModel {
         this.bulletTop += Math.cos(this.bulletAngle) * this.bulletSpeed;
     }
 
-    restartBullet() {
-        this.bulletAngle = -this.frogAngle;
-        this.bulletSpeed = 0;
-        this.bulletState = 0;
-        this.bulletLeft = this.frogLeft + this.frogWidth / 2;
-        this.bulletTop = this.frogTop + this.frogHeight / 2;
-    }
-
     updateSize(width, height) {
         this.frogWidth = width / 6.15;
         this.frogHeight = width / 6.15;
         this.bulletRadius = width / 65;
         this.frogLeft = width / this.data.offsetFrogLeft;
         this.frogTop = height / this.data.offsetFrogTop;
+        this.bulletLeft = this.frogLeft + this.frogWidth / 2;
+        this.bulletTop = this.frogTop + this.frogHeight / 2;
+    }
+
+    stopBullet() {
+        this.bulletSpeed = 0;
+        this.bulletLeft = this.frogLeft + this.frogWidth / 2;
+        this.bulletTop = this.frogTop + this.frogHeight / 2;
+        this.bulletState = 0;
+    }
+
+    restartBullet() {
+        this.bulletAngle = -this.frogAngle;
+        this.bulletSpeed = 0;
+        this.bulletState = 0;
         this.bulletLeft = this.frogLeft + this.frogWidth / 2;
         this.bulletTop = this.frogTop + this.frogHeight / 2;
     }

@@ -114,7 +114,9 @@ class Spa {
     run(run) {
         let oldHash = window.location.hash;
 
-        if (oldHash && oldHash === 'Game') {
+        if (oldHash === '#Game') {
+            location.hash = 'Menu';
+        } else if (oldHash && oldHash !== '#Game') {
             location.hash = oldHash.substr(1);
         } else {
             location.hash = 'Menu';

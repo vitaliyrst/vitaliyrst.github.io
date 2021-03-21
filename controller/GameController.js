@@ -8,7 +8,7 @@ class GameController {
         this.game = new GameModel();
         this.view = new GameView(this.game);
         this.frogController = new FrogController();
-        this.ballController = new BallController(this.game.totalBalls);
+        this.ballController = new BallController(this.game.totalBalls, this.frogController.model);
         this.view.createCanvas();
     }
 

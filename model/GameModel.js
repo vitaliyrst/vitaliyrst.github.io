@@ -17,7 +17,6 @@ class GameModel {
         this.levelBg = this.data.levelBg;
         this.colors = this.data.ballsColor;
         this.totalBalls = this.data.totalBalls;
-        this.context = document.getElementById('canvas').getContext('2d');
     }
 
     setCanvasData() {
@@ -89,14 +88,6 @@ class GameModel {
         this.canvasWidth = width;
         this.canvasHeight = height;
     }
-
-/*    setData() {
-        this.setCanvasData();
-        this.setFrogData();
-        this.setBulletData();
-        this.setPathData();
-        this.setBallData();
-    }*/
 }
 
 export {GameModel};
