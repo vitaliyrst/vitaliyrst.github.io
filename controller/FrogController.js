@@ -9,10 +9,6 @@ class FrogController {
         this.shot();
     }
 
-    updateSize(width, height) {
-        this.model.updateSize(width, height)
-    }
-
     moveFrog() {
         let canvas = document.getElementById('canvas');
         canvas.addEventListener('mousemove', (eo) => {
@@ -26,24 +22,11 @@ class FrogController {
         });
     }
 
-    /*    moveBullet() {
-            let canvas = document.getElementById('canvas');
-            canvas.addEventListener('mousemove', (eo) => {
-                let clientX = eo.clientX - canvas.getBoundingClientRect().x;
-                let clientY = eo.clientY - canvas.getBoundingClientRect().y;
-                if (this.model.bulletState === 0) {
-                    this.model.bulletAngle = Math.atan2(-(clientX - (this.view.frogLeft + this.view.frogWidth / 2)),
-                        clientY - (this.view.frogTop + this.view.frogHeight / 2));
-                }
-            });
-        }*/
-
     shot() {
         let canvas = document.getElementById('canvas');
         canvas.addEventListener('click', (eo) => {
             if (!this.model.bulletState) {
-
-                this.model.bulletSpeed = 7;
+                this.model.bulletSpeed = this.model.frogWidth / 15;
                 this.model.bulletState = 1;
                 this.gunSound().play();
             }
@@ -56,20 +39,23 @@ class FrogController {
         return gunSound;
     }
 
-  /*  restartBullet() {
-        if (this.model.bulletCenterX + this.view.bulletRadius + this.view.frogWidth / 2 < this.view.context.canvas.offsetLeft ||
-            this.model.bulletCenterY + this.view.bulletRadius + this.view.frogHeight / 2 < this.view.context.canvas.offsetTop ||
-            this.model.bulletCenterX - this.view.bulletRadius - this.view.frogWidth / 2 > this.view.context.canvas.width ||
-            this.model.bulletCenterY - this.view.bulletRadius - this.view.frogHeight / 2 > this.view.context.canvas.height) {
+    updateSize(width, height) {
+        this.model.updateSize(width, height)
+    }
+
+    restartBullet() {
+        let canvas = document.getElementById('canvas');
+        if (this.model.bulletLeft + this.model.bulletRadius + this.model.frogWidth / 2 < canvas.offsetLeft ||
+            this.model.bulletTop + this.model.bulletRadius + this.model.frogHeight / 2 < canvas.offsetTop ||
+            this.model.bulletLeft - this.model.bulletRadius - this.model.frogWidth / 2 > canvas.offsetWidth ||
+            this.model.bulletTop - this.model.bulletRadius - this.model.frogHeight / 2 > canvas.offsetHeight) {
             this.view.getRandomColor();
             this.model.restartBullet();
         }
-    }*/
-
-
+    }
 
     draw() {
-        /*this.restartBullet();*/
+        this.restartBullet();
         this.view.draw();
         this.model.updateBullet()
 

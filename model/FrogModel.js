@@ -38,11 +38,11 @@ class FrogModel extends GameModel {
     }
 
     restartBullet() {
-        this.bulletAngle = this.frogAngle;
+        this.bulletAngle = -this.frogAngle;
         this.bulletSpeed = 0;
         this.bulletState = 0;
-        this.bulletCenterX = 506;
-        this.bulletCenterY = 323;
+        this.bulletLeft = this.frogLeft + this.frogWidth / 2;
+        this.bulletTop = this.frogTop + this.frogHeight /2;
     }
 
     updateSize(width, height) {

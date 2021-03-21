@@ -68,6 +68,7 @@ class GameModel {
 
     setFrogSize() {
         return {
+            speed : this.canvasWidth / 113,
             width: this.canvasWidth / 6.15,
             height: this.canvasWidth / 6.15,
             left: this.canvasWidth / this.data.offsetFrogLeft,
@@ -77,7 +78,6 @@ class GameModel {
 
     setPath() {
         let path = this.settings.getPath();
-
         let ratioW = this.canvasWidth / 1138;
         let ratioH = this.canvasHeight / 768;
         let newPath = [];
@@ -103,8 +103,6 @@ class GameModel {
         levelBg.src = this.levelBg;
         this.context.drawImage(levelBg, 0, 0, this.canvasWidth, this.canvasHeight);
     }
-
-
 }
 
 export {GameModel};
