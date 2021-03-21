@@ -1,14 +1,14 @@
 import {GameView} from "./GameView.js";
 
 class FrogView extends GameView {
-    /*frame = 0;
+    frame = 0;
     numberOfRows = 10;
     numberOfCols = 6;
     tickPerFrame = 1;
     tickCount = 0;
     spriteWidth = 300;
     spriteHeight = 180;
-    rowCount = 0;*/
+    rowCount = 0;
 
     constructor(model) {
         super();
@@ -53,14 +53,16 @@ class FrogView extends GameView {
         this.context.restore();
     }
 
-    /*animateColor(image) {
-        this.context.translate(this.frog.bulletCenterX - this.frog.bulletRadius, this.frog.bulletCenterY - this.frog.bulletRadius);
-        this.context.drawImage(image,
-            this.frame * this.spriteWidth / this.numberOfRows,
-            this.rowCount * this.spriteHeight / this.numberOfCols,
+    animateColor(image) {
+        this.context.translate(0, 0);
+
+        this.context.drawImage(
+            image,
+            this.frame * this.spriteWidth / this.numberOfRows, this.rowCount * this.spriteHeight / this.numberOfCols,
             this.spriteWidth / this.numberOfRows, this.spriteHeight,
-            0, 0,
-            this.spriteWidth / this.numberOfRows, this.spriteHeight);
+            -this.model.bulletRadius, -this.model.bulletRadius + this.model.frogHeight / 4,
+            this.model.bulletRadius * 2 * 10 / this.numberOfRows, this.model.bulletRadius * 2 * 6
+        );
 
         if (this.tickCount > this.tickPerFrame) {
             this.tickCount = 0;
@@ -73,7 +75,7 @@ class FrogView extends GameView {
             this.frame = (this.frame < this.numberOfRows - 1) ? this.frame += 1 : this.frame = 0;
         }
         this.tickCount++;
-    }*/
+    }
 
     drawBullet() {
         let bulletImage = new Image();
@@ -103,14 +105,8 @@ class FrogView extends GameView {
         this.context.closePath();
         this.context.clip()
 
-        this.context.drawImage(
-            bulletImage,
-            0, 0,
-            30, 30,
-            -this.model.bulletRadius, this.model.frogHeight / 4 - this.model.bulletRadius,
-            this.model.bulletRadius * 2, this.model.bulletRadius * 2,
-        );
-        /* this.animateColor(bulletImage);*/
+        this.animateColor(bulletImage);
+
         this.context.restore();
     }
 

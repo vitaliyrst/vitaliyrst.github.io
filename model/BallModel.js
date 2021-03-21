@@ -45,7 +45,8 @@ class BallModel extends GameModel {
         this.context.translate(this.x - this.ballRadius, this.y - this.ballRadius);
         this.context.drawImage(
             image,
-            this.frame * this.spriteWidth / this.numberOfRows, this.rowCount * this.spriteHeight / this.numberOfCols,
+            this.frame * this.spriteWidth / this.numberOfRows,
+            this.rowCount * this.spriteHeight / this.numberOfCols,
             this.spriteWidth / this.numberOfRows, this.spriteHeight,
             0, 0,
             this.ballRadius * 2 * 10 / this.numberOfRows, this.ballRadius * 2 * 6
