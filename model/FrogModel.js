@@ -27,14 +27,14 @@ class FrogModel extends GameModel {
 
     updateBulletAngle(x, y) {
         this.bulletAngle = Math.atan2(
-            -(x - (this.bulletLeft + this.ballRadius)),
-            y - (this.bulletTop + this.ballRadius)
+            (x - (this.frogLeft + this.frogWidth / 2)),
+            (y - (this.frogTop + this.frogHeight / 2))
         );
     }
 
     updateBullet() {
-        this.bulletLeft += Math.sin(this.bulletAngle)* this.bulletSpeed;
-        this.bulletTop += Math.sin(this.bulletAngle) *  this.bulletSpeed;
+        this.bulletLeft += Math.sin(this.bulletAngle) * this.bulletSpeed;
+        this.bulletTop += Math.cos(this.bulletAngle) * this.bulletSpeed;
     }
 
     restartBullet() {
@@ -51,8 +51,8 @@ class FrogModel extends GameModel {
         this.bulletRadius = width / 65;
         this.frogLeft = width / this.data.offsetFrogLeft;
         this.frogTop = height / this.data.offsetFrogTop;
-        this.bulletLeft = width / this.data.offsetBulletLeft;
-        this.bulletTop = height / this.data.offsetBulletTop;
+        this.bulletLeft = this.frogLeft + this.frogWidth / 2;
+        this.bulletTop = this.frogTop + this.frogHeight /2;
     }
 }
 

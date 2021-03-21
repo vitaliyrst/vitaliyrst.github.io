@@ -25,7 +25,7 @@ class FrogView extends GameView {
 
     drawFrog() {
         let frogImage = new Image();
-        frogImage.src = './storage/frog/Zuma.png';
+        frogImage.src = './storage/frog/zuma.png';
 
         this.context.save();
         this.context.beginPath();
@@ -90,33 +90,27 @@ class FrogView extends GameView {
         this.context.closePath();
 
         this.context.translate(
-            this.model.frogLeft + this.model.frogWidth / 2,
-            this.model.frogTop + this.model.frogHeight / 2
+            this.model.bulletLeft, this.model.bulletTop
         );
-        this.context.rotate(this.model.bulletAngle);
 
+        this.context.rotate(-this.model.bulletAngle);
 
-        this.context.translate(
-            -(this.model.frogLeft + this.model.frogWidth / 2),
-            -(this.model.frogTop + this.model.frogHeight / 2)
-        );
-       /* onsole.log(this.model.frogAngle, this.model.bulletAngle);c*/
         this.context.beginPath();
         this.context.arc(
-            this.model.bulletLeft,
-            this.model.bulletTop,
+            0,
+            this.model.frogHeight / 4,
             this.model.bulletRadius, 0, Math.PI * 2, false)
         this.context.closePath();
-        this.context.clip();
+        this.context.clip()
 
         this.context.drawImage(
             bulletImage,
             0, 0,
             30, 30,
-            this.model.bulletLeft - this.model.bulletRadius, this.model.bulletTop - this.model.bulletRadius,
+            -this.model.bulletRadius, this.model.frogHeight / 4 - this.model.bulletRadius,
             this.model.bulletRadius * 2, this.model.bulletRadius * 2,
         );
-        /*this.animateColor(bulletImage);*/
+        /* this.animateColor(bulletImage);*/
         this.context.restore();
     }
 

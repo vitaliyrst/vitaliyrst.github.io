@@ -3,10 +3,10 @@ let data = {
         level: 1,
         levelBg: './storage/levels/1.jpg',
         ballsColor: [
-            './storage/colors/BlueBall1.jpg',
-            './storage/colors/GreenBall1.jpg',
-            './storage/colors/PurpleBall1.jpg',
-            './storage/colors/RedBall1.jpg'
+            './storage/colors/BlueBall.jpg',
+            './storage/colors/GreenBall.jpg',
+            './storage/colors/PurpleBall.jpg',
+            './storage/colors/RedBall.jpg'
         ],
         frogLeft : 420,
         frogTop : 240,
@@ -16,8 +16,8 @@ let data = {
 
         bulletLeft : 512,
         bulletTop : 380,
-        offsetBulletLeft : 2.22,
-        offsetBulletTop : 2.02,
+        /*offsetBulletLeft : 2.22,
+        offsetBulletTop : 2.02,*/
         points: [
         {"x": 234.71, "y": -25.6}, {"x": 193.46, "y": 16.64}, {"x": 157.9, "y": 52.48}, {"x": 125.18, "y": 98.56},
         {"x": 98.15, "y": 145.92}, {"x": 75.39, "y": 197.12}, {"x": 62.59, "y": 250.88}, {"x": 54.06, "y": 304.64},
@@ -47,18 +47,20 @@ let data = {
         level : 2,
         levelBg: './storage/levels/2.jpg',
         ballsColor: [
-            './storage/colors/BlueBall1.jpg',
-            './storage/colors/GreenBall1.jpg',
-            './storage/colors/PurpleBall1.jpg',
-            './storage/colors/RedBall1.jpg',
-            './storage/colors/WhiteBall1.jpg',
-            './storage/colors/YellowBall1.jpg'],
+            './storage/colors/BlueBall.jpg',
+            './storage/colors/GreenBall.jpg',
+            './storage/colors/PurpleBall.jpg',
+            './storage/colors/RedBall.jpg',
+            './storage/colors/WhiteBall.jpg',
+            './storage/colors/YellowBall.jpg'],
         frogLeft : 395,
         frogTop : 123,
         offsetFrogLeft : 2.88,
         offsetFrogTop : 6.24,
         bulletLeft : 300,
         bulletTop : 300,
+        offsetBulletLeft : 2.22,
+        offsetBulletTop : 2.02,
         points : [
             {"x": -30, "y": 755}, {"x": 50, "y": 735}, {"x": 107, "y": 725}, {"x": 164, "y": 719},
             {"x": 217, "y": 714}, {"x": 274, "y": 712}, {"x": 329, "y": 714}, {"x": 384, "y": 712},

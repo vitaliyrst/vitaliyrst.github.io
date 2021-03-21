@@ -61,8 +61,8 @@ class GameModel {
     setBulletSize() {
         return {
             radius: this.canvasWidth / 65,
-            left: this.canvasWidth / this.data.offsetBulletLeft,
-            top: this.canvasHeight / this.data.offsetBulletTop,
+            left: this.canvasWidth / this.data.offsetFrogLeft + this.canvasWidth / 6.15 / 2,
+            top: this.canvasHeight / this.data.offsetFrogTop + this.canvasWidth / 6.15 / 2,
         }
     }
 

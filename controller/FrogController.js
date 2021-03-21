@@ -21,7 +21,7 @@ class FrogController {
 
             this.model.updateFrogAngle(clientX, clientY);
             if (this.model.bulletState === 0) {
-                this.model.updateBulletAngle(clientX, clientY);
+                this.model.updateBulletAngle(clientX, clientY)
             }
         });
     }
@@ -42,10 +42,7 @@ class FrogController {
         let canvas = document.getElementById('canvas');
         canvas.addEventListener('click', (eo) => {
             if (!this.model.bulletState) {
-                let clientX = eo.clientX - canvas.getBoundingClientRect().x;
 
-                let clientY = eo.clientY - canvas.getBoundingClientRect().y;
-                this.model.updateBulletAngle(clientX, clientY);
                 this.model.bulletSpeed = 7;
                 this.model.bulletState = 1;
                 this.gunSound().play();
@@ -59,7 +56,7 @@ class FrogController {
         return gunSound;
     }
 
-    restartBullet() {
+  /*  restartBullet() {
         if (this.model.bulletCenterX + this.view.bulletRadius + this.view.frogWidth / 2 < this.view.context.canvas.offsetLeft ||
             this.model.bulletCenterY + this.view.bulletRadius + this.view.frogHeight / 2 < this.view.context.canvas.offsetTop ||
             this.model.bulletCenterX - this.view.bulletRadius - this.view.frogWidth / 2 > this.view.context.canvas.width ||
@@ -67,14 +64,15 @@ class FrogController {
             this.view.getRandomColor();
             this.model.restartBullet();
         }
-    }
+    }*/
 
 
 
     draw() {
-        this.restartBullet();
-        this.model.updateBullet()
+        /*this.restartBullet();*/
         this.view.draw();
+        this.model.updateBullet()
+
     }
 }
 
