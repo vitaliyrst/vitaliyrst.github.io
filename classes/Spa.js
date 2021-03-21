@@ -1,6 +1,7 @@
 class Spa {
     constructor() {
         this.spaState = {};
+        this.readyState = 0;
     }
 
     switchToStateFromURLHash() {
@@ -81,10 +82,6 @@ class Spa {
 
     switchToState(newState) {
         location.hash = newState.pageName;
-        /*console.log(location.href)
-        let clearHash = location.href.replace(/#/, '/');
-        console.log(clearHash)
-        history.replaceState({}, '', clearHash);*/
     }
 
     switchToMenuPage() {
@@ -114,12 +111,14 @@ class Spa {
     run(run) {
         let oldHash = window.location.hash;
 
-        if (oldHash === '#Game') {
-            location.hash = 'Menu';
-        } else if (oldHash && oldHash !== '#Game') {
-            location.hash = oldHash.substr(1);
-        } else {
-            location.hash = 'Menu';
+        if (this.readyState) {
+            if (oldHash === '#Game') {
+                location.hash = 'Menu';
+            } else if (oldHash && oldHash !== '#Game') {
+                location.hash = oldHash.substr(1);
+            } else {
+                location.hash = 'Menu';
+            }
         }
 
         let logo = document.querySelector('.game_name');

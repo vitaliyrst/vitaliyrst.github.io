@@ -5,12 +5,10 @@ class BallController {
     constructor(totalBalls, frog) {
         this.totalBalls = totalBalls;
         this.frog = frog;
-        console.log(frog)
         this.ballId = 0;
         this.balls = [];
         this.views = [];
         this.temps = [];
-
     }
 
     createBall() {

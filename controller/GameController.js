@@ -10,6 +10,8 @@ class GameController {
         this.frogController = new FrogController();
         this.ballController = new BallController(this.game.totalBalls, this.frogController.model);
         this.view.createCanvas();
+        this.observer();
+        this.gameSound();
     }
 
     resize() {
@@ -36,6 +38,20 @@ class GameController {
         this.game.updateSize(width, height);
         this.frogController.updateSize(width, height);
         this.ballController.updateSize(width, height);
+    }
+
+    observer() {
+        window.addEventListener('resize', () => {
+            setTimeout(() => {
+                this.resize();
+            }, 500);
+        });
+    }
+
+    gameSound() {
+        let mainMusic = new Audio();
+        mainMusic.src = './storage/sounds/main.mp3';
+        mainMusic.play();
     }
 
     draw() {

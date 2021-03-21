@@ -58,7 +58,6 @@ class FrogController {
         this.restartBullet();
         this.view.draw();
         this.model.updateBullet()
-
     }
 }
 
