@@ -26,7 +26,7 @@ class FrogController {
         let canvas = document.getElementById('canvas');
         canvas.addEventListener('click', (eo) => {
             if (!this.model.bulletState) {
-                this.model.bulletSpeed = this.model.frogWidth / 50;
+                this.model.bulletSpeed = this.model.frogWidth / 15;
                 this.model.bulletState = 1;
                 this.gunSound().play();
             }
@@ -49,8 +49,8 @@ class FrogController {
             this.model.bulletTop + this.model.bulletRadius + this.model.frogHeight / 2 < canvas.offsetTop ||
             this.model.bulletLeft - this.model.bulletRadius - this.model.frogWidth / 2 > canvas.offsetWidth ||
             this.model.bulletTop - this.model.bulletRadius - this.model.frogHeight / 2 > canvas.offsetHeight) {
-            this.view.getRandomColor();
             this.model.restartBullet();
+            this.view.color = this.model.color;
         }
     }
 

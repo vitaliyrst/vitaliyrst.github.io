@@ -1,91 +1,61 @@
 import {GameController} from "./controller/GameController.js";
 import {Spa} from "./classes/Spa.js";
+import {Records} from "./classes/Records.js";
+import {Level} from "./classes/Level.js";
 
-let images = ["./storage/backgrounds/bg.jpg",
-    "./storage/backgrounds/border.png",
-    "./storage/colors/BlueBall.jpg",
-    "./storage/colors/GreenBall.jpg",
-    "./storage/colors/PurpleBall.jpg",
-    "./storage/colors/RedBall.jpg",
-    "./storage/colors/WhiteBall.jpg",
-    "./storage/colors/YellowBall.jpg",
-    "./storage/frog/zuma.png",
-    "./storage/levels/1.jpg",
-    "./storage/levels/2.jpg",
-    "./storage/load/loadBlueBall.jpg",
-    "./storage/load/loadGreenBall.jpg",
-    "./storage/load/loadPurpleBall.jpg",
-    "./storage/load/loadRedBall.jpg",
-    "./storage/load/loadWhiteBall.jpg",
-    "./storage/load/loadYellowBall.jpg",
-    "./storage/social/github.png",
-    "./storage/social/linkedin.png",
-    "./storage/social/github.png",
-    "./storage/social/volume-off.png",
-    "./storage/social/volume-on.png"];
-/*let prFPS = new Promise((resolve, reject) => {
-    let sss = {};
-    let s1 = new Date().getMilliseconds();
-    getFPS();
-
-    function getFPS() {
-        let s2 = new Date().getMilliseconds();
-        let delta = s2 - s1;
-        s1 = s2;
-        if (delta in sss) {
-            sss[delta] = sss[delta] + 1;
-            if (sss[delta] > 50) {
-                let fps = Math.round(1000 / delta);
-                console.log(fps)
-                resolve(true);
-                return;
-            }
-        } else {
-            sss[delta] = 1;
-        }
-        requestAnimationFrame(getFPS);
-    }
-});*/
-
-let imageLoader = new Promise((resolve, reject) => {
+async function ready() {
     location.hash = '';
-    let count = 0;
+
+    /*// fetch images
+    let requestOptionsImages = {
+        method: 'GET',
+        redirect: 'follow'
+    };
+
+    let images = await fetch("https://vitaliyrst.github.io/images.json", requestOptionsImages)
+        .then(response => response.json())
+        .then(result => result)
+        .catch(error => console.log('error', error));
+
+    let count = 0
     images.forEach(function (value) {
         let img = new Image();
         img.src = value;
         count++;
     });
 
-    if (count === images.length) {
-        setTimeout(() => {
-            resolve(true);
-        }, 1000);
-    }
-});
+    //fetch records
+    let myHeadersRecords = new Headers();
+    myHeadersRecords.append("Content-Type", "application/x-www-form-urlencoded");
 
-let musicLoader = new Promise((resolve, reject) => {
-   setTimeout(() => {
-       resolve(true);
-   }, 2000)
-});
+    let urlencodedRecords = new URLSearchParams();
+    urlencodedRecords.append("f", "READ");
+    urlencodedRecords.append("n", "KLUBKOU_ZUMA_RECORDS");
 
-let recordsLoader = new Promise((resolve, reject) => {
-    setTimeout(() => {
-        resolve(true);
-    }, 2000)
-});
+    let requestOptionsRecords = {
+        method: 'POST',
+        headers: myHeadersRecords,
+        body: urlencodedRecords,
+        redirect: 'follow'
+    };
 
-let levelLoader = new Promise((resolve, reject) => {
-    setTimeout(() => {
-        resolve(true);
-    }, 2000)
-});
+    let records = await fetch("https://fe.it-academy.by/AjaxStringStorage2.php", requestOptionsRecords)
+        .then(response => response.json())
+        .then(result => JSON.parse(result.result))
+        .catch(error => console.log('error', error));
 
-Promise.all([imageLoader, musicLoader, recordsLoader, levelLoader]).then(() => {
+    let record = new Records(await records);
+*/
+
+    //fetch level
+    await new Promise((resolve, reject) => setTimeout(resolve, 200));
+}
+
+ready().then(() => {
     let spa = new Spa();
     spa.readyState = 1;
     spa.run(run);
-});
+})
 
 function run() {
     let gameController = new GameController();
@@ -94,5 +64,54 @@ function run() {
         gameController.draw();
         window.requestAnimationFrame(work);
     }
+
     window.requestAnimationFrame(work);
 }
+
+let arr = {1: ['Alex', 1000], 2: ['Jake', 1200], 3: ['Vitaliy', 1400], 4: ['Sten', 1600], 5: ['Kolya', 2000]}
+
+function update(name,value) {
+    let password = String(Math.random());
+
+    let myHeaders = new Headers();
+    myHeaders.append('Content-type', 'application/x-www-form-urlencoded');
+
+    let urlencodedRecords = new URLSearchParams();
+    urlencodedRecords.append('f', 'LOCKGET');
+    urlencodedRecords.append('n', name);
+    urlencodedRecords.append('p', password);
+
+    let requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: urlencodedRecords
+    }
+
+    fetch('https://fe.it-academy.by/AjaxStringStorage2.php', requestOptions)
+        .then(response => response.json())
+        .then(result => result)
+        .catch(error => console.log('error', error))
+
+
+    let myHeadersUpdate = new Headers();
+    myHeadersUpdate.append('Content-type', 'application/x-www-form-urlencoded');
+
+    let urlencodedRecordsUpdate = new URLSearchParams();
+    urlencodedRecordsUpdate.append('f', 'UPDATE');
+    urlencodedRecordsUpdate.append('n', name);
+    urlencodedRecordsUpdate.append('p', password);
+    urlencodedRecordsUpdate.append('v', JSON.stringify(value));
+
+    let requestOptionsUpdate = {
+        method: 'POST',
+        headers: myHeadersUpdate,
+        body: urlencodedRecordsUpdate
+    }
+
+    fetch('https://fe.it-academy.by/AjaxStringStorage2.php', requestOptionsUpdate)
+        .then(response => response.json())
+        .then(result => result)
+        .catch(error => console.log('error', error))
+}
+
+update(arr);

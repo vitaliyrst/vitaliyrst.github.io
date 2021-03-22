@@ -1,28 +1,32 @@
 import {GameModel} from "./GameModel.js";
 
 class BallModel extends GameModel {
-       constructor() {
+    constructor() {
         super();
-        this.color = 0;
         this.pathSection = 0;
-        this.speed = 1;
         this.ballId = 0;
         this.ballsColor = this.colors;
         this.width = this.canvasWidth;
         this.height = this.canvasHeight;
+        this.color = 0;
+        this.getRandomColor();
+    }
+
+    getRandomColor() {
+        let randomColor = Math.floor(Math.random() * this.colors.length);
+        this.color = this.colors[randomColor];
     }
 
     update() {
         if (this.pathSection >= this.path.length) {
-            this.pathSection = 0;
-            this.setPosition(this.path[this.pathSection].x, this.path[this.pathSection].y);
+            this.setPosition(0);
 
         }
 
         this.x = this.path[this.pathSection].x;
         this.y = this.path[this.pathSection].y;
 
-        this.pathSection += this.speed;
+        /*this.pathSection += this.speed;*/
     }
 
     updateSize(width, height) {
@@ -43,9 +47,19 @@ class BallModel extends GameModel {
         }
     }
 
-    setPosition(x, y) {
-        this.x = x;
-        this.y = y;
+    getPathSection() {
+        return this.pathSection;
+    }
+
+    updatePosition(speed) {
+        let index = this.pathSection + speed;
+        this.setPosition(index);
+    }
+
+    setPosition(index) {
+        this.pathSection = index;
+        this.x = this.path[this.pathSection].x;
+        this.y = this.path[this.pathSection].y;
     }
 }
 

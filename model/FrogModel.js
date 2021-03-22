@@ -8,15 +8,21 @@ class FrogModel extends GameModel {
         this.bulletAngle = 0;
         this.bulletState = 0;
 
-        this.bulletColors = this.colors;
         this.bulletRadius = this.bullet.radius;
         this.bulletLeft = this.bullet.left;
         this.bulletTop = this.bullet.top;
+        this.color = 0;
 
         this.frogWidth = this.frog.width;
         this.frogHeight = this.frog.height;
         this.frogLeft = this.frog.left;
         this.frogTop = this.frog.top;
+        this.getRandomColor();
+    }
+
+    getRandomColor() {
+        let randomColor = Math.floor(Math.random() * this.colors.length);
+        this.color = this.colors[randomColor];
     }
 
     updateFrogAngle(x, y) {
@@ -53,6 +59,7 @@ class FrogModel extends GameModel {
         this.bulletLeft = this.frogLeft + this.frogWidth / 2;
         this.bulletTop = this.frogTop + this.frogHeight / 2;
         this.bulletState = 0;
+        this.getRandomColor();
     }
 
     restartBullet() {
@@ -61,6 +68,7 @@ class FrogModel extends GameModel {
         this.bulletState = 0;
         this.bulletLeft = this.frogLeft + this.frogWidth / 2;
         this.bulletTop = this.frogTop + this.frogHeight / 2;
+        this.getRandomColor();
     }
 }
 

@@ -13,14 +13,7 @@ class BallView extends GameView{
     constructor(model) {
         super();
         this.model = model;
-        this.color = 0;
-        this.colors = this.model.ballsColor;
-        this.getRandomColor();
-    }
-
-    getRandomColor() {
-        let randomColor = Math.floor(Math.random() * this.colors.length);
-        this.color = this.colors[randomColor];
+        this.color = this.model.color;
     }
 
     drawBall() {

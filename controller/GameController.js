@@ -51,7 +51,7 @@ class GameController {
     gameSound() {
         let mainMusic = new Audio();
         mainMusic.src = './storage/sounds/main.mp3';
-        mainMusic.play();
+        /*mainMusic.play();*/
     }
 
     draw() {
