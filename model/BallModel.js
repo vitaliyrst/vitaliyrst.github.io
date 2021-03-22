@@ -17,17 +17,14 @@ class BallModel extends GameModel {
         this.color = this.colors[randomColor];
     }
 
-    update() {
+/*    update() {
         if (this.pathSection >= this.path.length) {
             this.setPosition(0);
 
         }
-
         this.x = this.path[this.pathSection].x;
         this.y = this.path[this.pathSection].y;
-
-        /*this.pathSection += this.speed;*/
-    }
+    }*/
 
     updateSize(width, height) {
         this.ballRadius = width / 70;
@@ -51,15 +48,15 @@ class BallModel extends GameModel {
         return this.pathSection;
     }
 
-    updatePosition(speed) {
-        let index = this.pathSection + speed;
-        this.setPosition(index);
-    }
-
     setPosition(index) {
         this.pathSection = index;
         this.x = this.path[this.pathSection].x;
         this.y = this.path[this.pathSection].y;
+    }
+
+    update(speed) {
+        let index = this.pathSection + speed;
+        this.setPosition(index);
     }
 }
 
