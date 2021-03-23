@@ -37,7 +37,7 @@ class BallController {
     }
 
     createFasterBalls() {
-        if (this.balls.length < this.totalBalls / 3) {
+        if (this.balls.length < this.totalBalls / 2) {
             for (let i = 0; i < this.balls.length; i++) {
                 this.balls[i].update(6);
             }
@@ -56,7 +56,7 @@ class BallController {
         if (this.balls.length !== 0) {
             this.getNextBall(0, 1);
 
-            if (this.balls[0].getPathSection() === 36 && this.totalBalls !== 0) {
+            if (this.balls[0].getPathSection() === 36 && this.totalBalls !== 0 && this.totalBalls > 0) {
                 let ball = this.getRandomBall();
                 let view = new BallView(ball);
                 this.views.unshift(view);
@@ -158,7 +158,7 @@ class BallController {
             }
         }
         j++;
-        console.log(tempBalls)
+
         if (tempBalls.length > 2 && clear) {
 
             this.clearBalls(j, tempBalls);
@@ -273,8 +273,9 @@ this.views.splice(index,tempBalls.length)
     }
 
     draw() {
+        console.log(this.totalBalls)
         this.shooting()
-        if (this.balls.length < this.totalBalls / 3) {
+        if (this.balls.length < this.totalBalls / 2) {
             this.createFasterBalls()
         } else {
             this.createBalls();

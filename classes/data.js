@@ -51,7 +51,7 @@ let data = {
         offsetFrogLeft : 2.48,
         offsetFrogTop : 2.8,
 
-        totalBalls: 60,
+        totalBalls: 100,
         points: [
             {"x": 124, "y": -40}, {"x": 124, "y": 0}, {"x": 123, "y": 32}, {"x": 123, "y": 82},
             {"x": 124, "y": 150}, {"x": 158, "y": 165}, {"x": 198, "y": 128}, {"x": 230, "y": 88},
