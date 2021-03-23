@@ -111,18 +111,8 @@ class BallController {
                 }
             }
         }
-        let parent = this;
-        x = this.path[insertPosition].x;
-        y = this.path[insertPosition].y;
-        let pathSection = this.path[insertPosition]
-        ball.currentFrame = 21;
 
-
-            parent.insertMotion(ball, insertPosition);
-
-
-
-
+        this.insertMotion(ball, insertPosition);
     }
 
     insertMotion(ball, insertPosition) {
@@ -162,7 +152,7 @@ class BallController {
             let dy = this.balls[i].y - ball.y;
             let distance = Math.sqrt((dx * dx) + (dy * dy));
 
-            if (distance <= 18) {
+            if (distance <= 40) {
                 this.frog.down = 1;
                 return i;
             }
