@@ -12,6 +12,8 @@ class BallController {
         this.bullets = [];
         this.createFirstBall();
         this.combo = 0;
+        this.attractBall = false;
+        this.ballAttracted = [];
     }
 
     updateSize(width, height) {
@@ -114,7 +116,7 @@ class BallController {
                 insertPosition = this.balls[index].getPathSection() - 18;
             }
         }
-        console.log(insertPosition)
+
         this.insertMotion(ball, insertPosition);
     }
 
@@ -186,6 +188,25 @@ class BallController {
             console.log(22);
             /*this.checkColor(tempBalls[0].color);*/
         }
+
+        if (this.balls[index - 1] && this.balls[index] && (this.balls[index - 1].color === this.balls[index].color)) {
+            if (this.checkTail(index, false) < 4) {
+
+            }
+            console.log(1);
+            this.addToBallAttracted(this.balls[index]);
+        }
+
+    }
+
+    addToBallAttracted(ball) {
+        if (this.ballAttracted === null) {
+            this.ballAttracted = [];
+            this.ballAttracted.push(ball);
+        } else {
+            this.ballAttracted.push(ball);
+        }
+        setTimeout(() => this.attractBall = true, 100);
     }
 
     insertMotion(ball, insertPosition) {
@@ -242,6 +263,34 @@ class BallController {
         this.bullets.push([bullet, angle]);
     }
 
+    attract() {
+        if (this.ballAttracted.length !== 0) {
+            for (let i = 0; i < this.ballAttracted.length; i++) {
+                let index = this.balls.indexOf(this.ballAttracted[i]);
+                if (index !== -1 && this.balls[index - 1]) {
+                    if (this.ballAttracted[i].color === this.balls[index - 1].color) {
+                        let step = (this.ballAttracted[i].getPathSection() - this.balls[index - 1].getPathSection()) > 21 ?
+                            3 : (this.ballAttracted[i].getPathSection() - this.balls[index - 1].getPathSection() - 18);
+                        this.getNextBall(index, -step);
+
+                        if ((this.ballAttracted[i].getPathSection() - this.balls[index - 1].getPathSection()) <= 18) {
+                            this.ballAttracted.splice(i, 1);
+
+                            this.clearBalls(index - 1, true);
+                            if (this.ballAttracted.length === 0) {
+                                this.attractBall = false;
+                            }
+                        }
+                    } else {
+                        this.ballAttracted.splice(i, 1);
+                    }
+                }
+            }
+        } else {
+            this.attractBall = false;
+        }
+    }
+
     shooting() {
         if (this.frog.bulletState === 1) {
 
@@ -272,6 +321,10 @@ class BallController {
     }
 
     draw() {
+        if (this.attractBall === true) {
+            this.attract();
+        }
+
         this.shooting()
         if (this.balls.length < this.totalBalls / 2) {
             this.createFasterBalls()
