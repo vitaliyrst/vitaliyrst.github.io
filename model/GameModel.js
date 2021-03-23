@@ -3,7 +3,7 @@ import {Level} from "../classes/Level.js";
 class GameModel {
 
     constructor() {
-        this.settings = new Level(2);
+        this.settings = new Level(1);
         this.data = this.settings.getData();
 
         this.ratio = 384 / 569;
