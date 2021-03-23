@@ -9,6 +9,7 @@ class BallController {
         this.views = [];
         this.path = [];
         this.knockedDownBalls = [];
+        this.bullets = [];
         this.createFirstBall();
     }
 
@@ -59,7 +60,7 @@ class BallController {
     }
 
     createFasterBalls() {
-        if (this.balls.length < 20) {
+        if (this.balls.length < this.totalBalls / 3) {
             for (let i = 0; i < this.balls.length; i++) {
                 this.balls[i].update(6);
             }
@@ -88,28 +89,13 @@ class BallController {
         }
     }
 
-    checkCollision(checked) {
-        let ball = checked;
-
-        for (let i = 0; i < this.balls.length; i++) {
-            let dx = this.balls[i].x - ball.x;
-            let dy = this.balls[i].y - ball.y;
-            let distance = (dx * dx) + (dy * dy);
-
-            if (distance <= this.frog.bulletRadius) {
-                return i;
-            }
-        }
-        return -1;
-    }
-
     insertBall(ball, index, label) {
         let x;
         let y;
         let insertPosition;
 
         if (label === 'next') {
-            insertPosition = this.balls.getPathSection() + 18;
+            insertPosition = this.balls[index].getPathSection() + 18;
 
             if (this.balls[index + 1] &&
                 (this.balls[index + 1].getPathSection() - this.balls[index].getPathSection()) < 36) {
@@ -123,15 +109,22 @@ class BallController {
                 }
             }
         }
+        let parent = this;
         x = this.path[insertPosition].x;
         y = this.path[insertPosition].y;
+        ball.currentFrame = 21;
+
+        parent.insertMotion(ball, insertPosition);
+
+
     }
 
     insertMotion(ball, insertPosition) {
         let index;
-
+        console.log(insertPosition)
         for (let i = 0; i < this.balls.length; i++) {
             if (this.balls[i].pathSection > insertPosition) {
+
                 index = i;
                 break;
             }
@@ -141,21 +134,75 @@ class BallController {
         }
 
         this.knockedDownBalls.splice(this.knockedDownBalls.indexOf(ball), 1);
-
+        console.log(1);
         ball.setPosition(insertPosition);
         this.balls.splice(index, 0, ball);
 
         // проверка оставшихся цветов
-      /*  if (this.balls[index - 1] &&
-            this.balls[index - 1].color === this.balls[index].color &&
-            this.balls[index].getPathSection() - this.balls[index - 1].getPathSection() > 17
-        ) {
-            this.
-        }*/
+        /*  if (this.balls[index - 1] &&
+              this.balls[index - 1].color === this.balls[index].color &&
+              this.balls[index].getPathSection() - this.balls[index - 1].getPathSection() > 17
+          ) {
+              this.
+          }*/
+    }
+
+    checkCollision(bullet) {
+        let ball = bullet;
+
+        for (let i = 0; i < this.balls.length; i++) {
+
+            let dx = this.balls[i].x - ball.x;
+            let dy = this.balls[i].y - ball.y;
+            let distance = Math.sqrt((dx * dx) + (dy * dy));
+            console.log(distance)
+            if (distance <= 36) {
+                this.frog.down = 1;
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    shoot() {
+        let angle = this.frog.bulletAngle;
+        let bullet = this.frog.getBullet();
+        this.bullets.push([bullet, angle]);
+    }
+
+    shooting() {
+        if (this.frog.bulletState === 1) {
+
+
+            let flag = this.checkCollision({x: this.frog.bulletLeft, y: this.frog.bulletTop});
+            /*if (flag === -1) {
+                this.frog.bulletLeft
+            }*/
+
+            let ball = this.frog.bulletLeft;
+            let angle = this.frog.bulletAngle;
+            let dy = 11;
+
+            if (flag !== -1) {
+
+                let ball = this.getRandomBall();
+
+                ball.color = this.frog.color;
+
+
+                let view = new BallView(ball);
+                this.views.push(view)
+
+                this.insertBall(ball, flag, 'next');
+            }
+
+        }
+
     }
 
     draw() {
-        if (this.balls.length < 20) {
+        this.shooting()
+        if (this.balls.length < this.totalBalls / 3) {
             this.createFasterBalls()
         } else {
             this.createBalls();

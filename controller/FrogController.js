@@ -26,7 +26,7 @@ class FrogController {
         let canvas = document.getElementById('canvas');
         canvas.addEventListener('click', (eo) => {
             if (!this.model.bulletState) {
-                this.model.bulletSpeed = this.model.frogWidth / 15;
+                this.model.bulletSpeed = this.model.frogWidth / 20;
                 this.model.bulletState = 1;
                 this.gunSound().play();
             }
@@ -45,16 +45,24 @@ class FrogController {
 
     restartBullet() {
         let canvas = document.getElementById('canvas');
-        if (this.model.bulletLeft + this.model.bulletRadius + this.model.frogWidth / 2 < canvas.offsetLeft ||
-            this.model.bulletTop + this.model.bulletRadius + this.model.frogHeight / 2 < canvas.offsetTop ||
-            this.model.bulletLeft - this.model.bulletRadius - this.model.frogWidth / 2 > canvas.offsetWidth ||
-            this.model.bulletTop - this.model.bulletRadius - this.model.frogHeight / 2 > canvas.offsetHeight) {
+        if (this.model.bulletLeft - this.model.bulletRadius < canvas.offsetLeft ||
+            this.model.bulletTop - this.model.bulletRadius < canvas.offsetTop ||
+            this.model.bulletLeft + this.model.bulletRadius > canvas.offsetWidth ||
+            this.model.bulletTop + this.model.bulletRadius > canvas.offsetHeight) {
             this.model.restartBullet();
+            this.view.color = this.model.color
+        }
+    }
+
+    stopBullet() {
+        if (this.model.down === 1) {
+            this.model.stopBullet();
             this.view.color = this.model.color;
         }
     }
 
     draw() {
+        this.stopBullet();
         this.restartBullet();
         this.view.draw();
         this.model.updateBullet()
