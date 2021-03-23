@@ -11,6 +11,7 @@ class BallController {
         this.knockedDownBalls = [];
         this.bullets = [];
         this.createFirstBall();
+        this.combo = 0;
     }
 
     updateSize(width, height) {
@@ -22,6 +23,47 @@ class BallController {
     getRandomBall() {
         this.totalBalls--;
         return new BallModel();
+    }
+
+
+    createFirstBall() {
+        let ball = this.getRandomBall();
+        let view = new BallView(ball);
+        this.views.unshift(view);
+        this.balls.unshift(ball);
+
+        ball.setPosition(18);
+        this.path = ball.path;
+    }
+
+    createFasterBalls() {
+        if (this.balls.length < this.totalBalls / 3) {
+            for (let i = 0; i < this.balls.length; i++) {
+                this.balls[i].update(6);
+            }
+
+            if (this.balls[0].getPathSection() === 36) {
+                let ball = this.getRandomBall();
+                let view = new BallView(ball);
+                this.views.unshift(view);
+                this.balls.unshift(ball);
+                ball.setPosition(18);
+            }
+        }
+    }
+
+    createBalls() {
+        if (this.balls.length !== 0) {
+            this.getNextBall(0, 1);
+
+            if (this.balls[0].getPathSection() === 36 && this.totalBalls !== 0) {
+                let ball = this.getRandomBall();
+                let view = new BallView(ball);
+                this.views.unshift(view);
+                this.balls.unshift(ball);
+                ball.setPosition(18);
+            }
+        }
     }
 
     getNextBall(index, speed) {
@@ -51,46 +93,6 @@ class BallController {
 
     }
 
-    createFirstBall() {
-        let ball = this.getRandomBall();
-        let view = new BallView(ball);
-        this.views.push(view);
-        this.balls.unshift(ball);
-
-        ball.setPosition(18);
-        this.path = ball.path;
-    }
-
-    createFasterBalls() {
-        if (this.balls.length < this.totalBalls / 3) {
-            for (let i = 0; i < this.balls.length; i++) {
-                this.balls[i].update(6);
-            }
-
-            if (this.balls[0].getPathSection() === 36) {
-                let ball = this.getRandomBall();
-                let view = new BallView(ball);
-                this.views.push(view);
-                this.balls.unshift(ball);
-                ball.setPosition(18);
-            }
-        }
-    }
-
-    createBalls() {
-        if (this.balls.length !== 0) {
-            this.getNextBall(0, 1);
-
-            if (this.balls[0].getPathSection() === 36 && this.totalBalls !== 0) {
-                let ball = this.getRandomBall();
-                let view = new BallView(ball);
-                this.views.push(view);
-                this.balls.unshift(ball);
-                ball.setPosition(18);
-            }
-        }
-    }
-
     insertBall(ball, index, label) {
         let x;
         let y;
@@ -115,6 +117,76 @@ class BallController {
         this.insertMotion(ball, insertPosition);
     }
 
+    checkTail(index, clear) {
+        let tempBalls = [];
+        tempBalls.push(this.balls[index]);
+        let color = this.frog.color;
+        let i = index + 1;
+
+        while (this.balls[i]) {
+
+            if (this.balls[i].color === color) {
+                if (this.balls[i].getPathSection() - this.balls[i - 1].getPathSection() <= 18) {
+                    tempBalls.push(this.balls[i]);
+                    i++;
+                } else if (!clear) {
+                    tempBalls.push(this.balls[i]);
+                    i++;
+                } else {
+                    break;
+                }
+            } else {
+                break;
+            }
+        }
+
+        let j = index - 1;
+
+        while (this.balls[j]) {
+            if (this.balls[j].color === color) {
+                if (this.balls[j + 1].getPathSection() - this.balls[j].getPathSection() <= 18) {
+                    tempBalls.push(this.balls[j]);
+                    j--;
+                } else if (!clear) {
+                    tempBalls.push(this.balls[j]);
+                    j--;
+                } else {
+                    break;
+                }
+            } else {
+                break;
+            }
+        }
+        j++;
+        console.log(tempBalls)
+        if (tempBalls.length > 2 && clear) {
+
+            this.clearBalls(j, tempBalls);
+        }
+        return tempBalls.length;
+    }
+
+    clearBalls(index, tempBalls) {
+        this.combo++;
+
+        let tempScore = 0;
+
+        for (let i = 0; i < tempBalls.length; i++) {
+            tempScore += 1;
+        }
+
+        if (this.balls.length === tempBalls.length) {
+            console.log(1);
+        }
+
+        this.balls.splice(index, tempBalls.length);
+this.views.splice(index,tempBalls.length)
+        if (this.totalBalls === 0) {
+            console.log(22);
+            /*this.checkColor(tempBalls[0].color);*/
+        }
+    }
+
     insertMotion(ball, insertPosition) {
         let index;
 
@@ -132,7 +204,11 @@ class BallController {
         /*this.knockedDownBalls.splice(this.knockedDownBalls.indexOf(ball), 1);*/
 
         ball.setPosition(insertPosition);
+
         this.balls.splice(index, 0, ball);
+        let view = new BallView(ball);
+        this.views.splice(index, 0, view);
+        this.checkTail(index, true);
 
         // проверка оставшихся цветов
         /*  if (this.balls[index - 1] &&
@@ -152,7 +228,7 @@ class BallController {
             let dy = this.balls[i].y - ball.y;
             let distance = Math.sqrt((dx * dx) + (dy * dy));
 
-            if (distance <= 40) {
+            if (distance <= 36) {
                 this.frog.down = 1;
                 return i;
             }
@@ -204,7 +280,6 @@ class BallController {
             this.createBalls();
         }
         for (let i = 0; i < this.balls.length; i++) {
-            /*this.balls[i].update();*/
             this.views[i].draw();
         }
     }

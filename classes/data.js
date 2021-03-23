@@ -89,7 +89,7 @@ let data = {
         offsetFrogLeft : 3.6,
         offsetFrogTop : 2.8,
 
-        totalBalls: 10,
+        totalBalls: 100,
         points: [
             {"x": -40, "y": 33}, {"x": 0, "y": 34}, {"x": 52, "y": 35}, {"x": 104, "y": 35},
             {"x": 156, "y": 37}, {"x": 209, "y": 38}, {"x": 260, "y": 39}, {"x": 312, "y": 44},

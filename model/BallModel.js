@@ -9,6 +9,7 @@ class BallModel extends GameModel {
         this.width = this.canvasWidth;
         this.height = this.canvasHeight;
         this.color = 0;
+        this.canAnimate = 0;
         this.getRandomColor();
     }
 
