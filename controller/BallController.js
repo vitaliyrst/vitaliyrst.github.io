@@ -31,8 +31,10 @@ class BallController {
         for (let i = index; i < this.balls.length - 1; i++) {
             if ((this.balls[i + 1].getPathSection() - this.balls[i].getPathSection()) <= 18) {
                 if ((this.balls[i + 1].getPathSection() - this.balls[i].getPathSection()) < 18) {
-                    this.balls[i + 1].setPosition(this.balls[i].getPathSection() + 18);
+                    this.balls[i + 1].update(3);
+                    /*this.balls[i + 1].setPosition(this.balls[i].getPathSection() + 18);*/
                 }
+
                 tempBalls.push(this.balls[i + 1]);
             } else {
                 break;
@@ -112,16 +114,20 @@ class BallController {
         let parent = this;
         x = this.path[insertPosition].x;
         y = this.path[insertPosition].y;
+        let pathSection = this.path[insertPosition]
         ball.currentFrame = 21;
 
-        parent.insertMotion(ball, insertPosition);
+
+            parent.insertMotion(ball, insertPosition);
+
+
 
 
     }
 
     insertMotion(ball, insertPosition) {
         let index;
-        console.log(insertPosition)
+
         for (let i = 0; i < this.balls.length; i++) {
             if (this.balls[i].pathSection > insertPosition) {
 
@@ -133,8 +139,8 @@ class BallController {
             }
         }
 
-        this.knockedDownBalls.splice(this.knockedDownBalls.indexOf(ball), 1);
-        console.log(1);
+        /*this.knockedDownBalls.splice(this.knockedDownBalls.indexOf(ball), 1);*/
+
         ball.setPosition(insertPosition);
         this.balls.splice(index, 0, ball);
 
@@ -155,8 +161,8 @@ class BallController {
             let dx = this.balls[i].x - ball.x;
             let dy = this.balls[i].y - ball.y;
             let distance = Math.sqrt((dx * dx) + (dy * dy));
-            console.log(distance)
-            if (distance <= 36) {
+
+            if (distance <= 18) {
                 this.frog.down = 1;
                 return i;
             }
