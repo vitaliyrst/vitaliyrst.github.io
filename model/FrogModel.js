@@ -65,6 +65,7 @@ class FrogModel extends GameModel {
     stopBullet() {
         this.bulletState = 0;
         this.bulletSpeed = 0;
+        this.bulletAngle = -this.frogAngle;
         this.bulletLeft = this.frogLeft + this.frogWidth / 2;
         this.bulletTop = this.frogTop + this.frogHeight / 2;
         this.getRandomColor();

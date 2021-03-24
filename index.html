@@ -23,9 +23,9 @@
             <form class="game_player" name="formName">
                 <input type="text" name="name" maxlength="30" placeholder="Your name...">
             </form>
-            <div class="menu menu_game">
+            <div class="menu menu_play">
                 <div>
-                    <button class="game_button">Play</button>
+                    <button class="play_button">Play</button>
                 </div>
             </div>
             <div class="menu menu_records">
@@ -51,6 +51,38 @@
                         onclick="location.href = 'https://github.com/vitaliyrst'"></button>
                 <button class="social_button social_button_sound"></button>
             </div>
+        </div>
+        <div class="zuma_play hidden">
+                <div class="level">
+                    <div>
+                        <button type="button" class="level_button" value="1">1</button>
+                    </div>
+                </div>
+                <div class="level">
+                    <div>
+                        <button type="button" class="level_button" value="2">2</button>
+                    </div>
+                </div>
+                <div class="level">
+                    <div>
+                        <button type="button" class="level_button" value="3">3</button>
+                    </div>
+                </div>
+                <div class="level">
+                    <div>
+                        <button type="button" class="level_button" value="4">4</button>
+                    </div>
+                </div>
+                <div class="level">
+                    <div>
+                        <button type="button" class="level_button" value="5" disabled>5</button>
+                    </div>
+                </div>
+                <div class="level">
+                    <div>
+                        <button type="button" class="level_button" value="6" disabled>6</button>
+                    </div>
+                </div>
         </div>
         <div class="zuma_game hidden">
             <div class="zuma_field">
@@ -89,7 +121,8 @@
             <div><h2>RULES:</h2></div>
             <ul class="rules_list">
                 <li class="rules_item">The goal of the game is to shoot down as many balls as possible</li>
-                <li class="rules_item">When 3 or more balls are knocked down, the number of points received increases</li>
+                <li class="rules_item">When 3 or more balls are knocked down, the number of points received increases
+                </li>
                 <li class="rules_item">If the balls reach the skull, you lose</li>
             </ul>
         </div>
@@ -103,7 +136,6 @@
         </div>
     </div>
 </section>
-<script src="https://code.createjs.com/1.0.0/tweenjs.min.js"></script>
 <script type="module" src="app.js"></script>
 </body>
 </html>

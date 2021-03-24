@@ -4,7 +4,7 @@ import {Records} from "./classes/Records.js";
 import {Level} from "./classes/Level.js";
 
 async function ready() {
-    location.hash = '';
+    /*location.hash = '';*/
 
     /*// fetch images
     let requestOptionsImages = {
@@ -54,7 +54,8 @@ async function ready() {
 ready().then(() => {
     let spa = new Spa();
     spa.readyState = 1;
-    spa.run(run);
+    setTimeout(() => spa.run(run), 500);
+
 })
 
 function run() {

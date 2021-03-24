@@ -2,6 +2,7 @@ class Spa {
     constructor() {
         this.spaState = {};
         this.readyState = 0;
+        this.level = 0;
     }
 
     switchToStateFromURLHash() {
@@ -15,17 +16,19 @@ class Spa {
             this.spaState = {pageName: 'Load'};
         }
 
+        let name = document.querySelector('.game_name');
         let loading = document.querySelector('.loading_container');
         let menu = document.querySelector('.main_menu');
+        let play = document.querySelector('.zuma_play');
+        let game = document.querySelector('.zuma_game');
         let records = document.querySelector('.zuma_records');
         let rules = document.querySelector('.zuma_rules');
         let about = document.querySelector('.zuma_about');
-        let game = document.querySelector('.zuma_game');
-        let name = document.querySelector('.game_name');
 
         switch (this.spaState.pageName) {
             case 'Menu':
                 loading.classList.add('hidden');
+                play.classList.add('hidden');
                 game.classList.add('hidden');
                 records.classList.add('hidden');
                 rules.classList.add('hidden');
@@ -33,9 +36,20 @@ class Spa {
                 menu.classList.remove('hidden');
                 name.classList.remove('hidden');
                 break;
-            case 'Game':
+            case 'Play':
                 loading.classList.add('hidden');
                 menu.classList.add('hidden');
+                game.classList.add('hidden');
+                records.classList.add('hidden');
+                rules.classList.add('hidden');
+                about.classList.add('hidden');
+                name.classList.remove('hidden');
+                play.classList.remove('hidden');
+                break;
+            case 'Game' :
+                loading.classList.add('hidden');
+                menu.classList.add('hidden');
+                play.classList.add('hidden');
                 records.classList.add('hidden');
                 rules.classList.add('hidden');
                 about.classList.add('hidden');
@@ -45,6 +59,7 @@ class Spa {
             case 'Records':
                 loading.classList.add('hidden');
                 menu.classList.add('hidden');
+                play.classList.add('hidden');
                 game.classList.add('hidden');
                 rules.classList.add('hidden');
                 about.classList.add('hidden');
@@ -54,6 +69,7 @@ class Spa {
             case 'Rules':
                 loading.classList.add('hidden');
                 menu.classList.add('hidden');
+                play.classList.add('hidden');
                 game.classList.add('hidden');
                 records.classList.add('hidden');
                 about.classList.add('hidden');
@@ -63,6 +79,7 @@ class Spa {
             case 'About':
                 loading.classList.add('hidden');
                 menu.classList.add('hidden');
+                play.classList.add('hidden');
                 game.classList.add('hidden');
                 records.classList.add('hidden');
                 rules.classList.add('hidden');
@@ -71,6 +88,7 @@ class Spa {
                 break;
             case 'Load':
                 menu.classList.add('hidden');
+                play.classList.add('hidden');
                 game.classList.add('hidden');
                 records.classList.add('hidden');
                 rules.classList.add('hidden');
@@ -86,6 +104,10 @@ class Spa {
 
     switchToMenuPage() {
         this.switchToState({pageName: 'Menu'});
+    }
+
+    switchToPlayPage() {
+        this.switchToState({pageName: 'Play'});
     }
 
     switchToGamePage() {
@@ -113,7 +135,7 @@ class Spa {
 
         if (this.readyState) {
             if (oldHash === '#Game') {
-                location.hash = 'Menu';
+                location.hash = 'Play';
             } else if (oldHash && oldHash !== '#Game') {
                 location.hash = oldHash.substr(1);
             } else {
@@ -126,11 +148,20 @@ class Spa {
             this.switchToMenuPage('Menu');
         });
 
-        let buttonGame = document.querySelector('.game_button');
-        buttonGame.addEventListener('click', () => {
-            run();
-            this.switchToGamePage('Game');
+        let buttonPlay = document.querySelector('.play_button');
+        buttonPlay.addEventListener('click', () => {
+            this.switchToPlayPage('Play');
         });
+
+        let buttonsLevel = document.querySelectorAll('.level_button');
+        for (let i = 0; i < buttonsLevel.length; i++) {
+            buttonsLevel[i].addEventListener('click', (eo) => {
+                let div = document.getElementById('canvas');
+                div.setAttribute('level', buttonsLevel[i].value);
+                run();
+                this.switchToGamePage('Game');
+            });
+        }
 
         let buttonRecords = document.querySelector('.records_button');
         buttonRecords.addEventListener('click', () => {

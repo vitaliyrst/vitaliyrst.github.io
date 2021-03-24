@@ -258,52 +258,55 @@ a {
     cursor: pointer;
 }
 
-/* Rules */
+/* Play */
 
-.zuma_rules {
-    margin-top: 1vh;
-    font-size: calc(1em + 1vw);
+.zuma_play {
+    width: 40vh;
+    margin-left: auto;
+    margin-right: auto;
 
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-grow: 1;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-content: flex-start;
+}
+
+.level {
+    width: 7vh;
+    height: 7vh;
+    margin: 1vh;
 
     border: 10px solid;
     border-image: url("./storage/backgrounds/border.png") 30 30 round;
-}
 
-.zuma_rules div {
-    background-color: #b3814b;
-    opacity: 80%;
-}
-
-.zuma_rules h2 {
-    font-size: calc(1em + 1vh);
     text-align: center;
-    color: white;
 }
 
-.rules_list {
-    width: 60vw;
-    margin: 0;
-    padding: 0;
+.level div {
+    width: 100%;
+    height: 100%;
 
-    background-color: #b3814b;
-    opacity: 80%;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    background-color: burlywood;
+    opacity: 70%;
 }
 
-.rules_item {
-    margin-bottom: 3vh;
 
-    font-size: calc(1em);
-    line-height: 100%;
-    text-align: left;
-    word-break: break-all;
+.level_button {
+    width: 100%;
+    height: 100%;
 
-    list-style: none;
+    margin: auto;
+
+    font: inherit;
+    font-size: calc(2em);
+
+    outline: none;
+    border: none;
+
+    background: transparent;
+    cursor: pointer;
 }
 
 /* Records */
@@ -339,6 +342,54 @@ a {
     color: white;
 }
 
+/* Rules */
+
+.zuma_rules {
+    margin-top: 1vh;
+    font-size: calc(1em + 1vw);
+
+    display: flex;
+    flex-direction: column;
+
+    border: 10px solid;
+    border-image: url("./storage/backgrounds/border.png") 30 30 round;
+}
+
+.zuma_rules div {
+    background-color: #b3814b;
+    opacity: 80%;
+}
+
+.zuma_rules h2 {
+    font-size: calc(1em + 1vh);
+    text-align: center;
+    color: white;
+}
+
+.rules_list {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+
+    background-color: #b3814b;
+    opacity: 80%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.rules_item {
+    margin-bottom: 3vh;
+
+    font-size: calc(1em);
+    line-height: 100%;
+    text-align: left;
+    word-break: break-all;
+
+    list-style: none;
+}
+
 /* About */
 
 .zuma_about {
@@ -365,7 +416,7 @@ a {
 }
 
 .about_list {
-    width: 60vw;
+    width: 100%;
     margin: 0;
     padding: 0;
 

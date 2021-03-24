@@ -3,20 +3,18 @@ import {Level} from "../classes/Level.js";
 class GameModel {
 
     constructor() {
-        this.settings = new Level(2);
+        this.settings = new Level();
         this.data = this.settings.getData();
-
+        this.level = this.data.level;
+        this.levelBg = this.data.levelBg;
+        this.colors = this.data.ballsColor;
+        this.totalBalls = this.data.totalBalls;
         this.ratio = 384 / 569;
-
         this.setCanvasData();
         this.frog = this.setFrogData();
         this.bullet = this.setBulletData();
         this.ballRadius = this.setBallData();
         this.path = this.setPathData();
-        this.level = this.data.level;
-        this.levelBg = this.data.levelBg;
-        this.colors = this.data.ballsColor;
-        this.totalBalls = this.data.totalBalls;
     }
 
     setCanvasData() {
