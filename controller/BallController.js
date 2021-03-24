@@ -190,7 +190,7 @@ class BallController {
         }
 
         if (this.balls[index - 1] && this.balls[index] && (this.balls[index - 1].color === this.balls[index].color)) {
-            if (this.checkTail(index, false) < 4) {
+            if (this.checkTail(index, false) < 3) {
 
             }
             console.log(1);
@@ -271,12 +271,14 @@ class BallController {
                     if (this.ballAttracted[i].color === this.balls[index - 1].color) {
                         let step = (this.ballAttracted[i].getPathSection() - this.balls[index - 1].getPathSection()) > 21 ?
                             3 : (this.ballAttracted[i].getPathSection() - this.balls[index - 1].getPathSection() - 18);
+                        console.log(step)
                         this.getNextBall(index, -step);
 
                         if ((this.ballAttracted[i].getPathSection() - this.balls[index - 1].getPathSection()) <= 18) {
+                            console.log(1);
                             this.ballAttracted.splice(i, 1);
 
-                            this.clearBalls(index - 1, true);
+                            this.checkTail(index - 1, true);
                             if (this.ballAttracted.length === 0) {
                                 this.attractBall = false;
                             }
