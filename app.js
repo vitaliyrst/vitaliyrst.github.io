@@ -1,12 +1,11 @@
 import {GameController} from "./controller/GameController.js";
 import {Spa} from "./classes/Spa.js";
 import {Records} from "./classes/Records.js";
-import {Level} from "./classes/Level.js";
 
 async function ready() {
     /*location.hash = '';*/
 
-    /*// fetch images
+    // fetch images
     let requestOptionsImages = {
         method: 'GET',
         redirect: 'follow'
@@ -45,10 +44,9 @@ async function ready() {
         .catch(error => console.log('error', error));
 
     let record = new Records(await records);
-*/
 
     //fetch level
-    await new Promise((resolve, reject) => setTimeout(resolve, 200));
+    await new Promise((resolve, reject) => setTimeout(resolve, 500));
 }
 
 ready().then(() => {
