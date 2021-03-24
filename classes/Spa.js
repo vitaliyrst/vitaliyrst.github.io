@@ -2,7 +2,6 @@ class Spa {
     constructor() {
         this.spaState = {};
         this.readyState = 0;
-        this.level = 0;
     }
 
     switchToStateFromURLHash() {

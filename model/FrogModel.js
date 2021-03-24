@@ -48,7 +48,7 @@ class FrogModel extends GameModel {
     updateSize(width, height) {
         this.frogWidth = width / 6.15;
         this.frogHeight = width / 6.15;
-        this.bulletRadius = width / 65;
+        this.bulletRadius = width / 63;
         this.frogLeft = width / this.data.offsetFrogLeft;
         this.frogTop = height / this.data.offsetFrogTop;
         this.bulletLeft = this.frogLeft + this.frogWidth / 2;

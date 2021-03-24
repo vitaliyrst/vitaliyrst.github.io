@@ -4,12 +4,10 @@ class BallModel extends GameModel {
     constructor() {
         super();
         this.pathSection = 0;
-        this.ballId = 0;
         this.ballsColor = this.colors;
         this.width = this.canvasWidth;
         this.height = this.canvasHeight;
         this.color = 0;
-        this.canAnimate = 0;
         this.getRandomColor();
     }
 
@@ -18,17 +16,8 @@ class BallModel extends GameModel {
         this.color = this.colors[randomColor];
     }
 
-/*    update() {
-        if (this.pathSection >= this.path.length) {
-            this.setPosition(0);
-
-        }
-        this.x = this.path[this.pathSection].x;
-        this.y = this.path[this.pathSection].y;
-    }*/
-
     updateSize(width, height) {
-        this.ballRadius = width / 70;
+        this.ballRadius = width / 63;
         let path = this.path;
         let ratioW = width / this.width;
         let ratioH = height / this.height;

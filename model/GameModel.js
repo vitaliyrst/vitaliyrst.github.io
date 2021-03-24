@@ -51,12 +51,12 @@ class GameModel {
     }
 
     setBallData() {
-        return this.canvasWidth / 70;
+        return this.canvasWidth / 63;
     }
 
     setBulletData() {
         return {
-            radius: this.canvasWidth / 70,
+            radius: this.canvasWidth / 63,
             left: this.canvasWidth / this.data.offsetFrogLeft + this.canvasWidth / 6.15 / 2,
             top: this.canvasHeight / this.data.offsetFrogTop + this.canvasWidth / 6.15 / 2,
         }

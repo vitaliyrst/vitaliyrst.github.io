@@ -3,8 +3,6 @@ import {Spa} from "./classes/Spa.js";
 import {Records} from "./classes/Records.js";
 
 async function ready() {
-    /*location.hash = '';*/
-
     // fetch images
     let requestOptionsImages = {
         method: 'GET',
@@ -67,6 +65,7 @@ function run() {
     window.requestAnimationFrame(work);
 }
 
+/*
 let arr = {1: ['Alex', 1000], 2: ['Jake', 1200], 3: ['Vitaliy', 1400], 4: ['Sten', 1600], 5: ['Kolya', 2000]}
 
 function update(name,value) {
@@ -113,4 +112,4 @@ function update(name,value) {
         .catch(error => console.log('error', error))
 }
 
-update(arr);
+update(arr);*/
