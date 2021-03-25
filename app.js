@@ -36,12 +36,12 @@ async function ready() {
         redirect: 'follow'
     };
 
-    let records = await fetch("https://fe.it-academy.by/AjaxStringStorage2.php", requestOptionsRecords)
+    /*let records = await fetch("https://fe.it-academy.by/AjaxStringStorage2.php", requestOptionsRecords)
         .then(response => response.json())
         .then(result => JSON.parse(result.result))
         .catch(error => console.log('error', error));
 
-    let record = new Records(await records);
+    let record = new Records(await records);*/
 
     //fetch level
     await new Promise((resolve, reject) => setTimeout(resolve, 500));

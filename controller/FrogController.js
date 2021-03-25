@@ -25,8 +25,8 @@ class FrogController {
     shot() {
         let canvas = document.getElementById('canvas');
         canvas.addEventListener('click', (eo) => {
-            if (!this.model.bulletState) {
-                this.model.bulletSpeed = this.model.frogWidth / 20;
+            if (!this.model.bulletState && this.model.canShoot) {
+                this.model.bulletSpeed = this.model.frogWidth / 10;
                 this.model.bulletState = 1;
                 this.gunSound().play();
             }

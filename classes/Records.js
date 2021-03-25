@@ -1,10 +1,14 @@
 class Records {
-    constructor(data) {
-        this.data = data;
-        this.set();
+    constructor(/*data*/) {
+        /*this.data = data;*/
+        /*this.set();*/
+        this.score = 0;
+        this.currentCombo = 0;
+        this.maxCombo = 0;
+        this.multiplierCombo = 0;
     }
 
-    set() {
+    /*set() {
         let table = document.querySelector('.records_table');
         let trs = table.getElementsByTagName('tr');
         for (let i = 0; i < trs.length; i++) {
@@ -13,6 +17,19 @@ class Records {
                 trs[i].lastElementChild.textContent = this.data[i][1];
             }
         }
+    }*/
+
+    getScore() {
+        let gameField = document.querySelector('.zuma_field');
+    }
+
+    updateScore(score) {
+        let gameScore = document.querySelector('.game_score');
+        gameScore.textContent = `SCORE : ${score}`;
+    }
+
+    getCombo(value) {
+
     }
 }
 

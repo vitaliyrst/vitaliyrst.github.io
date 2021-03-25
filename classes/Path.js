@@ -27,7 +27,7 @@ class Path {
                     (mapCurve[i + 1].y + mapCurve[i + 2].y) / 2) :
                 this.getPoint(mapCurve[i + 2].x, mapCurve[i + 2].y);
 
-            let steps = bezier.init(point0, point1, point2, 1.8);
+            let steps = bezier.init(point0, point1, point2, 1);
 
             for (let m = 1; m <= steps; ++m) {
                 let data = bezier.getAnchorPoint(m);

@@ -1,24 +1,31 @@
 import {BallModel} from "../model/BallModel.js";
 import {BallView} from "../view/BallView.js";
+import {Records} from "../classes/Records.js";
 
 class BallController {
     constructor(totalBalls, frog) {
         this.frog = frog;
         this.totalBalls = totalBalls;
+        this.records = new Records();
+
         this.balls = [];
-        this.spacing = 20;
+        this.spacing = 36;
         this.path = [];
         this.views = [];
         this.createFirstBall();
 
-        this.checkPushBallCollision = false;
-        this.knockedDownBalls = [];
-        this.bullets = [];
+        /*this.checkPushBallCollision = false;
+        this.knockedDownBalls = [];*/
 
-        this.combo = 0;
+
         this.ballNeedShift = false;
         this.shiftedBalls = [];
+        this.fasterBallsState = true;
 
+        this.currentCombo = 0;
+        this.maxCombo = 0;
+        this.multiplierCombo = 1;
+        this.score = 0;
     }
 
     /**
@@ -51,9 +58,8 @@ class BallController {
      * Создание быстрых шаров
      */
     createFasterBalls() {
-        if (this.balls.length < this.totalBalls / 2) {
-
-            let speed = 10;
+        if (this.balls.length < 30 && this.fasterBallsState) {
+            let speed = 12;
             for (let i = 0; i < this.balls.length; i++) {
                 this.balls[i].update(speed);
             }
@@ -117,7 +123,7 @@ class BallController {
             if (this.balls[i + 1].getPathSection() - this.balls[i].getPathSection() <= this.spacing) {
 
                 if (this.balls[i + 1].getPathSection() - this.balls[i].getPathSection() < this.spacing) {
-                    this.balls[i + 1].update(1);
+                    this.balls[i + 1].update(4);
                 }
 
                 tempBalls.push(this.balls[i + 1]);
@@ -133,12 +139,33 @@ class BallController {
 
         // Удаление шаров, если дойдут до черепа
         if (this.balls[this.balls.length - 1].getPathSection() >= this.path.length - this.spacing) {
+            delete this.balls[this.balls.length - 2];
             this.balls.splice(this.balls.length - 2, 1);
-            this.checkPushBallCollision = false;
+            /*this.checkPushBallCollision = false;*/
 
             // конец игры, отключаем музыку, запрещаем стрелять, играем музыку проигрыша, удаляем ссылки на шары
         }
+    }
 
+    /**
+     * @method
+     * @param bullet {Object}
+     * @return {number}
+     * Проверка столкновения
+     */
+    checkCollision(bullet) {
+        for (let i = 0; i < this.balls.length; i++) {
+
+            let dx = this.balls[i].x - bullet.x;
+            let dy = this.balls[i].y - bullet.y;
+            let distance = Math.sqrt((dx * dx) + (dy * dy));
+
+            if (distance <= this.balls[i].ballRadius * 2) {
+                this.frog.down = 1;
+                return i;
+            }
+        }
+        return -1;
     }
 
     /**
@@ -152,27 +179,27 @@ class BallController {
         let insertPosition;
 
         if (position === 'next') {
-            insertPosition = this.balls[index].getPathSection() + this.spacing;
+            insertPosition = this.balls[index].getPathSection();
 
-            if (this.balls[index + 1] &&
+            /*if (this.balls[index + 1] &&
                 this.balls[index + 1].getPathSection() - this.balls[index].getPathSection() < this.spacing * 2
             ) {
-                this.knockedDownBalls.push(new Array(ball, this.balls[index + 1]));
+                this.knockedDownBalls.push([ball, this.balls[index + 1]]);
                 this.checkPushBallCollision = true;
-            }
+            }*/
         } else if (position === 'previous') {
 
-            if (this.balls[index - 1] &&
+            /*if (this.balls[index - 1] &&
                 this.balls[index - 1].getPathSection() - this.balls[index].getPathSection() < this.spacing * 2
             ) {
-                insertPosition = this.balls[index - 1].getPathSection() + this.spacing;
-                this.knockedDownBalls.push(new Array(ball, this.balls[index]));
-                this.checkPushBallCollision = true;
-            } else {
+               /!* insertPosition = this.balls[index].getPathSection()/!* + this.spacing*!/;*!/
+                /!*this.knockedDownBalls.push([ball, this.balls[index]]);
+                this.checkPushBallCollision = true;*!/
+            } else {*/
+                console.log(1);
                 insertPosition = this.balls[index].getPathSection() - this.spacing;
-            }
-        }
 
+        }
         this.insertBall(ball, insertPosition);
     }
 
@@ -197,7 +224,7 @@ class BallController {
             }
         }
 
-        this.knockedDownBalls.splice(this.knockedDownBalls.indexOf(ball), 1);
+        /*this.knockedDownBalls.splice(this.knockedDownBalls.indexOf(ball), 1);*/
         ball.setPosition(insertPosition);
 
         this.balls.splice(index, 0, ball);
@@ -230,7 +257,7 @@ class BallController {
         let tempBalls = [];
         tempBalls.push(this.balls[index]);
 
-        let color = this.frog.color;
+        let color = this.balls[index].color;
         let i = index + 1;
 
         while (this.balls[i]) {
@@ -285,8 +312,15 @@ class BallController {
      * Удаление хвоста при совпадении более двух шаров одного цвета (+комбо)
      */
     clearTailBalls(index, tempBalls) {
-
+        this.currentCombo++;
         // очки + выигранный раунд
+        let tempScore = 0;
+        for (let i = 0; i < tempBalls.length; i++) {
+            tempScore += 10;
+        }
+        tempScore *= this.multiplierCombo;
+        this.score += tempScore;
+
 
 
         this.balls.splice(index, tempBalls.length);
@@ -296,9 +330,19 @@ class BallController {
             this.balls[index] &&
             this.balls[index - 1].color === this.balls[index].color
         ) {
+            if (this.checkTail(index, false) < 3) {
+                if (this.currentCombo > this.maxCombo) {
+                    this.maxCombo = this.currentCombo;
+                }
+                this.currentCombo = 0;
+            }
             this.addShiftedBall(this.balls[index]);
+        } else {
+            if (this.currentCombo > this.maxCombo) {
+                this.maxCombo = this.currentCombo;
+            }
+            this.currentCombo = 0;
         }
-
     }
 
     /**
@@ -331,70 +375,57 @@ class BallController {
                     if (this.shiftedBalls[i].color === this.balls[index - 1].color) {
                         let speed;
 
-                        if (this.shiftedBalls[i].getPathSection() - this.balls[index - 1].getPathSection() > this.spacing + 4) {
-                            speed = 4;
+                        if (this.shiftedBalls[i].getPathSection() - this.balls[index - 1].getPathSection() > this.spacing + 2) {
+                            speed = 3;
                         } else {
-                            speed = this.shiftedBalls[i].getPathSection() - this.balls[index - 1].getPathSection() - this.spacing;
+                            speed = 10;
                         }
 
                         this.pushNextBall(index, -speed);
 
                         if (this.shiftedBalls[i].getPathSection() - this.balls[index - 1].getPathSection() <= this.spacing) {
-
+                            this.multiplierCombo++;
                             this.shiftedBalls.splice(i, 1);
 
                             this.checkTail(index - 1, true);
 
                             if (this.shiftedBalls.length === 0) {
                                 this.ballNeedShift = false;
+                                this.multiplierCombo = 1;
                             }
                         }
                     } else {
                         this.shiftedBalls.splice(i, 1);
+                        if (this.currentCombo > this.maxCombo) {
+                            this.maxCombo = this.currentCombo;
+                        }
+                        this.currentCombo = 0;
                     }
                 }
             }
         } else {
             this.ballNeedShift = false;
+            this.multiplierCombo = 1;
         }
     }
 
-    /**
-     * @method
-     * @param bullet {Object}
-     * @return {number}
-     * Проверка столкновения
-     */
-    checkCollision(bullet) {
-        for (let i = 0; i < this.balls.length; i++) {
 
-            let dx = this.balls[i].x - bullet.x;
-            let dy = this.balls[i].y - bullet.y;
-            let distance = Math.sqrt((dx * dx) + (dy * dy));
 
-            if (distance <= this.balls[i].ballRadius * 2) {
-                this.frog.down = 1;
-                return i;
-            }
-        }
-        return -1;
-    }
-
-    checkPushNextBallCollision() {
+    /*checkPushNextBallCollision() {
         if (this.knockedDownBalls.length !== 0) {
 
             for (let i = 0; i < this.knockedDownBalls.length; i++) {
                 let dx = this.knockedDownBalls[i][0].x - this.knockedDownBalls[i][1].x;
                 let dy = this.knockedDownBalls[i][0].y - this.knockedDownBalls[i][1].y;
-                let distance = (dx * dx) + (dy * dy);
+                let distance = Math.sqrt((dx * dx) + (dy * dy));
                 let collision = (distance < this.knockedDownBalls[i][0].ballRadius);
                 let speed = 0;
-                console.log(distance)
+
                 while (collision) {
                     speed++;
                     dx = this.knockedDownBalls[i][0].x - this.path[this.knockedDownBalls[i][1].getPathSection() + speed].x;
                     dy = this.knockedDownBalls[i][0].y - this.path[this.knockedDownBalls[i][1].getPathSection() + speed].y;
-                    distance = (dx * dx) + (dy * dy);
+                    distance = Math.sqrt((dx * dx) + (dy * dy));
 
                     collision = (distance < this.knockedDownBalls[i][0].ballRadius);
                 }
@@ -407,60 +438,56 @@ class BallController {
                 }
             }
         } else {
-
             this.checkPushBallCollision = false;
         }
-    }
-
-    shoot() {
-        let angle = this.frog.bulletAngle;
-        let bullet = this.frog.getBullet();
-        this.bullets.push([bullet, angle]);
-    }
-
+    }*/
 
     shooting() {
         if (this.frog.bulletState === 1) {
 
             let flag = this.checkCollision({x: this.frog.bulletLeft, y: this.frog.bulletTop});
+
             if (flag !== -1) {
-                let previousX = this.path[this.balls[flag].getPathSection() - Math.ceil(this.frog.bulletRadius)].x;
-                let previousY = this.path[this.balls[flag].getPathSection() - Math.ceil(this.frog.bulletRadius)].y;
+                let previousX = this.path[this.balls[flag].getPathSection() - Math.ceil(this.balls[flag].ballRadius)].x;
+                let previousY = this.path[this.balls[flag].getPathSection() - Math.ceil(this.balls[flag].ballRadius)].y;
                 let previousDistance = Math.sqrt(
                     (this.frog.bulletLeft - previousX) * (this.frog.bulletLeft - previousX) +
                     (this.frog.bulletTop - previousY) * (this.frog.bulletTop - previousY)
                 );
 
-                let nextX = this.path[this.balls[flag].getPathSection() + Math.floor(this.frog.bulletRadius)].x;
-                let nextY = this.path[this.balls[flag].getPathSection() + Math.floor(this.frog.bulletRadius)].y;
+                let nextX = this.path[this.balls[flag].getPathSection() + Math.ceil(this.balls[flag].ballRadius)].x;
+                let nextY = this.path[this.balls[flag].getPathSection() + Math.ceil(this.balls[flag].ballRadius)].y;
                 let nextDistance = Math.sqrt(
                     (this.frog.bulletLeft - nextX) * (this.frog.bulletLeft - nextX) +
                     (this.frog.bulletTop - nextY) * (this.frog.bulletTop - nextY)
                 );
 
                 let position = (previousDistance > nextDistance) ? 'next' : 'previous';
+                console.log(position)
                 let ball = this.getRandomBall();
                 ball.color = this.frog.color;
                 this.insertPositionCheck(ball, flag, position);
             }
-
         }
-
     }
 
     draw() {
+        this.records.updateScore(this.score);
         if (this.ballNeedShift) {
             this.shiftOfTwoTails();
         }
 
-        if (this.checkPushBallCollision) {
+        /*if (this.checkPushBallCollision) {
             this.checkPushNextBallCollision();
-        }
+        }*/
 
-        this.shooting()
-        if (this.balls.length < this.totalBalls / 2) {
-            this.createFasterBalls()
+        this.shooting();
+
+        if (this.fasterBallsState && this.balls.length < 1) {
+            this.createFasterBalls();
         } else {
+            this.fasterBallsState = false;
+            this.frog.canShoot = 1;
             this.createBalls();
         }
         for (let i = 0; i < this.balls.length; i++) {

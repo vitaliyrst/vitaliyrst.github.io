@@ -13,6 +13,7 @@ class FrogModel extends GameModel {
         this.bulletLeft = this.bullet.left;
         this.bulletTop = this.bullet.top;
         this.color = 0;
+        this.canShoot = false;
 
         this.frogWidth = this.frog.width;
         this.frogHeight = this.frog.height;
