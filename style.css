@@ -512,6 +512,16 @@ a {
     z-index: 1;
 }
 
+.extra_score {
+    font: inherit;
+    font-size: 3vh;
+
+    color: white;
+
+    position: absolute;
+    z-index: 1;
+}
+
 @media (max-width: 768px) {
     .game_name {
         max-height: 8vh;

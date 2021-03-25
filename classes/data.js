@@ -4,14 +4,14 @@ let data = {
         levelBg: './storage/levels/1.jpg',
         ballsColor: [
             './storage/colors/BlueBall.jpg',
-            './storage/colors/GreenBall.jpg',
+            /*'./storage/colors/GreenBall.jpg',
             './storage/colors/PurpleBall.jpg',
-            './storage/colors/RedBall.jpg'
+            './storage/colors/RedBall.jpg'*/
         ],
         offsetFrogLeft : 2.71,
         offsetFrogTop : 3.2,
 
-        totalBalls: 1,
+        totalBalls: 3,
         points: [
         {"x": 234.71, "y": -45}, {"x": 193.46, "y": 16.64}, {"x": 157.9, "y": 52.48}, {"x": 125.18, "y": 98.56},
         {"x": 98.15, "y": 145.92}, {"x": 75.39, "y": 197.12}, {"x": 62.59, "y": 250.88}, {"x": 54.06, "y": 304.64},

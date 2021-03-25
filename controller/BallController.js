@@ -14,10 +14,6 @@ class BallController {
         this.views = [];
         this.createFirstBall();
 
-        /*this.checkPushBallCollision = false;
-        this.knockedDownBalls = [];*/
-
-
         this.ballNeedShift = false;
         this.shiftedBalls = [];
         this.fasterBallsState = true;
@@ -25,7 +21,7 @@ class BallController {
         this.currentCombo = 0;
         this.maxCombo = 0;
         this.multiplierCombo = 1;
-        this.score = 0;
+        this.score = this.records.score;
     }
 
     /**
@@ -141,7 +137,6 @@ class BallController {
         if (this.balls[this.balls.length - 1].getPathSection() >= this.path.length - this.spacing) {
             delete this.balls[this.balls.length - 2];
             this.balls.splice(this.balls.length - 2, 1);
-            /*this.checkPushBallCollision = false;*/
 
             // конец игры, отключаем музыку, запрещаем стрелять, играем музыку проигрыша, удаляем ссылки на шары
         }
@@ -180,25 +175,8 @@ class BallController {
 
         if (position === 'next') {
             insertPosition = this.balls[index].getPathSection();
-
-            /*if (this.balls[index + 1] &&
-                this.balls[index + 1].getPathSection() - this.balls[index].getPathSection() < this.spacing * 2
-            ) {
-                this.knockedDownBalls.push([ball, this.balls[index + 1]]);
-                this.checkPushBallCollision = true;
-            }*/
         } else if (position === 'previous') {
-
-            /*if (this.balls[index - 1] &&
-                this.balls[index - 1].getPathSection() - this.balls[index].getPathSection() < this.spacing * 2
-            ) {
-               /!* insertPosition = this.balls[index].getPathSection()/!* + this.spacing*!/;*!/
-                /!*this.knockedDownBalls.push([ball, this.balls[index]]);
-                this.checkPushBallCollision = true;*!/
-            } else {*/
-                console.log(1);
-                insertPosition = this.balls[index].getPathSection() - this.spacing;
-
+            insertPosition = this.balls[index].getPathSection() - this.spacing;
         }
         this.insertBall(ball, insertPosition);
     }
@@ -224,7 +202,6 @@ class BallController {
             }
         }
 
-        /*this.knockedDownBalls.splice(this.knockedDownBalls.indexOf(ball), 1);*/
         ball.setPosition(insertPosition);
 
         this.balls.splice(index, 0, ball);
@@ -300,7 +277,7 @@ class BallController {
         j++;
 
         if (tempBalls.length > 2 && status) {
-            this.clearTailBalls(j, tempBalls);
+            this.clearBalls(j, tempBalls);
         }
         return tempBalls.length;
     }
@@ -309,18 +286,23 @@ class BallController {
      * @method
      * @param index {Number}
      * @param tempBalls {Array}
-     * Удаление хвоста при совпадении более двух шаров одного цвета (+комбо)
+     * Удаление шаров совпадении более двух шаров одного цвета (+комбо)
      */
-    clearTailBalls(index, tempBalls) {
+    clearBalls(index, tempBalls) {
         this.currentCombo++;
-        // очки + выигранный раунд
+
+        if (this.balls.length === tempBalls.length) {
+            this.frog.canShoot = 0;
+            this.records.getFullScore(this.path, this.balls[this.balls.length - 1].getPathSection());
+        }
+
+
         let tempScore = 0;
         for (let i = 0; i < tempBalls.length; i++) {
             tempScore += 10;
         }
         tempScore *= this.multiplierCombo;
-        this.score += tempScore;
-
+        this.records.score += tempScore;
 
 
         this.balls.splice(index, tempBalls.length);
@@ -337,6 +319,7 @@ class BallController {
                 this.currentCombo = 0;
             }
             this.addShiftedBall(this.balls[index]);
+
         } else {
             if (this.currentCombo > this.maxCombo) {
                 this.maxCombo = this.currentCombo;
@@ -409,39 +392,6 @@ class BallController {
         }
     }
 
-
-
-    /*checkPushNextBallCollision() {
-        if (this.knockedDownBalls.length !== 0) {
-
-            for (let i = 0; i < this.knockedDownBalls.length; i++) {
-                let dx = this.knockedDownBalls[i][0].x - this.knockedDownBalls[i][1].x;
-                let dy = this.knockedDownBalls[i][0].y - this.knockedDownBalls[i][1].y;
-                let distance = Math.sqrt((dx * dx) + (dy * dy));
-                let collision = (distance < this.knockedDownBalls[i][0].ballRadius);
-                let speed = 0;
-
-                while (collision) {
-                    speed++;
-                    dx = this.knockedDownBalls[i][0].x - this.path[this.knockedDownBalls[i][1].getPathSection() + speed].x;
-                    dy = this.knockedDownBalls[i][0].y - this.path[this.knockedDownBalls[i][1].getPathSection() + speed].y;
-                    distance = Math.sqrt((dx * dx) + (dy * dy));
-
-                    collision = (distance < this.knockedDownBalls[i][0].ballRadius);
-                }
-
-                let index;
-                index = this.balls.indexOf(this.knockedDownBalls[i][1]);
-
-                if (index !== -1) {
-                    this.pushNextBall(index, speed);
-                }
-            }
-        } else {
-            this.checkPushBallCollision = false;
-        }
-    }*/
-
     shooting() {
         if (this.frog.bulletState === 1) {
 
@@ -463,7 +413,6 @@ class BallController {
                 );
 
                 let position = (previousDistance > nextDistance) ? 'next' : 'previous';
-                console.log(position)
                 let ball = this.getRandomBall();
                 ball.color = this.frog.color;
                 this.insertPositionCheck(ball, flag, position);
@@ -472,18 +421,14 @@ class BallController {
     }
 
     draw() {
-        this.records.updateScore(this.score);
+        this.records.updateScore();
         if (this.ballNeedShift) {
             this.shiftOfTwoTails();
         }
 
-        /*if (this.checkPushBallCollision) {
-            this.checkPushNextBallCollision();
-        }*/
-
         this.shooting();
 
-        if (this.fasterBallsState && this.balls.length < 1) {
+        if (this.fasterBallsState && this.balls.length < 3) {
             this.createFasterBalls();
         } else {
             this.fasterBallsState = false;

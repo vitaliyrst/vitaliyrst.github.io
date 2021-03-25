@@ -23,9 +23,33 @@ class Records {
         let gameField = document.querySelector('.zuma_field');
     }
 
-    updateScore(score) {
+    updateScore() {
         let gameScore = document.querySelector('.game_score');
-        gameScore.textContent = `SCORE : ${score}`;
+        gameScore.textContent = `SCORE : ${this.score}`;
+    }
+
+    getFullScore(path, lastBallPathSection) {
+        let gameField = document.querySelector('.zuma_field');
+        let divExtraScore = document.createElement('div');
+        let extra = Math.round((path.length - lastBallPathSection) / 40);
+
+        divExtraScore.classList.add('extra_score');
+        divExtraScore.textContent = '+10';
+        gameField.append(divExtraScore);
+
+        let width = divExtraScore.offsetWidth / 2;
+        let height = divExtraScore.offsetHeight / 2;
+
+        for (let i = lastBallPathSection; i < path.length; i += 40) {
+            let x = path[i].x;
+            let y = path[i].y;
+            setTimeout(() => {
+
+                divExtraScore.style.left = x - width + 'px';
+                divExtraScore.style.top = y - height + 'px';
+                this.score += 10;
+            }, i);
+        }
     }
 
     getCombo(value) {
