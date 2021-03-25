@@ -30,26 +30,40 @@ class Records {
 
     getFullScore(path, lastBallPathSection) {
         let gameField = document.querySelector('.zuma_field');
-        let divExtraScore = document.createElement('div');
-        let extra = Math.round((path.length - lastBallPathSection) / 40);
 
+        let canvas = document.getElementById('canvas');
+        let offsetLeft = document.body.offsetLeft - canvas.offsetLeft;
+        let offsetTop = document.body.offsetTop - canvas.offsetTop;
+
+        let divExtraScore = document.createElement('div');
         divExtraScore.classList.add('extra_score');
-        divExtraScore.textContent = '+10';
+        let img = document.createElement('img');
+        divExtraScore.append(img);
+        img.src = './storage/extra.png';
+
         gameField.append(divExtraScore);
 
         let width = divExtraScore.offsetWidth / 2;
         let height = divExtraScore.offsetHeight / 2;
+        divExtraScore.style.left = path[lastBallPathSection].x - width - offsetLeft + 'px';
+        divExtraScore.style.top = path[lastBallPathSection].y - height - offsetTop + 'px';
 
-        for (let i = lastBallPathSection; i < path.length; i += 40) {
+        for (let i = lastBallPathSection + 40; i < path.length; i += 40) {
             let x = path[i].x;
             let y = path[i].y;
             setTimeout(() => {
-
-                divExtraScore.style.left = x - width + 'px';
-                divExtraScore.style.top = y - height + 'px';
+                divExtraScore.style.left = x - width - offsetLeft + 'px';
+                divExtraScore.style.top =  y - height - offsetTop+ 'px';
                 this.score += 10;
             }, i);
         }
+    }
+
+    win() {
+        let gameField = document.querySelector('.zuma_field');
+        let winDiv = document.createElement('div');
+
+
     }
 
     getCombo(value) {

@@ -484,9 +484,11 @@ a {
 }
 
 .zuma_field {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
     width: 100%;
     height: 100%;
-    margin-bottom: 20px;
 
     min-width: 569px;
     min-height: 384px;
@@ -513,13 +515,13 @@ a {
 }
 
 .extra_score {
-    font: inherit;
-    font-size: 3vh;
-
-    color: white;
-
     position: absolute;
     z-index: 1;
+}
+
+.extra_score img {
+    width: 5vh;
+    height: 5vh;
 }
 
 @media (max-width: 768px) {

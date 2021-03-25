@@ -13,6 +13,7 @@ class BallController {
         this.path = [];
         this.views = [];
         this.createFirstBall();
+        this.gameEnd = false;
 
         this.ballNeedShift = false;
         this.shiftedBalls = [];
@@ -21,7 +22,6 @@ class BallController {
         this.currentCombo = 0;
         this.maxCombo = 0;
         this.multiplierCombo = 1;
-        this.score = this.records.score;
     }
 
     /**
@@ -292,6 +292,7 @@ class BallController {
         this.currentCombo++;
 
         if (this.balls.length === tempBalls.length) {
+            this.gameEnd = true;
             this.frog.canShoot = 0;
             this.records.getFullScore(this.path, this.balls[this.balls.length - 1].getPathSection());
         }
@@ -431,9 +432,11 @@ class BallController {
         if (this.fasterBallsState && this.balls.length < 3) {
             this.createFasterBalls();
         } else {
-            this.fasterBallsState = false;
-            this.frog.canShoot = 1;
-            this.createBalls();
+            if (!this.gameEnd) {
+                this.fasterBallsState = false;
+                this.frog.canShoot = 1;
+                this.createBalls();
+            }
         }
         for (let i = 0; i < this.balls.length; i++) {
             this.views[i].draw();

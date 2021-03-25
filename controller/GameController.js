@@ -16,10 +16,11 @@ class GameController {
 
     resize() {
         let container = document.querySelector('.zuma_field');
-        let offsetWidth = container.clientWidth;
-        let offsetHeight = container.clientHeight;
+
 
         let canvas = document.getElementById('canvas');
+        let offsetWidth = container.clientWidth;
+        let offsetHeight = container.clientHeight;
         let canvasRatio = 384 / 569;
         let windowRatio = (offsetWidth > offsetHeight) ? offsetHeight / offsetWidth : offsetWidth / offsetHeight;
 
