@@ -258,6 +258,17 @@ a {
     cursor: pointer;
 }
 
+/* Player Info */
+
+.player_info_name,
+.player_info_score {
+    box-sizing: border-box;
+    font: inherit;
+    font-size: calc(1.2em);
+    padding: 1vh;
+    text-align: left;
+}
+
 /* Play */
 
 .zuma_play {
@@ -339,7 +350,7 @@ a {
 }
 
 .records_table tr:first-child {
-    color: white;
+
 }
 
 /* Rules */

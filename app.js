@@ -2,10 +2,12 @@ import {GameController} from "./controller/GameController.js";
 import {Spa} from "./classes/Spa.js";
 import {Records} from "./classes/Records.js";
 
+
 async function ready() {
+    let spa = new Spa();
+
     let userName = localStorage.getItem('name');
     let currentLevel = localStorage.getItem('level');
-
 
 
     // fetch images
@@ -47,18 +49,14 @@ async function ready() {
         .catch(error => console.log('error', error));
 
     let record = new Records();
-        record.setRecords(await records);
-
-    //fetch level
-    await new Promise((resolve, reject) => setTimeout(resolve, 500));
+    record.setRecords(await records);
+    spa.checkPlayer(record);
+    spa.readyState = 1;
+    /*spa.run(run);*/
+    return spa;
 }
 
-ready().then(() => {
-    let spa = new Spa();
-    spa.readyState = 1;
-    setTimeout(() => spa.run(run), 1000);
-
-})
+ready().then(spa => spa.run(run));
 
 function run() {
     let gameController = new GameController();
@@ -71,7 +69,7 @@ function run() {
     window.requestAnimationFrame(work);
 }
 
-/*let arr = [['Kolya', 2000],['Sten', 1600] , ['Vitaliy', 1400],['Jake', 1200] , ['Alex', 1000]];
+/*let arr = [['1', 100],['2', 99] , ['3', 98],['4', 97] , ['5', 96]];
 
 async function update(name, value) {
     let password = String(Math.random());

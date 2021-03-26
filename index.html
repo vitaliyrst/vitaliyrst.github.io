@@ -19,10 +19,16 @@
             <div class="loading_white_ball"></div>
             <div class="loading_red_ball"></div>
         </div>
-        <div class="main_menu hidden">
-            <form class="game_player" name="formName">
-                <input type="text" name="name" maxlength="30" placeholder="Your name...">
+        <div class="player_name hidden">
+            <form class="game_player" name="formPlayer">
+                <input type="text" name="player" maxlength="30" placeholder="Your name...">
             </form>
+        </div>
+        <div class="main_menu hidden">
+            <div class="menu player_info">
+                <div class="player_info_name"></div>
+                <div class="player_info_score"></div>
+            </div>
             <div class="menu menu_play">
                 <div>
                     <button class="play_button">Play</button>
@@ -53,36 +59,51 @@
             </div>
         </div>
         <div class="zuma_play hidden">
-                <div class="level">
-                    <div>
-                        <button type="button" class="level_button" value="1">1</button>
-                    </div>
+            <div class="level">
+                <div>
+                    <button type="button" class="level_button" value="1">1</button>
                 </div>
-                <div class="level">
-                    <div>
-                        <button type="button" class="level_button" value="2">2</button>
-                    </div>
+            </div>
+            <div class="level">
+                <div>
+                    <button type="button" class="level_button" value="2">2</button>
                 </div>
-                <div class="level">
-                    <div>
-                        <button type="button" class="level_button" value="3">3</button>
-                    </div>
+            </div>
+            <div class="level">
+                <div>
+                    <button type="button" class="level_button" value="3">3</button>
                 </div>
-                <div class="level">
-                    <div>
-                        <button type="button" class="level_button" value="4">4</button>
-                    </div>
+            </div>
+            <div class="level">
+                <div>
+                    <button type="button" class="level_button" value="4">4</button>
                 </div>
-                <div class="level">
-                    <div>
-                        <button type="button" class="level_button" value="5">5</button>
-                    </div>
+            </div>
+            <div class="level">
+                <div>
+                    <button type="button" class="level_button" value="5">5</button>
                 </div>
-                <div class="level">
-                    <div>
-                        <button type="button" class="level_button" value="6" disabled>6</button>
-                    </div>
+            </div>
+            <div class="level">
+                <div>
+                    <button type="button" class="level_button" value="6">6</button>
                 </div>
+            </div>
+            <div class="level">
+                <div>
+                    <button type="button" class="level_button" value="7">7</button>
+                </div>
+            </div>
+            <div class="level">
+                <div>
+                    <button type="button" class="level_button" value="8">8</button>
+                </div>
+            </div>
+            <div class="level">
+                <div>
+                    <button type="button" class="level_button" value="9">9</button>
+                </div>
+            </div>
         </div>
         <div class="zuma_game hidden">
             <div class="zuma_field">
@@ -93,8 +114,8 @@
         <div class="zuma_records hidden">
             <table class="records_table">
                 <tr>
-                    <td>Your record</td>
-                    <td>100</td>
+                    <td>Best Players</td>
+                    <td></td>
                 </tr>
                 <tr class="top_five">
                     <td>Alex</td>

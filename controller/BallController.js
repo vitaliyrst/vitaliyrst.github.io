@@ -295,11 +295,16 @@ class BallController {
             this.gameEnd = true;
             this.frog.canShoot = 0;
             this.records.getExtraScore(this.path, this.balls[this.balls.length - 1].getPathSection());
-            localStorage.setItem('name', 'RsTShock');
+
             let name = localStorage.getItem('name');
-            if (name) {
-                this.records.updateTable('KLUBKOU_ZUMA_RECORDS', [name, this.records.score]);
-            }
+
+            this.records.updateTable('KLUBKOU_ZUMA_RECORDS', [name, this.records.score]);
+
+            setTimeout(()=> {
+                localStorage.setItem('score', this.records.score);
+                this.records.checkScore(this.records.score);
+            }, 5000);
+
         }
 
 
@@ -427,7 +432,7 @@ class BallController {
     }
 
     draw() {
-        this.records.updateScore();
+        this.records.updateGameScore();
         if (this.ballNeedShift) {
             this.shiftOfTwoTails();
         }

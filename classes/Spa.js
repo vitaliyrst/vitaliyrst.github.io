@@ -16,6 +16,7 @@ class Spa {
         }
 
         let name = document.querySelector('.game_name');
+        let player = document.querySelector('.player_name');
         let loading = document.querySelector('.loading_container');
         let menu = document.querySelector('.main_menu');
         let play = document.querySelector('.zuma_play');
@@ -27,13 +28,20 @@ class Spa {
         switch (this.spaState.pageName) {
             case 'Menu':
                 loading.classList.add('hidden');
-                play.classList.add('hidden');
-                game.classList.add('hidden');
-                records.classList.add('hidden');
-                rules.classList.add('hidden');
-                about.classList.add('hidden');
-                menu.classList.remove('hidden');
-                name.classList.remove('hidden');
+
+                if (localStorage.getItem('name')) {
+                    player.classList.add('hidden');
+                    play.classList.add('hidden');
+                    game.classList.add('hidden');
+                    records.classList.add('hidden');
+                    rules.classList.add('hidden');
+                    about.classList.add('hidden');
+                    menu.classList.remove('hidden');
+                } else {
+                    name.classList.remove('hidden');
+                    player.classList.remove('hidden');
+                }
+
                 break;
             case 'Play':
                 loading.classList.add('hidden');
@@ -179,6 +187,25 @@ class Spa {
 
         this.observer();
         this.switchToStateFromURLHash();
+    }
+
+    checkPlayer(records) {
+        let form = document.forms['formPlayer'];
+
+        form.addEventListener('change', () => {
+            let inputName = document.querySelector('input[name]').value;
+            let re = /^[a-zA-Z]{5,16}$/;
+            let name;
+
+            if (re.test(inputName)) {
+                name = inputName;
+                localStorage.setItem('name', name);
+                records.setPlayer();
+                setTimeout(() => {
+                    this.switchToStateFromURLHash();
+                }, 500);
+            }
+        });
     }
 }
 

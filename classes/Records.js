@@ -1,6 +1,7 @@
 class Records {
     constructor() {
         this.score = 0;
+        this.setPlayer();
     }
 
     setRecords(data) {
@@ -13,11 +14,34 @@ class Records {
         }
     }
 
-    getScore() {
-        let gameField = document.querySelector('.zuma_field');
+    setPlayer() {
+        let name = localStorage.getItem('name');
+
+        if (name) {
+            let playerScore = localStorage.getItem('score');
+            let playerNameDiv = document.querySelector('.player_info_name');
+            let playerScoreDiv = document.querySelector('.player_info_score');
+            playerNameDiv.textContent = `Hi, ${name}`;
+            if (playerScore > 0) {
+                playerScoreDiv.textContent = `Your score: ${playerScore}`;
+            } else {
+                localStorage.setItem('score', '0');
+                playerScoreDiv.textContent = 'Your score: 0';
+            }
+        }
     }
 
-    updateScore() {
+    checkScore(score) {
+        let localStorageScore = localStorage.getItem('score');
+        if (score > localStorageScore) {
+            localStorage.setItem('score', score);
+        } else {
+            localStorage.setItem('score', localStorageScore);
+        }
+        this.setPlayer();
+    }
+
+    updateGameScore() {
         let gameScore = document.querySelector('.game_score');
         gameScore.textContent = `SCORE : ${this.score}`;
     }
@@ -42,6 +66,7 @@ class Records {
         divExtraScore.style.left = path[lastBallPathSection].x - width - offsetLeft + 'px';
         divExtraScore.style.top = path[lastBallPathSection].y - height - offsetTop + 'px';
 
+        let count = 50;
         for (let i = lastBallPathSection + 40; i < path.length; i += 40) {
             let x = path[i].x;
             let y = path[i].y;
@@ -49,15 +74,36 @@ class Records {
                 divExtraScore.style.left = x - width - offsetLeft + 'px';
                 divExtraScore.style.top = y - height - offsetTop + 'px';
                 this.score += 10;
-            }, i);
+
+            }, count += 30);
         }
     }
 
-    win() {
-        let gameField = document.querySelector('.zuma_field');
-        let winDiv = document.createElement('div');
+    checkTop(records, value) {
+        let nameIndex = null;
+        for (let i = 0; i < records.length; i++) {
+            if (records[i][0] === value[0]) {
+                nameIndex = i;
+            }
+        }
 
-
+        if (nameIndex) {
+            if (records[nameIndex][1] <= value[1]) {
+                records[nameIndex][1] = value[1];
+                return records;
+            } else if (records[nameIndex[1] >= value[1]]) {
+                return records;
+            }
+        } else {
+            for (let j = 0; j < records.length; j++) {
+                if (value[1] > records[j][1]) {
+                    records.splice(j, 0, value);
+                    records.pop();
+                    return records;
+                }
+            }
+        }
+        return records;
     }
 
     async updateTable(name, value) {
@@ -109,37 +155,6 @@ class Records {
             .catch(error => console.log('error', error));
 
         return 'updated';
-    }
-
-    checkTop(records, value) {
-        let nameIndex = null;
-        for (let i = 0; i < records.length; i++) {
-            if (records[i][0] === value[0]) {
-                nameIndex = i;
-            }
-        }
-
-        if (nameIndex) {
-            if (records[nameIndex][1] <= value[1]) {
-                records[nameIndex][1] = value[1];
-                return records;
-            } else if (records[nameIndex[1] >= value[1]]) {
-                return records;
-            }
-        } else {
-            for (let j = 0; j < records.length; j++) {
-                if (value[1] > records[j][1]) {
-                    records.splice(j, 0, value);
-                    records.pop();
-                    return records;
-                }
-            }
-        }
-        return records;
-    }
-
-    getCombo(value) {
-
     }
 }
 
