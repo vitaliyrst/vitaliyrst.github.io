@@ -22,6 +22,8 @@ class BallController {
         this.currentCombo = 0;
         this.maxCombo = 0;
         this.multiplierCombo = 1;
+
+        this.checkUnload();
     }
 
     /**
@@ -425,6 +427,14 @@ class BallController {
                 this.insertPositionCheck(ball, flag, position);
             }
         }
+    }
+
+    checkUnload() {
+        window.addEventListener('beforeunload', (eo) => {
+            if (!this.gameEnd && location.hash === '#Game') {
+                eo.returnValue = 'You will lose your score!!!';
+            }
+        });
     }
 
     draw() {
