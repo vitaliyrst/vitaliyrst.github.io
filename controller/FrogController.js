@@ -45,8 +45,13 @@ class FrogController {
 
     restartBullet() {
         let canvas = document.getElementById('canvas');
-        if (this.model.bulletLeft - this.model.bulletRadius < canvas.offsetLeft ||
-            this.model.bulletTop - this.model.bulletRadius < canvas.offsetTop ||
+        let field = document.querySelector('.zuma_field');
+
+        let offsetLeft = (field.clientWidth - canvas.offsetWidth) / 2;
+        let offsetTop = (field.clientHeight - canvas.offsetHeight) / 2 ;
+
+        if (this.model.bulletLeft - this.model.bulletRadius < canvas.offsetLeft - offsetLeft ||
+            this.model.bulletTop - this.model.bulletRadius < canvas.offsetTop - offsetTop ||
             this.model.bulletLeft + this.model.bulletRadius > canvas.offsetWidth ||
             this.model.bulletTop + this.model.bulletRadius > canvas.offsetHeight) {
             this.model.restartBullet();

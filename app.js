@@ -50,6 +50,13 @@ async function ready() {
 
     let records = new Records();
     records.setRecords(await recordsArray);
+
+    for (let i = 0; i < recordsArray.length; i++) {
+        if (localStorage.getItem('name') !== recordsArray[i][0] && !localStorage.getItem('checked')) {
+           localStorage.clear();
+        }
+    }
+
     spa.checkPlayer(records, recordsArray);
     spa.readyState = 1;
     /*spa.run(run);*/

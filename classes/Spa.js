@@ -24,12 +24,13 @@ class Spa {
         let records = document.querySelector('.zuma_records');
         let rules = document.querySelector('.zuma_rules');
         let about = document.querySelector('.zuma_about');
+        let localStorageName = localStorage.getItem('name');
 
         switch (this.spaState.pageName) {
             case 'Menu':
                 loading.classList.add('hidden');
 
-                if (localStorage.getItem('name')) {
+                if (localStorageName) {
                     player.classList.add('hidden');
                     play.classList.add('hidden');
                     game.classList.add('hidden');
@@ -41,57 +42,87 @@ class Spa {
                     name.classList.remove('hidden');
                     player.classList.remove('hidden');
                 }
-
                 break;
             case 'Play':
                 loading.classList.add('hidden');
-                menu.classList.add('hidden');
-                game.classList.add('hidden');
-                records.classList.add('hidden');
-                rules.classList.add('hidden');
-                about.classList.add('hidden');
-                name.classList.remove('hidden');
-                play.classList.remove('hidden');
+
+                if (localStorageName) {
+                    menu.classList.add('hidden');
+                    game.classList.add('hidden');
+                    records.classList.add('hidden');
+                    rules.classList.add('hidden');
+                    about.classList.add('hidden');
+                    name.classList.remove('hidden');
+                    play.classList.remove('hidden');
+                } else {
+                    name.classList.remove('hidden');
+                    player.classList.remove('hidden');
+                }
                 break;
             case 'Game' :
                 loading.classList.add('hidden');
-                menu.classList.add('hidden');
-                play.classList.add('hidden');
-                records.classList.add('hidden');
-                rules.classList.add('hidden');
-                about.classList.add('hidden');
-                name.classList.add('hidden');
-                game.classList.remove('hidden');
+
+                if (localStorage) {
+                    menu.classList.add('hidden');
+                    play.classList.add('hidden');
+                    records.classList.add('hidden');
+                    rules.classList.add('hidden');
+                    about.classList.add('hidden');
+                    name.classList.add('hidden');
+                    game.classList.remove('hidden');
+                } else {
+                    game.classList.add('hidden');
+                    name.classList.remove('hidden');
+                    player.classList.remove('hidden');
+                }
                 break;
             case 'Records':
                 loading.classList.add('hidden');
-                menu.classList.add('hidden');
-                play.classList.add('hidden');
-                game.classList.add('hidden');
-                rules.classList.add('hidden');
-                about.classList.add('hidden');
-                name.classList.remove('hidden');
-                records.classList.remove('hidden');
+
+                if (localStorageName) {
+                    menu.classList.add('hidden');
+                    play.classList.add('hidden');
+                    game.classList.add('hidden');
+                    rules.classList.add('hidden');
+                    about.classList.add('hidden');
+                    name.classList.remove('hidden');
+                    records.classList.remove('hidden');
+                } else {
+                    name.classList.remove('hidden');
+                    player.classList.remove('hidden');
+                }
                 break;
             case 'Rules':
                 loading.classList.add('hidden');
-                menu.classList.add('hidden');
-                play.classList.add('hidden');
-                game.classList.add('hidden');
-                records.classList.add('hidden');
-                about.classList.add('hidden');
-                name.classList.remove('hidden');
-                rules.classList.remove('hidden');
+
+                if (localStorageName) {
+                    menu.classList.add('hidden');
+                    play.classList.add('hidden');
+                    game.classList.add('hidden');
+                    records.classList.add('hidden');
+                    about.classList.add('hidden');
+                    name.classList.remove('hidden');
+                    rules.classList.remove('hidden');
+                } else {
+                    name.classList.remove('hidden');
+                    player.classList.remove('hidden');
+                }
                 break;
             case 'About':
                 loading.classList.add('hidden');
-                menu.classList.add('hidden');
-                play.classList.add('hidden');
-                game.classList.add('hidden');
-                records.classList.add('hidden');
-                rules.classList.add('hidden');
-                name.classList.remove('hidden');
-                about.classList.remove('hidden');
+
+                if (localStorageName) {
+                    menu.classList.add('hidden');
+                    play.classList.add('hidden');
+                    game.classList.add('hidden');
+                    records.classList.add('hidden');
+                    rules.classList.add('hidden');
+                    name.classList.remove('hidden');
+                    about.classList.remove('hidden');
+                } else {
+                    name.classList.remove('hidden');
+                    player.classList.remove('hidden');
+                }
                 break;
             case 'Load':
                 menu.classList.add('hidden');
@@ -193,7 +224,6 @@ class Spa {
         let form = document.forms['formPlayer'];
         let errorSpan = document.querySelector('.error_span');
 
-
         form.addEventListener('change', () => {
             errorSpan.textContent = '';
             let inputName = document.querySelector('input[name]').value;
@@ -212,6 +242,7 @@ class Spa {
 
             } else if (re.test(inputName) && !same) {
                 localStorage.setItem('name', inputName);
+                localStorage.setItem('checked', '1');
                 records.setPlayer();
                 setTimeout(() => {
                     this.switchToStateFromURLHash();
