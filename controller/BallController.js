@@ -435,6 +435,17 @@ class BallController {
                 eo.returnValue = 'You will lose your score!!!';
             }
         });
+
+        window.addEventListener('popstate', (eo) =>{
+           if (location.hash === '#Play' && !this.gameEnd) {
+               let conf = confirm('You will lose your score!!!');
+               if (conf) {
+                   window.location.reload();
+               } else {
+                   location.hash = '#Game';
+               }
+           }
+        });
     }
 
     draw() {
