@@ -3,7 +3,9 @@ import {Spa} from "./classes/Spa.js";
 import {Records} from "./classes/Records.js";
 
 async function ready() {
-    let userData = localStorage.getItem('data');
+    let userName = localStorage.getItem('name');
+    let currentLevel = localStorage.getItem('level');
+
 
 
     // fetch images
@@ -54,7 +56,7 @@ async function ready() {
 ready().then(() => {
     let spa = new Spa();
     spa.readyState = 1;
-    setTimeout(() => spa.run(run), 500);
+    setTimeout(() => spa.run(run), 1000);
 
 })
 
