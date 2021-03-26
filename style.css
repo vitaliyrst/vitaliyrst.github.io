@@ -184,7 +184,8 @@ a {
 
     display: flex;
     align-items: center;
-    justify-content: center
+    justify-content: center;
+    position: relative;
 }
 
 .game_player input {
@@ -214,6 +215,11 @@ a {
     border-color: white;
 }
 
+.error_span {
+    color: white;
+    position: absolute;
+    top: 6vh
+}
 
 /* Menu */
 

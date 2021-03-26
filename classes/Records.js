@@ -39,7 +39,8 @@ class Records {
             localStorage.setItem('score', localStorageScore);
         }
         this.setPlayer();
-        this.updateTable('KLUBKOU_ZUMA_RECORDS', [localStorage.getItem('name'), String(this.score)]);
+        this.updateTable('KLUBKOU_ZUMA_RECORDS', [localStorage.getItem('name'), String(this.score)])
+            .then(result => this.setRecords(result));
     }
 
     updateGameScore() {
@@ -98,7 +99,6 @@ class Records {
             for (let j = 0; j < records.length; j++) {
                 if (value[1] > records[j][1]) {
                     records.splice(j, 0, value);
-                    records.pop();
                     return records;
                 }
             }
@@ -154,7 +154,7 @@ class Records {
             .then(result => result)
             .catch(error => console.log('error', error));
 
-        return 'updated';
+        return records;
     }
 }
 

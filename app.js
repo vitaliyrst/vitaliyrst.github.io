@@ -43,14 +43,14 @@ async function ready() {
         redirect: 'follow'
     };
 
-    let records = await fetch("https://fe.it-academy.by/AjaxStringStorage2.php", requestOptionsRecords)
+    let recordsArray = await fetch("https://fe.it-academy.by/AjaxStringStorage2.php", requestOptionsRecords)
         .then(response => response.json())
         .then(result => JSON.parse(result.result))
         .catch(error => console.log('error', error));
 
-    let record = new Records();
-    record.setRecords(await records);
-    spa.checkPlayer(record);
+    let records = new Records();
+    records.setRecords(await recordsArray);
+    spa.checkPlayer(records, recordsArray);
     spa.readyState = 1;
     /*spa.run(run);*/
     return spa;

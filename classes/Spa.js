@@ -189,17 +189,29 @@ class Spa {
         this.switchToStateFromURLHash();
     }
 
-    checkPlayer(records) {
+    checkPlayer(records, recordsArray) {
         let form = document.forms['formPlayer'];
+        let errorSpan = document.querySelector('.error_span');
+
 
         form.addEventListener('change', () => {
+            errorSpan.textContent = '';
             let inputName = document.querySelector('input[name]').value;
             let re = /^[a-zA-Z]{5,16}$/;
-            let name;
+            let same;
 
-            if (re.test(inputName)) {
-                name = inputName;
-                localStorage.setItem('name', name);
+            for (let i = 0; i < recordsArray.length; i++) {
+                if (recordsArray[i][0] === inputName) {
+                    errorSpan.textContent = 'player exist';
+                    same = true;
+                }
+            }
+
+            if (!re.test(inputName)) {
+                errorSpan.textContent = 'name must be 5-16 letters';
+
+            } else if (re.test(inputName) && !same) {
+                localStorage.setItem('name', inputName);
                 records.setPlayer();
                 setTimeout(() => {
                     this.switchToStateFromURLHash();
