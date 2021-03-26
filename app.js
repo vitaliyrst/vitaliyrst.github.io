@@ -52,8 +52,10 @@ async function ready() {
     records.setRecords(await recordsArray);
 
     for (let i = 0; i < recordsArray.length; i++) {
-        if (localStorage.getItem('name') !== recordsArray[i][0] && !localStorage.getItem('checked')) {
+        let state = localStorage.getItem('checked');
+        if (localStorage.getItem('name') !== recordsArray[i][0] && state !== '1') {
            localStorage.clear();
+           location.hash = 'Menu';
         }
     }
 
