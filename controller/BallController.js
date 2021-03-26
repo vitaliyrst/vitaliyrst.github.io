@@ -433,6 +433,9 @@ class BallController {
         window.addEventListener('beforeunload', (eo) => {
             if (!this.gameEnd && location.hash === '#Game') {
                 eo.returnValue = 'You will lose your score!!!';
+                if (eo.returnValue) {
+                    window.location.reload();
+                }
             }
         });
 

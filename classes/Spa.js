@@ -227,7 +227,7 @@ class Spa {
         form.addEventListener('change', () => {
             errorSpan.textContent = '';
             let inputName = document.querySelector('input[name]').value;
-            let re = /^[a-zA-Z]{5,16}$/;
+            let re = /^[a-zA-Zа-яА-ЯёЁ]{5,16}$/;
             let same;
 
             for (let i = 0; i < recordsArray.length; i++) {
