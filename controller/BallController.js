@@ -296,10 +296,6 @@ class BallController {
             this.frog.canShoot = 0;
             this.records.getExtraScore(this.path, this.balls[this.balls.length - 1].getPathSection());
 
-            let name = localStorage.getItem('name');
-
-            this.records.updateTable('KLUBKOU_ZUMA_RECORDS', [name, this.records.score]);
-
             setTimeout(()=> {
                 localStorage.setItem('score', this.records.score);
                 this.records.checkScore(this.records.score);

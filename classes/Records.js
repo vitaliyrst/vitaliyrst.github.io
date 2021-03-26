@@ -39,6 +39,7 @@ class Records {
             localStorage.setItem('score', localStorageScore);
         }
         this.setPlayer();
+        this.updateTable('KLUBKOU_ZUMA_RECORDS', [localStorage.getItem('name'), String(this.score)]);
     }
 
     updateGameScore() {
@@ -74,7 +75,6 @@ class Records {
                 divExtraScore.style.left = x - width - offsetLeft + 'px';
                 divExtraScore.style.top = y - height - offsetTop + 'px';
                 this.score += 10;
-
             }, count += 30);
         }
     }
