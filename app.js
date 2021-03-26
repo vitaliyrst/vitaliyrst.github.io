@@ -3,6 +3,9 @@ import {Spa} from "./classes/Spa.js";
 import {Records} from "./classes/Records.js";
 
 async function ready() {
+    let userData = localStorage.getItem('data');
+
+
     // fetch images
     let requestOptionsImages = {
         method: 'GET',
@@ -36,12 +39,13 @@ async function ready() {
         redirect: 'follow'
     };
 
-    /*let records = await fetch("https://fe.it-academy.by/AjaxStringStorage2.php", requestOptionsRecords)
+    let records = await fetch("https://fe.it-academy.by/AjaxStringStorage2.php", requestOptionsRecords)
         .then(response => response.json())
         .then(result => JSON.parse(result.result))
         .catch(error => console.log('error', error));
 
-    let record = new Records(await records);*/
+    let record = new Records();
+        record.setRecords(await records);
 
     //fetch level
     await new Promise((resolve, reject) => setTimeout(resolve, 500));
@@ -65,10 +69,9 @@ function run() {
     window.requestAnimationFrame(work);
 }
 
-/*
-let arr = {1: ['Alex', 1000], 2: ['Jake', 1200], 3: ['Vitaliy', 1400], 4: ['Sten', 1600], 5: ['Kolya', 2000]}
+/*let arr = [['Kolya', 2000],['Sten', 1600] , ['Vitaliy', 1400],['Jake', 1200] , ['Alex', 1000]];
 
-function update(name,value) {
+async function update(name, value) {
     let password = String(Math.random());
 
     let myHeaders = new Headers();
@@ -84,12 +87,13 @@ function update(name,value) {
         headers: myHeaders,
         body: urlencodedRecords
     }
-
-    fetch('https://fe.it-academy.by/AjaxStringStorage2.php', requestOptions)
+    console.log(value)
+    let records = await fetch('https://fe.it-academy.by/AjaxStringStorage2.php', requestOptions)
         .then(response => response.json())
-        .then(result => result)
+        .then(result => console.log(result))
         .catch(error => console.log('error', error))
 
+    console.log(records)
 
     let myHeadersUpdate = new Headers();
     myHeadersUpdate.append('Content-type', 'application/x-www-form-urlencoded');
@@ -112,4 +116,4 @@ function update(name,value) {
         .catch(error => console.log('error', error))
 }
 
-update(arr);*/
+update('KLUBKOU_ZUMA_RECORDS',arr);*/

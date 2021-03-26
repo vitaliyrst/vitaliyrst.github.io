@@ -294,7 +294,12 @@ class BallController {
         if (this.balls.length === tempBalls.length) {
             this.gameEnd = true;
             this.frog.canShoot = 0;
-            this.records.getFullScore(this.path, this.balls[this.balls.length - 1].getPathSection());
+            this.records.getExtraScore(this.path, this.balls[this.balls.length - 1].getPathSection());
+            localStorage.setItem('name', 'RsTShock');
+            let name = localStorage.getItem('name');
+            if (name) {
+                this.records.updateTable('KLUBKOU_ZUMA_RECORDS', [name, this.records.score]);
+            }
         }
 
 
@@ -429,7 +434,7 @@ class BallController {
 
         this.shooting();
 
-        if (this.fasterBallsState && this.balls.length < 3) {
+        if (this.fasterBallsState && this.balls.length < 30) {
             this.createFasterBalls();
         } else {
             if (!this.gameEnd) {
