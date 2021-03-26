@@ -54,7 +54,6 @@ async function ready() {
     for (let i = 0; i < recordsArray.length; i++) {
         if (localStorage.getItem('name') !== recordsArray[i][0] && !localStorage.getItem('checked')) {
            localStorage.clear();
-           window.location.reload(true);
         }
     }
 
