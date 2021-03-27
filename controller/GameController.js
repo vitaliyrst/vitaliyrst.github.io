@@ -11,7 +11,6 @@ class GameController {
         this.ballController = new BallController(this.game.totalBalls, this.frogController.model);
         this.view.createCanvas();
         this.observer();
-        this.gameSound();
     }
 
     resize() {
@@ -52,7 +51,9 @@ class GameController {
     gameSound() {
         let mainMusic = new Audio();
         mainMusic.src = './storage/sounds/main.mp3';
-        /*mainMusic.play();*/
+
+        mainMusic.addEventListener('change')
+        return mainMusic;
     }
 
     draw() {

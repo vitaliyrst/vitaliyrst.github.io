@@ -25,6 +25,7 @@ class BallController {
         this.comboCounter = 0;
 
         this.checkUnload();
+        this.music = this.setMusic();
     }
 
     /**
@@ -50,6 +51,7 @@ class BallController {
 
         ball.setPosition(this.spacing);
         this.path = ball.path;
+
     }
 
     /**
@@ -80,7 +82,6 @@ class BallController {
      */
     createBalls() {
         if (this.balls.length !== 0) {
-
             // Подталкивание шаров
             this.pushNextBall(0, 1);
 
@@ -106,6 +107,35 @@ class BallController {
         return new BallModel();
     }
 
+
+    setMusic() {
+        let musicArray = {};
+        let main = new Audio();
+        main.src = './storage/sounds/intheend.mp3';
+        main.volume = 0.5;
+        main.play();
+
+        let win = new Audio();
+        win.src = './storage/sounds/win.mp3';
+
+        let end = new Audio();
+        end.src = './storage/sounds/end.mp3';
+
+        let clearBall = new Audio();
+        clearBall.src = './storage/sounds/clear-ball.mp3';
+
+        let shifted = new Audio();
+        shifted.src = './storage/sounds/shifted.mp3';
+
+
+        musicArray.main = main;
+        musicArray.win = win;
+        musicArray.end = end;
+        musicArray.clearBall = clearBall;
+        musicArray.shifted = shifted;
+
+        return musicArray;
+    }
     /**
      * @method
      * @param index {Number}
@@ -133,7 +163,7 @@ class BallController {
 
         // Обновление позиции шаров за тик
         for (let j = 0; j < tempBalls.length; j++) {
-            tempBalls[j].update(5);
+            tempBalls[j].update(speed);
         }
 
         // Удаление шаров, если дойдут до черепа
@@ -142,6 +172,9 @@ class BallController {
 
             if (this.balls.length === 2) {
                 this.gameEnd = true;
+                this.frog.canShoot = 0;
+                this.music.main.pause();
+                this.music.end.play();
             }
 
             if (this.gameEnd) {
@@ -300,30 +333,11 @@ class BallController {
      * Удаление шаров совпадении более двух шаров одного цвета (+комбо)
      */
     clearBalls(index, tempBalls) {
+        this.checkWinGame(tempBalls);
+
         this.currentCombo++;
-
-        if (this.balls.length === tempBalls.length) {
-            this.gameEnd = true;
-            this.frog.canShoot = 0;
-            this.records.getExtraScore(this.path, this.balls[this.balls.length - 1].getPathSection());
-
-            let currentLevel = localStorage.getItem('level');
-            let nextLevel = this.frog.level + 1;
-
-            if (nextLevel < currentLevel) {
-                localStorage.setItem('level', currentLevel);
-            } else if (nextLevel > currentLevel && this.frog.level < 9) {
-                localStorage.setItem('level', String(nextLevel));
-            }
-
-            setTimeout(() => {
-                this.records.checkScore(this.records.score);
-                this.records.nextLevel('win', this.frog.level, this.totalBalls, this.records.score, this.comboCounter);
-            }, 4000);
-
-        }
-
-
+        /*this.music.clearBall.currentTime = 0;
+        this.music.clearBall.play();*/
         let tempScore = 0;
         for (let i = 0; i < tempBalls.length; i++) {
             tempScore += 10;
@@ -346,14 +360,43 @@ class BallController {
                 this.comboCounter += this.currentCombo;
                 this.currentCombo = 0;
             }
-            this.addShiftedBall(this.balls[index]);
 
+            this.addShiftedBall(this.balls[index]);
         } else {
             if (this.currentCombo > this.maxCombo) {
                 this.maxCombo = this.currentCombo;
             }
             this.comboCounter += this.currentCombo;
             this.currentCombo = 0;
+            this.music.clearBall.currentTime = 0;
+            this.music.clearBall.play();
+        }
+    }
+
+    checkWinGame(tempBalls) {
+        if (this.balls.length === tempBalls.length) {
+            this.gameEnd = true;
+
+            this.music.main.pause();
+            this.music.win.play();
+
+            this.frog.canShoot = 0;
+
+            this.records.getExtraScore(this.path, this.balls[this.balls.length - 1].getPathSection());
+
+            let currentLevel = localStorage.getItem('level');
+            let nextLevel = this.frog.level + 1;
+
+            if (nextLevel < currentLevel) {
+                localStorage.setItem('level', currentLevel);
+            } else if (nextLevel > currentLevel && this.frog.level < 9) {
+                localStorage.setItem('level', String(nextLevel));
+            }
+
+            setTimeout(() => {
+                this.records.checkScore(this.records.score);
+                this.records.nextLevel('win', this.frog.level, this.totalBalls, this.records.score, this.comboCounter);
+            }, 5000);
         }
     }
 
@@ -369,7 +412,11 @@ class BallController {
         } else {
             this.shiftedBalls.push(ball);
         }
-        setTimeout(() => this.ballNeedShift = true, 100);
+        setTimeout(() => {
+            this.ballNeedShift = true;
+            this.music.shifted.currentTime = 0;
+            this.music.shifted.play();
+        }, 100);
     }
 
     /**
@@ -413,6 +460,7 @@ class BallController {
                         }
                         this.comboCounter += this.currentCombo;
                         this.currentCombo = 0;
+                        this.music[3].play();
                     }
                 }
             }
@@ -473,16 +521,14 @@ class BallController {
     }
 
     draw() {
+        this.records.updateGameScore();
+        if (this.ballNeedShift) {
+            this.shiftOfTwoTails();
+        }
+
+        this.shooting();
+
         if (!this.gameEnd) {
-
-
-            this.records.updateGameScore();
-            if (this.ballNeedShift) {
-                this.shiftOfTwoTails();
-            }
-
-            this.shooting();
-
             if (this.fasterBallsState && this.balls.length < 30) {
                 this.createFasterBalls();
             } else {

@@ -86,8 +86,8 @@ class Records {
 
                 if (i + 36 > path.length) {
                     setTimeout(() => {
-                        divExtraScore.remove()
-                    }, 200)
+                        divExtraScore.remove();
+                    }, 200);
                 }
             }, count += 45);
         }
