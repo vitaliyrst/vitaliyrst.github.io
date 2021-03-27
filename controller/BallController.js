@@ -106,7 +106,6 @@ class BallController {
     getRandomBall() {
 
         let i = 1;
-        console.log(i+=1);
         this.totalBalls--;
         this.ballCounter++;
         return new BallModel();

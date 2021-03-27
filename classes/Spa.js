@@ -193,7 +193,18 @@ class Spa {
 
         let buttonsLevel = document.querySelectorAll('.level_button');
         for (let i = 0; i < buttonsLevel.length; i++) {
+
             buttonsLevel[i].addEventListener('click', (eo) => {
+
+                if (/Android|webOS|iPhone|iPad|iPod|IEMobile|Windows Phone|Opera Mini/i.test(navigator.userAgent)) {
+                    function fullScreen(element) {
+                        if (element.requestFullscreen) {
+                            element.requestFullscreen();
+                        }
+                    }
+                    let html = document.documentElement;
+                    fullScreen(html)
+                }
                 let div = document.getElementById('canvas');
                 div.setAttribute('level', buttonsLevel[i].value);
                 run();

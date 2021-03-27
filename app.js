@@ -3,6 +3,7 @@ import {Spa} from "./classes/Spa.js";
 import {Records} from "./classes/Records.js";
 
 
+
 async function ready() {
     let spa = new Spa();
 
