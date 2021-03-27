@@ -78,6 +78,7 @@ function run() {
     window.requestAnimationFrame(work);
 }
 
+/*
 let arr = [['1', 100],['2', 99] , ['3', 98],['4', 97] , ['5', 96]];
 
 async function update(name, value) {
@@ -126,3 +127,4 @@ async function update(name, value) {
 }
 
 update('KLUBKOU_ZUMA_RECORDS',arr);
+*/
