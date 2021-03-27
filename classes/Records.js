@@ -2,6 +2,7 @@ class Records {
     constructor() {
         this.score = 0;
         this.setPlayer();
+        this.currentLevel = 0;
     }
 
     setRecords(data) {
@@ -29,6 +30,17 @@ class Records {
                 playerScoreDiv.textContent = 'Your score: 0';
             }
         }
+
+        let currentLevel = localStorage.getItem('level');
+        
+        let levelDiv = document.querySelectorAll('.level_button');
+        for (let i = 1; i < levelDiv.length; i++) {
+            if (currentLevel >= levelDiv[i].value) {
+                levelDiv[i].removeAttribute('disabled');
+            }
+
+        }
+        console.log(levelDiv)
     }
 
     checkScore(score) {

@@ -243,6 +243,7 @@ class Spa {
             } else if (re.test(inputName) && !same) {
                 localStorage.setItem('name', inputName);
                 localStorage.setItem('checked', '1');
+                localStorage.setItem('level', '1');
                 records.setPlayer();
                 setTimeout(() => {
                     this.switchToStateFromURLHash();

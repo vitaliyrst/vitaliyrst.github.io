@@ -298,7 +298,16 @@ class BallController {
             this.frog.canShoot = 0;
             this.records.getExtraScore(this.path, this.balls[this.balls.length - 1].getPathSection());
 
-            setTimeout(()=> {
+            let currentLevel = localStorage.getItem('level');
+            let nextLevel = this.frog.level + 1;
+
+            if (nextLevel < currentLevel) {
+                localStorage.setItem('level', currentLevel);
+            } else if (nextLevel > currentLevel && this.frog.level < 9) {
+                localStorage.setItem('level', String(nextLevel));
+            }
+
+            setTimeout(() => {
                 localStorage.setItem('score', this.records.score);
                 this.records.checkScore(this.records.score);
             }, 5000);
@@ -439,15 +448,15 @@ class BallController {
             }
         });
 
-        window.addEventListener('popstate', (eo) =>{
-           if (location.hash === '#Play' && !this.gameEnd) {
-               let conf = confirm('You will lose your score!!!');
-               if (conf) {
-                   window.location.reload();
-               } else {
-                   location.hash = '#Game';
-               }
-           }
+        window.addEventListener('popstate', (eo) => {
+            if (location.hash === '#Play' && !this.gameEnd) {
+                let conf = confirm('You will lose your score!!!');
+                if (conf) {
+                    window.location.reload();
+                } else {
+                    location.hash = '#Game';
+                }
+            }
         });
     }
 
