@@ -626,7 +626,7 @@ body {
 }
 
 
-@media (min-width: 320px) and (max-width: 823px) and (orientation: landscape) {
+@media (min-width: 320px) and (max-width: 900px) and (orientation: landscape) {
     body {
         background: url("storage/backgrounds/main-background.jpg");
         background-position: center center;
