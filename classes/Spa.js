@@ -196,17 +196,32 @@ class Spa {
 
             buttonsLevel[i].addEventListener('click', (eo) => {
 
+                let zumaOrientation = window.screen.orientation;
+                let orientationDiv = document.querySelector('.orientation');
+                let html = document.documentElement;
+
                 let div = document.getElementById('canvas');
                 div.setAttribute('level', buttonsLevel[i].value);
 
                 if (/Android|webOS|iPhone|iPad|iPod|IEMobile|Windows Phone|Opera Mini/i.test(navigator.userAgent)) {
 
-                    let zumaOrientation = window.screen.orientation;
-                    let orientationDiv = document.querySelector('.orientation');
-                    let html = document.documentElement;
+
 
                     if (zumaOrientation.type === 'portrait-primary') {
                         orientationDiv.classList.remove('hidden');
+                    }
+
+                    if (zumaOrientation.type === 'landscape-primary') {
+                        orientationDiv.classList.add('hidden');
+
+                        function fullScreen(element) {
+                            if (element.requestFullscreen) {
+                                element.requestFullscreen();
+                            }
+                        }
+                        fullScreen(html);
+                        run();
+                        this.switchToGamePage('Game');
                     }
                     window.addEventListener('orientationchange', () => {
                         if (zumaOrientation.type === 'portrait-primary') {
@@ -225,7 +240,7 @@ class Spa {
                         run();
                         this.switchToGamePage('Game');
                     });
-                } else {
+                } else if (zumaOrientation.type === 'landscape-primary') {
                     run();
                     this.switchToGamePage('Game');
                 }
