@@ -378,7 +378,7 @@ body {
 .zuma_rules h2 {
     font-size: calc(1em + 1vh);
     text-align: center;
-    color: white;
+    color: black;
 }
 
 .rules_list {
@@ -427,7 +427,7 @@ body {
     font-size: calc(1em + 1vh);
     text-align: center;
 
-    color: white;
+    color: black;
 }
 
 .about_list {
@@ -622,7 +622,7 @@ body {
 
 
 .hidden {
-    display: none /*!important*/
+    display: none;
 }
 
 
@@ -681,7 +681,7 @@ body {
         min-width: 0;
         min-height: 0;
 
-text-align: center;
+        text-align: center;
         font: inherit;
         font-size: calc(4vh);
 
@@ -704,42 +704,42 @@ text-align: center;
         height: 5vw;
     }
 
-    /*
-
-    .menu {
-        margin-top: 10px;
-
-        border: 10px solid;
-        border-image: url("storage/backgrounds/border-background.png") 30 30 round;
-
-        text-align: center;
+    .zuma_rules {
+        font-size: 4vh;
     }
 
-    .menu div {
-        width: 100%;
-
-        background-color: burlywood;
-        opacity: 70%;
+    .zuma_rules h2 {
+        color: black;
     }
 
-    .menu button {
-        width: 35vh;
-        height: 6vh;
-        min-width: 150px;
-        min-height: 40px;
-        margin: auto;
-
-        font: inherit;
-        font-size: calc(2em);
-
-        outline: none;
-        border: none;
-
-        background: transparent;
-        cursor: pointer;
+    .zuma_about {
+        font-size: 4vh;
     }
-    */
 
+    .zuma_about h2 {
+        color: black;
+    }
+
+    .zuma_records {
+        margin: 0 auto;
+        width: 70vh;
+        font-size: 5vh;
+    }
+
+    .records_table td {
+        word-wrap: break-word;
+        padding: 2vh;
+        text-align: left;
+    }
+
+    .zuma_play {
+        width: 70vh;
+    }
+
+    .level {
+        width: 15vh;
+        height: 15vh;
+    }
 }
 
 /*@media only screen and (min-width: 415px) and (max-width: 1279px) {
