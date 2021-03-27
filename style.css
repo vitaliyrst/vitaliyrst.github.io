@@ -742,32 +742,22 @@ body {
     }
 }
 
-/*@media only screen and (min-width: 415px) and (max-width: 1279px) {
-    body {
-        display: none
-    }
 
-    html:before {
-        content: 'Переверните устройство в портретный режим или откройте сайт с компьютера.';
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        margin: auto;
-        background: #fff;
-        z-index: 999;
-        text-align: center;
-        width: 80%;
-        height: 100px
-    }
-}*/
+.orientation{
+    background-color: black;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+    color: white;
+}
 
-/*
-@media all and (orientation: portrait) {
-    html,body {
-        transform: rotate(-90deg);
-        transform-origin: left top;
-        width: 100vh;
-    }
-}*/
+.orientation p{
+    margin-top: 100%;
+}
+
+
