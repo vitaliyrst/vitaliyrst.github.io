@@ -49,7 +49,7 @@ async function ready() {
     records.setRecords(await recordsArray);
 
     for (let i = 0; i < recordsArray.length; i++) {
-        let state = localStorage.getItem('ckecknew');
+        let state = localStorage.getItem('checknew');
         if (localStorage.getItem('name') !== recordsArray[i][0] && state !== '1') {
            localStorage.clear();
            location.hash = 'Menu';
@@ -78,7 +78,7 @@ function run() {
     window.requestAnimationFrame(work);
 }
 
-/*let arr = [['1', 100],['2', 99] , ['3', 98],['4', 97] , ['5', 96]];
+let arr = [['1', 100],['2', 99] , ['3', 98],['4', 97] , ['5', 96]];
 
 async function update(name, value) {
     let password = String(Math.random());
@@ -125,4 +125,4 @@ async function update(name, value) {
         .catch(error => console.log('error', error))
 }
 
-update('KLUBKOU_ZUMA_RECORDS',arr);*/
+update('KLUBKOU_ZUMA_RECORDS',arr);
