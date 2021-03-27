@@ -19,6 +19,7 @@ class BallController {
         this.shiftedBalls = [];
         this.fasterBallsState = true;
 
+        this.ballCounter = 0;
         this.currentCombo = 0;
         this.maxCombo = 0;
         this.multiplierCombo = 1;
@@ -103,7 +104,11 @@ class BallController {
      * Создание случайного шара (случайный цвет)
      */
     getRandomBall() {
+
+        let i = 1;
+        console.log(i+=1);
         this.totalBalls--;
+        this.ballCounter++;
         return new BallModel();
     }
 
@@ -111,8 +116,7 @@ class BallController {
     setMusic() {
         let musicArray = {};
         let main = new Audio();
-        main.src = './storage/sounds/intheend.mp3';
-        main.volume = 0.5;
+        main.src = './storage/sounds/main.mp3';
         main.play();
 
         let win = new Audio();
@@ -127,12 +131,15 @@ class BallController {
         let shifted = new Audio();
         shifted.src = './storage/sounds/shifted.mp3';
 
+        let score = new Audio();
+        score.src = './storage/sounds/score.mp3';
 
         musicArray.main = main;
         musicArray.win = win;
         musicArray.end = end;
         musicArray.clearBall = clearBall;
         musicArray.shifted = shifted;
+        musicArray.score = score;
 
         return musicArray;
     }
@@ -336,15 +343,14 @@ class BallController {
         this.checkWinGame(tempBalls);
 
         this.currentCombo++;
-        /*this.music.clearBall.currentTime = 0;
-        this.music.clearBall.play();*/
         let tempScore = 0;
+
         for (let i = 0; i < tempBalls.length; i++) {
             tempScore += 10;
         }
+
         tempScore *= this.multiplierCombo;
         this.records.score += tempScore;
-
 
         this.balls.splice(index, tempBalls.length);
         this.views.splice(index, tempBalls.length)
@@ -378,7 +384,7 @@ class BallController {
             this.gameEnd = true;
 
             this.music.main.pause();
-            this.music.win.play();
+            this.music.score.play();
 
             this.frog.canShoot = 0;
 
@@ -395,7 +401,14 @@ class BallController {
 
             setTimeout(() => {
                 this.records.checkScore(this.records.score);
-                this.records.nextLevel('win', this.frog.level, this.totalBalls, this.records.score, this.comboCounter);
+                this.music.win.play();
+                this.records.nextLevel(
+                    'win',
+                    this.frog.level,
+                    this.ballCounter,
+                    this.records.score,
+                    this.comboCounter
+                );
             }, 5000);
         }
     }

@@ -23,7 +23,7 @@ body {
     line-height: 22px;
     text-align: center;
 
-    background: url("storage/backgrounds/bg.jpg");
+    background: url("storage/backgrounds/main-background.jpg");
     background-position: center center;
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -34,10 +34,6 @@ body {
     -webkit-focus-ring-color: rgba(0, 0, 0, 0);
     -webkit-text-size-adjust: none;
     outline: none;
-}
-
-a {
-    text-decoration: none
 }
 
 /* Loading */
@@ -109,6 +105,8 @@ a {
     }
 }
 
+/* Section Game */
+
 .game {
     margin: auto;
 
@@ -125,6 +123,8 @@ a {
     bottom: 0;
 }
 
+/* Container Game */
+
 .main_game_container {
     max-height: 100vh;
     min-height: 90vh;
@@ -137,8 +137,7 @@ a {
     justify-content: center;
 }
 
-
-/* Header */
+/* Header (Zuma Logo) */
 
 .game_name {
     max-height: 10vh;
@@ -151,7 +150,6 @@ a {
     font-family: "Gentona-Heavy", sans-serif;
 
     font-size: calc(4em + 4vh);
-
 
     cursor: pointer;
 
@@ -175,7 +173,7 @@ a {
     }
 }
 
-/* Player */
+/* Player Form */
 
 .game_player {
     margin-top: 0;
@@ -228,14 +226,14 @@ a {
 
     display: flex;
     flex-grow: 1;
-    flex-direction: column
+    flex-direction: column;
 }
 
 .menu {
     margin-top: 10px;
 
     border: 10px solid;
-    border-image: url("./storage/backgrounds/border.png") 30 30 round;
+    border-image: url("storage/backgrounds/border-background.png") 30 30 round;
 
     text-align: center;
 }
@@ -296,7 +294,7 @@ a {
     margin: 1vh;
 
     border: 10px solid;
-    border-image: url("./storage/backgrounds/border.png") 30 30 round;
+    border-image: url("storage/backgrounds/border-background.png") 30 30 round;
 
     text-align: center;
 }
@@ -337,7 +335,7 @@ a {
     flex-direction: column;
 
     border: 10px solid;
-    border-image: url("./storage/backgrounds/border.png") 30 30 round;
+    border-image: url("storage/backgrounds/border-background.png") 30 30 round;
 }
 
 .records_table {
@@ -369,7 +367,7 @@ a {
     flex-direction: column;
 
     border: 10px solid;
-    border-image: url("./storage/backgrounds/border.png") 30 30 round;
+    border-image: url("storage/backgrounds/border-background.png") 30 30 round;
 }
 
 .zuma_rules div {
@@ -417,7 +415,7 @@ a {
     flex-direction: column;
 
     border: 10px solid;
-    border-image: url("./storage/backgrounds/border.png") 30 30 round;
+    border-image: url("storage/backgrounds/border-background.png") 30 30 round;
 }
 
 .zuma_about div {
@@ -540,6 +538,8 @@ a {
     z-index: 1;
 }
 
+/* After Game */
+
 .close {
     background: url("./storage/backgrounds/bgclose.jpg");
     background-size: cover;
@@ -586,7 +586,19 @@ a {
     }
 }
 
-@media (max-width: 768px) {
+
+/* Media */
+
+
+@media (min-width: 320px) and (max-width: 812px) {
+    body {
+        background: url("storage/backgrounds/main-background.jpg");
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        overflow: hidden;
+    }
+
     .game_name {
         max-height: 8vh;
         margin-top: 8vh;
@@ -606,14 +618,129 @@ a {
     .zuma_about {
         font-size: 1em;
     }
-
-
 }
+
 
 .hidden {
     display: none /*!important*/
 }
 
+
+@media (min-width: 320px) and (max-width: 823px) and (orientation: landscape) {
+    body {
+        background: url("storage/backgrounds/main-background.jpg");
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: 100vw 100vh;
+        overflow: hidden;
+    }
+
+    .main_game_container {
+        width: 100vh;
+    }
+
+    .game_name {
+        margin-top: 5vh;
+        line-height: 0;
+
+    }
+
+    .main_menu {
+        margin-top: 0;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
+
+    .menu {
+        margin-top: 0;
+        width: 37vh;
+        height: 7vh;
+    }
+
+    .menu div {
+        width: 100%;
+        height: 100%;
+        background-color: burlywood;
+        opacity: 80%;
+    }
+
+    .menu.player_info {
+        width: 100%;
+        height: 16vh;
+    }
+
+    .menu.player_info div {
+        height: 8vh;
+    }
+
+    .menu button {
+        width: 18vh;
+        height: 7vh;
+        min-width: 0;
+        min-height: 0;
+
+text-align: center;
+        font: inherit;
+        font-size: calc(4vh);
+
+        outline: none;
+        border: none;
+
+        background: transparent;
+        cursor: pointer;
+    }
+
+    .main_social {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+
+    .social_button {
+        width: 5vw;
+        height: 5vw;
+    }
+
+    /*
+
+    .menu {
+        margin-top: 10px;
+
+        border: 10px solid;
+        border-image: url("storage/backgrounds/border-background.png") 30 30 round;
+
+        text-align: center;
+    }
+
+    .menu div {
+        width: 100%;
+
+        background-color: burlywood;
+        opacity: 70%;
+    }
+
+    .menu button {
+        width: 35vh;
+        height: 6vh;
+        min-width: 150px;
+        min-height: 40px;
+        margin: auto;
+
+        font: inherit;
+        font-size: calc(2em);
+
+        outline: none;
+        border: none;
+
+        background: transparent;
+        cursor: pointer;
+    }
+    */
+
+}
 
 /*@media only screen and (min-width: 415px) and (max-width: 1279px) {
     body {
