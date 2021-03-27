@@ -171,7 +171,7 @@ class Records {
         return records;
     }
 
-    nextLevel(level,totalBalls, score, combo){
+    nextLevel(status,level,totalBalls, score, combo){
         let continueButton = document.querySelector('.continue');
         continueButton.addEventListener('click', () => {
             window.location.reload();
@@ -186,10 +186,18 @@ class Records {
         closeDiv.style.height = canvas.offsetHeight + 'px';
         closeDiv.style.left = canvas.offsetLeft + 'px';
 
-        summaryDivs[0].textContent = `Level: ${level}`;
-        summaryDivs[1].textContent = `Total Balls: ${totalBalls}`;
-        summaryDivs[2].textContent = `Score: ${score}`;
-        summaryDivs[3].textContent = `Combo: x${combo}`;
+        if (status === 'win') {
+            summaryDivs[0].textContent = `Level: ${level}`;
+            summaryDivs[1].textContent = `Total Balls: ${totalBalls}`;
+            summaryDivs[2].textContent = `Score: ${score}`;
+            summaryDivs[3].textContent = `Combo: x${combo}`;
+        }
+        if (status === 'lose') {
+            summaryDivs[0].style.textAlign = 'center';
+            summaryDivs[0].style.fontSize = '5vw';
+            summaryDivs[0].textContent = `You lose`;
+        }
+
 
         closeDiv.classList.remove('hidden');
     }

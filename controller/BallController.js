@@ -133,14 +133,21 @@ class BallController {
 
         // Обновление позиции шаров за тик
         for (let j = 0; j < tempBalls.length; j++) {
-            tempBalls[j].update(speed);
+            tempBalls[j].update(5);
         }
 
         // Удаление шаров, если дойдут до черепа
         if (this.balls[this.balls.length - 1].getPathSection() >= this.path.length - this.spacing) {
             this.balls.splice(this.balls.length - 2, 1);
-            if (this.balls.length === 0) {
+
+            if (this.balls.length === 2) {
                 this.gameEnd = true;
+            }
+
+            if (this.gameEnd) {
+                setTimeout(() => {
+                    this.records.nextLevel('lose');
+                }, 500);
             }
             // конец игры, отключаем музыку, запрещаем стрелять, играем музыку проигрыша, удаляем ссылки на шары
         }
@@ -311,7 +318,7 @@ class BallController {
 
             setTimeout(() => {
                 this.records.checkScore(this.records.score);
-                this.records.nextLevel(this.frog.level, this.totalBalls, this.records.score, this.comboCounter);
+                this.records.nextLevel('win', this.frog.level, this.totalBalls, this.records.score, this.comboCounter);
             }, 4000);
 
         }
