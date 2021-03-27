@@ -6,10 +6,6 @@ import {Records} from "./classes/Records.js";
 async function ready() {
     let spa = new Spa();
 
-    let userName = localStorage.getItem('name');
-    let currentLevel = localStorage.getItem('level');
-
-
     // fetch images
     let requestOptionsImages = {
         method: 'GET',

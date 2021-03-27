@@ -2,7 +2,6 @@ class Records {
     constructor() {
         this.score = 0;
         this.setPlayer();
-        this.currentLevel = 0;
     }
 
     setRecords(data) {
@@ -32,25 +31,24 @@ class Records {
         }
 
         let currentLevel = localStorage.getItem('level');
-        
+
         let levelDiv = document.querySelectorAll('.level_button');
         for (let i = 1; i < levelDiv.length; i++) {
             if (currentLevel >= levelDiv[i].value) {
                 levelDiv[i].removeAttribute('disabled');
             }
-
         }
-        console.log(levelDiv)
     }
 
     checkScore(score) {
         let localStorageScore = localStorage.getItem('score');
         if (score > localStorageScore) {
             localStorage.setItem('score', score);
+            this.setPlayer();
         } else {
             localStorage.setItem('score', localStorageScore);
         }
-        this.setPlayer();
+
         this.updateTable('KLUBKOU_ZUMA_RECORDS', [localStorage.getItem('name'), String(this.score)])
             .then(result => this.setRecords(result));
     }
@@ -88,6 +86,12 @@ class Records {
                 divExtraScore.style.left = x - width - offsetLeft + 'px';
                 divExtraScore.style.top = y - height - offsetTop + 'px';
                 this.score += 10;
+
+                if (i + 40 > path.length) {
+                    setTimeout(() => {
+                        divExtraScore.remove()
+                    }, 200)
+                }
             }, count += 30);
         }
     }
@@ -97,10 +101,11 @@ class Records {
         for (let i = 0; i < records.length; i++) {
             if (records[i][0] === value[0]) {
                 nameIndex = i;
+                break;
             }
         }
 
-        if (nameIndex) {
+        if (nameIndex !== null) {
             if (records[nameIndex][1] <= value[1]) {
                 records[nameIndex][1] = value[1];
                 return records;

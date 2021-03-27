@@ -308,7 +308,6 @@ class BallController {
             }
 
             setTimeout(() => {
-                localStorage.setItem('score', this.records.score);
                 this.records.checkScore(this.records.score);
             }, 5000);
 
