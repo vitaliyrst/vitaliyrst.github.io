@@ -55,11 +55,14 @@ async function ready() {
         }
     }
 
+
     spa.checkPlayer(records, recordsArray);
     spa.readyState = 1;
     /*spa.run(run);*/
     return spa;
 }
+
+
 
 ready().then(spa => spa.run(run));
 

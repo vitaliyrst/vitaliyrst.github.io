@@ -22,6 +22,7 @@ class BallController {
         this.currentCombo = 0;
         this.maxCombo = 0;
         this.multiplierCombo = 1;
+        this.comboCounter = 0;
 
         this.checkUnload();
     }
@@ -137,9 +138,10 @@ class BallController {
 
         // Удаление шаров, если дойдут до черепа
         if (this.balls[this.balls.length - 1].getPathSection() >= this.path.length - this.spacing) {
-            delete this.balls[this.balls.length - 2];
             this.balls.splice(this.balls.length - 2, 1);
-
+            if (this.balls.length === 0) {
+                this.gameEnd = true;
+            }
             // конец игры, отключаем музыку, запрещаем стрелять, играем музыку проигрыша, удаляем ссылки на шары
         }
     }
@@ -309,7 +311,8 @@ class BallController {
 
             setTimeout(() => {
                 this.records.checkScore(this.records.score);
-            }, 5000);
+                this.records.nextLevel(this.frog.level, this.totalBalls, this.records.score, this.comboCounter);
+            }, 4000);
 
         }
 
@@ -333,6 +336,7 @@ class BallController {
                 if (this.currentCombo > this.maxCombo) {
                     this.maxCombo = this.currentCombo;
                 }
+                this.comboCounter += this.currentCombo;
                 this.currentCombo = 0;
             }
             this.addShiftedBall(this.balls[index]);
@@ -341,6 +345,7 @@ class BallController {
             if (this.currentCombo > this.maxCombo) {
                 this.maxCombo = this.currentCombo;
             }
+            this.comboCounter += this.currentCombo;
             this.currentCombo = 0;
         }
     }
@@ -399,6 +404,7 @@ class BallController {
                         if (this.currentCombo > this.maxCombo) {
                             this.maxCombo = this.currentCombo;
                         }
+                        this.comboCounter += this.currentCombo;
                         this.currentCombo = 0;
                     }
                 }
@@ -460,24 +466,28 @@ class BallController {
     }
 
     draw() {
-        this.records.updateGameScore();
-        if (this.ballNeedShift) {
-            this.shiftOfTwoTails();
-        }
+        if (!this.gameEnd) {
 
-        this.shooting();
 
-        if (this.fasterBallsState && this.balls.length < 30) {
-            this.createFasterBalls();
-        } else {
-            if (!this.gameEnd) {
-                this.fasterBallsState = false;
-                this.frog.canShoot = 1;
-                this.createBalls();
+            this.records.updateGameScore();
+            if (this.ballNeedShift) {
+                this.shiftOfTwoTails();
             }
-        }
-        for (let i = 0; i < this.balls.length; i++) {
-            this.views[i].draw();
+
+            this.shooting();
+
+            if (this.fasterBallsState && this.balls.length < 30) {
+                this.createFasterBalls();
+            } else {
+                if (!this.gameEnd) {
+                    this.fasterBallsState = false;
+                    this.frog.canShoot = 1;
+                    this.createBalls();
+                }
+            }
+            for (let i = 0; i < this.balls.length; i++) {
+                this.views[i].draw();
+            }
         }
     }
 }

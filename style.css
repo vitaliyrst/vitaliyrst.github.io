@@ -532,15 +532,58 @@ a {
 }
 
 .extra_score {
+    font: inherit;
+    font-size: 2vw;
+    color: white;
+
     position: absolute;
     z-index: 1;
 }
 
+.close {
+    background: url("./storage/backgrounds/bgclose.jpg");
+    background-size: cover;
 
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    text-align: left;
 
-.extra_score img {
-    width: 5vh;
-    height: 5vh;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+
+    animation: close 4s;
+}
+
+.summary {
+    margin-left: 3vw;
+    margin-top: 3vh;
+
+    font: inherit;
+    font-size: 3vw;
+    color: white;
+}
+
+.continue {
+    max-width: 20vw;
+}
+
+.continue img {
+    width: 100%;
+    height: 100%;
+}
+
+@keyframes close {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 100%;
+    }
 }
 
 @media (max-width: 768px) {

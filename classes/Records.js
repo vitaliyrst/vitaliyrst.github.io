@@ -67,10 +67,6 @@ class Records {
 
         let divExtraScore = document.createElement('div');
         divExtraScore.classList.add('extra_score');
-        let img = document.createElement('img');
-        divExtraScore.append(img);
-        img.src = './storage/extra.png';
-
         gameField.append(divExtraScore);
 
         let width = divExtraScore.offsetWidth / 2;
@@ -79,20 +75,21 @@ class Records {
         divExtraScore.style.top = path[lastBallPathSection].y - height - offsetTop + 'px';
 
         let count = 50;
-        for (let i = lastBallPathSection + 40; i < path.length; i += 40) {
+        for (let i = lastBallPathSection + 36; i < path.length; i += 36) {
             let x = path[i].x;
             let y = path[i].y;
             setTimeout(() => {
                 divExtraScore.style.left = x - width - offsetLeft + 'px';
                 divExtraScore.style.top = y - height - offsetTop + 'px';
                 this.score += 10;
+                divExtraScore.textContent = `+ ${this.score}`;
 
-                if (i + 40 > path.length) {
+                if (i + 36 > path.length) {
                     setTimeout(() => {
                         divExtraScore.remove()
                     }, 200)
                 }
-            }, count += 30);
+            }, count += 45);
         }
     }
 
@@ -172,6 +169,29 @@ class Records {
             .catch(error => console.log('error', error));
 
         return records;
+    }
+
+    nextLevel(level,totalBalls, score, combo){
+        let continueButton = document.querySelector('.continue');
+        continueButton.addEventListener('click', () => {
+            window.location.reload();
+            location.hash = '#Play';
+        });
+
+        let canvas = document.getElementById('canvas');
+        let closeDiv = document.querySelector('.close');
+        let summaryDivs = document.querySelectorAll('.summary');
+
+        closeDiv.style.width = canvas.offsetWidth + 'px';
+        closeDiv.style.height = canvas.offsetHeight + 'px';
+        closeDiv.style.left = canvas.offsetLeft + 'px';
+
+        summaryDivs[0].textContent = `Level: ${level}`;
+        summaryDivs[1].textContent = `Total Balls: ${totalBalls}`;
+        summaryDivs[2].textContent = `Score: ${score}`;
+        summaryDivs[3].textContent = `Combo: x${combo}`;
+
+        closeDiv.classList.remove('hidden');
     }
 }
 
