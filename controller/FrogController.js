@@ -85,30 +85,18 @@ class FrogController {
             }
         });
 
-        /*let gameField = document.querySelector('.zuma_field')
-        let hammertime = new Hammer(myElement, myOptions);
-        hammertime.get()*/
-        /*window.addEventListener('touchstart', (eo) => {
-            let tapTwice = false;
-            console.log('one');
-            if (!tapTwice) {
-                tapTwice = true;
-                setTimeout(() => {
+        let gameField = document.querySelector('.zuma_field');
+        let hammer = new Hammer(gameField);
+        hammer.get('swipe').set({direction : Hammer.DIRECTION_DOWN});
+        hammer.on('swipe', (eo) => {
+            let firstColor = this.model.color;
+            let secondColor = this.model.secondBulletColor;
 
-                    tapTwice = false;
-                }, 300)
-
-            } else {
-                let firstColor = this.model.color;
-                let secondColor = this.model.secondBulletColor;
-
-                this.model.color = secondColor;
-                this.model.secondBulletColor = firstColor;
-                this.view.color = secondColor;
-                this.view.secondColor = firstColor;
-                console.log('twice');
-            }
-        })*/
+            this.model.color = secondColor;
+            this.model.secondBulletColor = firstColor;
+            this.view.color = secondColor;
+            this.view.secondColor = firstColor;
+        });
     }
 
     draw() {
