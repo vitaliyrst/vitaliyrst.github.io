@@ -11,6 +11,7 @@ class GameController {
         this.ballController = new BallController(this.game.totalBalls, this.frogController.model);
         this.view.createCanvas();
         this.observer();
+        this.gameStatus = 1;
     }
 
     resize() {
@@ -48,18 +49,17 @@ class GameController {
         });
     }
 
-    gameSound() {
-        let mainMusic = new Audio();
-        mainMusic.src = './storage/sounds/main.mp3';
-
-        mainMusic.addEventListener('change')
-        return mainMusic;
-    }
-
     draw() {
-        this.view.draw();
-        this.frogController.draw();
-        this.ballController.draw();
+        if (this.ballController.gameEnd) {
+            setTimeout(() => {
+                this.gameStatus = 0;
+            }, 0);
+        }
+        if (this.gameStatus) {
+            this.view.draw();
+            this.frogController.draw();
+            this.ballController.draw();
+        }
     }
 }
 

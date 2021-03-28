@@ -89,8 +89,6 @@ class FrogModel extends GameModel {
         this.bulletTop = this.frogTop + this.frogHeight / 2;
         this.color = this.secondBulletColor;
         this.getRandomSecondBulletColor();
-
-        console.log(this.color, this.secondBulletColor)
     }
 }
 

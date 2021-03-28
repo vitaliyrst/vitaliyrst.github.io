@@ -49,7 +49,7 @@ class FrogController {
         let field = document.querySelector('.zuma_field');
 
         let offsetLeft = (field.clientWidth - canvas.offsetWidth) / 2;
-        let offsetTop = (field.clientHeight - canvas.offsetHeight) / 2 ;
+        let offsetTop = (field.clientHeight - canvas.offsetHeight) / 2;
 
         if (this.model.bulletLeft - this.model.bulletRadius < canvas.offsetLeft - offsetLeft ||
             this.model.bulletTop - this.model.bulletRadius < canvas.offsetTop - offsetTop ||
@@ -71,19 +71,44 @@ class FrogController {
 
     swapColor() {
         window.oncontextmenu = function (eo) {
-                return false;
+            return false;
         }
-        window.addEventListener('mousedown', (eo) =>{
-           if (eo.button === 2) {
-               let firstColor = this.model.color;
-               let secondColor = this.model.secondBulletColor;
+        window.addEventListener('mousedown', (eo) => {
+            if (eo.button === 2) {
+                let firstColor = this.model.color;
+                let secondColor = this.model.secondBulletColor;
 
-               this.model.color = secondColor;
-               this.model.secondBulletColor = firstColor;
-               this.view.color = secondColor;
-               this.view.secondColor = firstColor;
-           }
+                this.model.color = secondColor;
+                this.model.secondBulletColor = firstColor;
+                this.view.color = secondColor;
+                this.view.secondColor = firstColor;
+            }
         });
+
+        /*let gameField = document.querySelector('.zuma_field')
+        let hammertime = new Hammer(myElement, myOptions);
+        hammertime.get()*/
+        /*window.addEventListener('touchstart', (eo) => {
+            let tapTwice = false;
+            console.log('one');
+            if (!tapTwice) {
+                tapTwice = true;
+                setTimeout(() => {
+
+                    tapTwice = false;
+                }, 300)
+
+            } else {
+                let firstColor = this.model.color;
+                let secondColor = this.model.secondBulletColor;
+
+                this.model.color = secondColor;
+                this.model.secondBulletColor = firstColor;
+                this.view.color = secondColor;
+                this.view.secondColor = firstColor;
+                console.log('twice');
+            }
+        })*/
     }
 
     draw() {

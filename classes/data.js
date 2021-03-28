@@ -4,7 +4,7 @@ let data = {
         levelBg: './storage/levels/1.jpg',
         ballsColor: [
             './storage/colors/BlueBall.jpg',
-            './storage/colors/GreenBall.jpg',
+           /* './storage/colors/GreenBall.jpg',*/
            /* './storage/colors/PurpleBall.jpg',
             './storage/colors/RedBall.jpg'*/
         ],

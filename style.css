@@ -95,6 +95,12 @@ body {
     }
 }
 
+@media (orientation: landscape) {
+    .loading_container {
+        margin: 0 auto;
+    }
+}
+
 @keyframes loadBall {
     0% {
         transform: rotate(0deg);
@@ -216,7 +222,13 @@ body {
 .error_span {
     color: white;
     position: absolute;
-    top: 6vh
+    top: 6vh;
+
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
 }
 
 /* Menu */
@@ -260,6 +272,12 @@ body {
 
     background: transparent;
     cursor: pointer;
+
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
 }
 
 /* Player Info */
@@ -271,6 +289,12 @@ body {
     font-size: calc(1.2em);
     padding: 1vh;
     text-align: left;
+
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
 }
 
 /* Play */
@@ -322,6 +346,12 @@ body {
 
     background: transparent;
     cursor: pointer;
+
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
 }
 
 /* Player */
@@ -478,6 +508,12 @@ body {
     border-radius: 50%;
     background-size: 100%;
     outline: none;
+
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
 }
 
 .social_button_github {
@@ -527,6 +563,12 @@ body {
     left: 0;
     right: 0;
     z-index: 1;
+
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
 }
 
 .extra_score {
@@ -536,12 +578,20 @@ body {
 
     position: absolute;
     z-index: 1;
+
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
 }
 
 /* After Game */
 
 .close {
     background: url("./storage/backgrounds/score-background.jpg");
+    background-position: center center;
+    background-repeat: no-repeat;
     background-size: cover;
 
     display: flex;

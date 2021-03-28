@@ -269,6 +269,7 @@ class BallController {
         ball.setPosition(insertPosition);
 
         this.balls.splice(index, 0, ball);
+        this.frog.colors = this.checkColor();
         let view = new BallView(ball);
         this.views.splice(index, 0, view);
 
