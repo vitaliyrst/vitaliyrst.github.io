@@ -3,7 +3,6 @@ import {Spa} from "./classes/Spa.js";
 import {Player} from "./classes/Player.js";
 
 
-
 async function ready() {
     let spa = new Spa();
 
@@ -18,12 +17,22 @@ async function ready() {
         .then(result => result)
         .catch(error => console.log('error', error));
 
+
     let count = 0
     images.forEach(function (value) {
         let img = new Image();
         img.src = value;
+
         count++;
     });
+
+    new Promise((resolve => {
+        if (count === images.length) {
+            resolve(1);
+        }
+    }));
+
+    await (images.length === count);
 
     //fetch records
     let myHeadersRecords = new Headers();
@@ -49,21 +58,18 @@ async function ready() {
     player.setRecords(await recordsArray);
 
     for (let i = 0; i < recordsArray.length; i++) {
-        let state = localStorage.getItem('checknew');
+        let state = localStorage.getItem('create');
         if (localStorage.getItem('name') !== recordsArray[i][0] && state !== '1') {
-           localStorage.clear();
-           location.hash = 'Menu';
+            localStorage.clear();
+            location.hash = 'Menu';
         }
     }
 
+    await spa.checkPlayer(player, recordsArray);
 
-    spa.checkPlayer(player, recordsArray);
     spa.readyState = 1;
-    /*spa.run(run);*/
     return spa;
 }
-
-
 
 ready().then(spa => spa.run(run));
 
@@ -78,8 +84,7 @@ function run() {
     window.requestAnimationFrame(work);
 }
 
-/*
-let arr = [['1', 100],['2', 99] , ['3', 98],['4', 97] , ['5', 96]];
+/*let arr = [['1', 100],['2', 99] , ['3', 98],['4', 97] , ['5', 96]];
 
 async function update(name, value) {
     let password = String(Math.random());
@@ -126,5 +131,4 @@ async function update(name, value) {
         .catch(error => console.log('error', error))
 }
 
-update('KLUBKOU_ZUMA_RECORDS',arr);
-*/
+update('KLUBKOU_ZUMA_RECORDS',arr);*/

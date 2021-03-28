@@ -54,11 +54,13 @@ class Bezier {
     invertL(t, l) {
         let t1 = t;
         let t2;
+
         do {
             t2 = t1 - (this.length(t1) - l) / this.speed(t1);
             if (Math.abs(t1 - t2) < 0.000001) break;
             t1 = t2;
         } while (true);
+
         return t2;
     };
 
@@ -87,6 +89,7 @@ class Bezier {
             let dy = Q1.y - Q0.y;
             let radians = Math.atan2(dy, dx);
             let degrees = radians * 180 / Math.PI;
+
             return {x: xx, y: yy, degrees: degrees};
         } else {
             return {};

@@ -31,9 +31,10 @@ class Player {
         }
 
         let currentLevel = localStorage.getItem('level');
-
         let levelDiv = document.querySelectorAll('.level_button');
+
         for (let i = 1; i < levelDiv.length; i++) {
+
             if (currentLevel >= levelDiv[i].value) {
                 levelDiv[i].removeAttribute('disabled');
             }
@@ -42,6 +43,7 @@ class Player {
 
     checkScore(score) {
         let localStorageScore = localStorage.getItem('score');
+
         if (score > localStorageScore) {
             localStorage.setItem('score', score);
             this.setPlayer();
@@ -66,6 +68,7 @@ class Player {
         let offsetTop = document.body.offsetTop - canvas.offsetTop;
 
         let divExtraScore = document.createElement('div');
+
         divExtraScore.classList.add('extra_score');
         gameField.append(divExtraScore);
 
@@ -76,8 +79,10 @@ class Player {
 
         let count = 50;
         for (let i = lastBallPathSection + 36; i < path.length; i += 36) {
+
             let x = path[i].x;
             let y = path[i].y;
+
             setTimeout(() => {
                 divExtraScore.style.left = x - width - offsetLeft + 'px';
                 divExtraScore.style.top = y - height - offsetTop + 'px';
@@ -167,7 +172,6 @@ class Player {
             .then(response => response.json())
             .then(result => result)
             .catch(error => console.log('error', error));
-
         return records;
     }
 
@@ -187,17 +191,15 @@ class Player {
         closeDiv.style.left = canvas.offsetLeft + 'px';
 
         if (status === 'win') {
-            summaryDivs[0].textContent = `Level: ${level}`;
-            summaryDivs[1].textContent = `Total Balls: ${totalBalls}`;
-            summaryDivs[2].textContent = `Score: ${score}`;
-            summaryDivs[3].textContent = `Combo: x${combo}`;
+            summaryDivs[0].textContent = `You WIN`;
+            summaryDivs[1].textContent = `Level: ${level}`;
+            summaryDivs[2].textContent = `Balls: ${totalBalls}`;
+            summaryDivs[3].textContent = `Score: ${score}`;
+            summaryDivs[4].textContent = `Combo: x${combo}`;
         }
         if (status === 'lose') {
-            summaryDivs[0].style.textAlign = 'center';
-            summaryDivs[0].style.fontSize = '5vw';
-            summaryDivs[0].textContent = `You lose`;
+            summaryDivs[0].textContent = `You LOSE`;
         }
-
 
         closeDiv.classList.remove('hidden');
     }

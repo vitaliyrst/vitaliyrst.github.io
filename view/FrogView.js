@@ -15,7 +15,6 @@ class FrogView extends GameView {
         this.model = model;
         this.color = this.model.color;
         this.secondColor = this.model.secondBulletColor;
-
     }
 
     drawFrog() {

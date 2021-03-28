@@ -47,9 +47,11 @@ class BallView extends GameView{
 
         if (this.tickCount > this.tickPerFrame) {
             this.tickCount = 0;
+
             if (this.frame === this.numberOfRows - 1) {
                 this.rowCount++;
             }
+
             if (this.rowCount === 6) {
                 this.rowCount = 0;
             }

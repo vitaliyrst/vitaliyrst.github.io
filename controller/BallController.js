@@ -26,6 +26,7 @@ class BallController {
         this.comboCounter = 0;
 
         this.checkUnload();
+        this.sound = localStorage.getItem('sound');
         this.music = this.setMusic();
     }
 
@@ -60,8 +61,7 @@ class BallController {
      */
     createFasterBalls() {
         if (this.balls.length < 30 && this.fasterBallsState) {
-            /*this.music.chant.play();
-            this.music.rolling.play();*/
+
             let speed = 12;
             for (let i = 0; i < this.balls.length; i++) {
                 this.balls[i].update(speed);
@@ -75,9 +75,7 @@ class BallController {
 
                 ball.setPosition(this.spacing);
             }
-        } /*else {
-            this.music.main.play();
-        }*/
+        }
     }
 
     /**
@@ -113,48 +111,45 @@ class BallController {
     }
 
 
+    /**
+     * @method
+     * @return {{}}
+     * Установка звуков игры
+     */
     setMusic() {
-        let musicArray = {};
-        let main = new Audio();
-        main.src = './storage/sounds/main.mp3';
-        main.play();
-        main.loop = true;
+        if (this.sound === 'on') {
+            let musicArray = {};
+            let main = new Audio();
+            main.src = './storage/sounds/main.mp3';
+            main.play();
+            main.loop = true;
 
-        let chant = new Audio();
-        chant.src = './storage/sounds/chant.ogg';
+            let win = new Audio();
+            win.src = './storage/sounds/win.mp3';
 
-        let rolling = new Audio();
-        rolling.src = './storage/sounds/rolling.ogg';
+            let end = new Audio();
+            end.src = './storage/sounds/end.mp3';
 
-        let win = new Audio();
-        win.src = './storage/sounds/win.mp3';
+            let clearBall = new Audio();
+            clearBall.src = './storage/sounds/clear-ball.mp3';
 
-        let end = new Audio();
-        end.src = './storage/sounds/end.mp3';
+            let shifted = new Audio();
+            shifted.src = './storage/sounds/shifted.ogg';
 
-        let clearBall = new Audio();
-        clearBall.src = './storage/sounds/clear-ball.mp3';
+            let score = new Audio();
+            score.src = './storage/sounds/score.mp3';
 
-        let destroyBall = new Audio();
-        destroyBall.src = './storage/sounds/destroy.ogg';
+            musicArray.main = main;
+            musicArray.win = win;
+            musicArray.end = end;
+            musicArray.clearBall = clearBall;
+            musicArray.shifted = shifted;
+            musicArray.score = score;
 
-        let shifted = new Audio();
-        shifted.src = './storage/sounds/shifted.ogg';
-
-        let score = new Audio();
-        score.src = './storage/sounds/score.mp3';
-
-        musicArray.main = main;
-        musicArray.chant = chant;
-        musicArray.rolling = rolling;
-        musicArray.win = win;
-        musicArray.end = end;
-        musicArray.clearBall = clearBall;
-        musicArray.destroyBall = destroyBall;
-        musicArray.shifted = shifted;
-        musicArray.score = score;
-
-        return musicArray;
+            return musicArray;
+        } else {
+            return [];
+        }
     }
 
     /**
@@ -194,8 +189,11 @@ class BallController {
             if (this.balls.length === 2) {
                 this.gameEnd = true;
                 this.frog.canShoot = 0;
-                this.music.main.pause();
-                this.music.end.play();
+
+                if (this.sound === 'on') {
+                    this.music.main.pause();
+                    this.music.end.play();
+                }
             }
 
             if (this.gameEnd) {
@@ -203,7 +201,6 @@ class BallController {
                     this.player.nextLevel('lose');
                 }, 500);
             }
-            // конец игры, отключаем музыку, запрещаем стрелять, играем музыку проигрыша, удаляем ссылки на шары
         }
     }
 
@@ -390,8 +387,12 @@ class BallController {
             }
             this.comboCounter += this.currentCombo;
             this.currentCombo = 0;
-            this.music.clearBall.currentTime = 0;
-            this.music.clearBall.play();
+
+
+            if (this.sound === 'on') {
+                this.music.clearBall.currentTime = 0;
+                this.music.clearBall.play();
+            }
         }
     }
 
@@ -399,11 +400,12 @@ class BallController {
         if (this.balls.length === tempBalls.length) {
             this.gameEnd = true;
 
-            this.music.main.pause();
-            this.music.score.play();
+            if (this.sound === 'on') {
+                this.music.main.pause();
+                this.music.score.play();
+            }
 
             this.frog.canShoot = 0;
-
             this.player.getExtraScore(this.path, this.balls[this.balls.length - 1].getPathSection(), this.frog.level);
 
             let currentLevel = localStorage.getItem('level');
@@ -417,7 +419,9 @@ class BallController {
 
             setTimeout(() => {
                 this.player.checkScore(this.player.score);
-                this.music.win.play();
+                if (this.sound === 'on') {
+                    this.music.win.play();
+                }
                 this.player.nextLevel(
                     'win',
                     this.frog.level,
@@ -443,8 +447,11 @@ class BallController {
         }
         setTimeout(() => {
             this.ballNeedShift = true;
-            this.music.shifted.currentTime = 0;
-            this.music.shifted.play();
+
+            if (this.sound === 'on') {
+                this.music.shifted.currentTime = 0;
+                this.music.shifted.play();
+            }
         }, 100);
     }
 
@@ -499,6 +506,11 @@ class BallController {
         }
     }
 
+    /**
+     * @method
+     * @return {*[]}
+     * Проверка оставшихся цветов
+     */
     checkColor() {
         let colorArray = [];
 
@@ -509,6 +521,10 @@ class BallController {
         return Array.from(new Set(colorArray));
     }
 
+    /**
+     * @method
+     * Проверка столкновения пули с шаром
+     */
     shooting() {
         if (this.frog.bulletState === 1) {
 
@@ -537,6 +553,10 @@ class BallController {
         }
     }
 
+    /**
+     * @method
+     * Проверка на уход пользователя с поля игры
+     */
     checkUnload() {
         window.addEventListener('beforeunload', (eo) => {
             if (!this.gameEnd && location.hash === '#Game') {
@@ -559,6 +579,10 @@ class BallController {
         });
     }
 
+    /**
+     * @method
+     * Передача обновления в model и отрисовки во view
+     */
     draw() {
         this.player.updateGameScore();
         if (this.ballNeedShift) {

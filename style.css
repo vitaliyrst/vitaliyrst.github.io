@@ -150,7 +150,7 @@ body {
     margin-top: 10vh;
 
     box-sizing: border-box;
-    color: darkslategray;
+    color: teal;
     text-shadow: 5px 5px 5px black;
 
     font-family: "Gentona-Heavy", sans-serif;
@@ -254,7 +254,7 @@ body {
     width: 100%;
 
     background-color: burlywood;
-    opacity: 70%;
+    opacity: 80%;
 }
 
 .menu button {
@@ -525,7 +525,7 @@ body {
 }
 
 .social_button_sound {
-    background-image: url("./storage/social/volume-off.png");
+    /*background-image: url("./storage/social/volume-off.png");*/
 }
 
 /* Game */
@@ -597,7 +597,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    text-align: left;
+    text-align: center;
 
     position: absolute;
     left: 0;
@@ -609,18 +609,29 @@ body {
     animation: close 4s;
 }
 
-.summary {
-    margin-left: 3vw;
-    margin-top: 3vw;
 
-    font: inherit;
-    font-size: 2vw;
-    color: white;
+
+.summary.end {
+    margin-bottom: 6vw;
+    color: darkslategrey;
+    font-size: 8vw;
 }
 
+.summary {
+
+    font-family: "Gentona-Heavy", sans-serif;
+    margin-top: 4vw;
+
+
+    font-size: 3vw;
+    color: black;
+}
 .continue {
     max-width: 20vw;
+    margin: 0 auto;
 }
+
+
 
 .continue img {
     width: 100%;

@@ -11,7 +11,6 @@ class GameController {
         this.ballController = new BallController(this.game.totalBalls, this.frogController.model);
         this.view.createCanvas();
         this.observer();
-        this.gameStatus = 1;
     }
 
     resize() {
@@ -34,8 +33,10 @@ class GameController {
             width = offsetWidth;
             height = width * canvasRatio;
         }
+
         canvas.width = width;
         canvas.height = height;
+
         this.game.updateSize(width, height);
         this.frogController.updateSize(width, height);
         this.ballController.updateSize(width, height);
@@ -50,16 +51,9 @@ class GameController {
     }
 
     draw() {
-        if (this.ballController.gameEnd) {
-            setTimeout(() => {
-                this.gameStatus = 0;
-            }, 300);
-        }
-        if (this.gameStatus) {
-            this.view.draw();
-            this.frogController.draw();
-            this.ballController.draw();
-        }
+        this.view.draw();
+        this.frogController.draw();
+        this.ballController.draw();
     }
 }
 

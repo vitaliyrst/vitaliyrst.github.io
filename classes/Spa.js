@@ -2,6 +2,7 @@ class Spa {
     constructor() {
         this.spaState = {};
         this.readyState = 0;
+        this.checkSound();
     }
 
     switchToStateFromURLHash() {
@@ -206,7 +207,6 @@ class Spa {
                 if (/Android|webOS|iPhone|iPad|iPod|IEMobile|Windows Phone|Opera Mini/i.test(navigator.userAgent)) {
 
 
-
                     if (zumaOrientation.type === 'portrait-primary') {
                         orientationDiv.classList.remove('hidden');
                     }
@@ -219,6 +219,7 @@ class Spa {
                                 element.requestFullscreen();
                             }
                         }
+
                         fullScreen(html);
                         run();
                         this.switchToGamePage('Game');
@@ -235,6 +236,7 @@ class Spa {
                                     element.requestFullscreen();
                                 }
                             }
+
                             fullScreen(html);
                         }
                         run();
@@ -266,6 +268,27 @@ class Spa {
         this.switchToStateFromURLHash();
     }
 
+    checkSound() {
+        let buttonSound = document.querySelector('.social_button_sound');
+        let status = localStorage.getItem('sound');
+        (status === 'on') ?
+            buttonSound.style.backgroundImage = 'url("./storage/social/volume-on.png")' :
+            buttonSound.style.backgroundImage = 'url("./storage/social/volume-off.png")';
+
+            buttonSound.addEventListener('click', () => {
+                console.log(buttonSound)
+                let sound = localStorage.getItem('sound');
+                console.log(sound)
+                if (sound === 'on') {
+                    buttonSound.style.backgroundImage = 'url("./storage/social/volume-off.png")';
+                    localStorage.setItem('sound', 'off');
+                } else if (sound === 'off') {
+                    buttonSound.style.backgroundImage = 'url("./storage/social/volume-on.png")';
+                    localStorage.setItem('sound', 'on');
+                }
+            });
+    }
+
     checkPlayer(records, recordsArray) {
         let form = document.forms['formPlayer'];
         let errorSpan = document.querySelector('.error_span');
@@ -288,7 +311,8 @@ class Spa {
 
             } else if (re.test(inputName) && !same) {
                 localStorage.setItem('name', inputName);
-                localStorage.setItem('checknew', '1');
+                localStorage.setItem('create', '1');
+                localStorage.setItem('sound', 'on');
                 localStorage.setItem('level', '1');
                 records.setPlayer();
                 setTimeout(() => {

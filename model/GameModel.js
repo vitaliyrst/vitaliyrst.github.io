@@ -1,7 +1,6 @@
 import {Level} from "../classes/Level.js";
 
 class GameModel {
-
     constructor() {
         this.settings = new Level();
         this.data = this.settings.getData();
@@ -30,6 +29,7 @@ class GameModel {
             width = 569;
             height = 384;
         } else if (windowRatio < this.ratio) {
+
             if (innerWidth < 589 && innerHeight > 384) {
                 width = 589;
                 height = width * this.ratio
@@ -76,9 +76,11 @@ class GameModel {
         let ratioW = this.canvasWidth / 1138;
         let ratioH = this.canvasHeight / 768;
         let newPath = [];
+
         for (let i = 0; i < path.length; i++) {
             newPath.push({x: path[i].x * ratioW, y: path[i].y * ratioH});
         }
+
         return newPath;
     }
 

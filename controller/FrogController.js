@@ -12,6 +12,7 @@ class FrogController {
 
     moveFrog() {
         let canvas = document.getElementById('canvas');
+
         canvas.addEventListener('mousemove', (eo) => {
             let clientX = eo.clientX - canvas.getBoundingClientRect().x;
             let clientY = eo.clientY - canvas.getBoundingClientRect().y;
@@ -25,6 +26,7 @@ class FrogController {
 
     shot() {
         let canvas = document.getElementById('canvas');
+
         canvas.addEventListener('click', (eo) => {
             if (!this.model.bulletState && this.model.canShoot) {
                 this.model.bulletSpeed = this.model.frogWidth / 10;
@@ -35,9 +37,13 @@ class FrogController {
     }
 
     gunSound() {
-        let gunSound = new Audio();
-        gunSound.src = './storage/sounds/bullet.ogg';
-        return gunSound;
+        let sound = localStorage.getItem('sound');
+
+        if(sound === 'on') {
+            let gunSound = new Audio();
+            gunSound.src = './storage/sounds/bullet.ogg';
+            return gunSound;
+        }
     }
 
     updateSize(width, height) {
@@ -73,6 +79,7 @@ class FrogController {
         window.oncontextmenu = function (eo) {
             return false;
         }
+
         window.addEventListener('mousedown', (eo) => {
             if (eo.button === 2) {
                 let firstColor = this.model.color;
@@ -87,7 +94,9 @@ class FrogController {
 
         let gameField = document.querySelector('.zuma_field');
         let hammer = new Hammer(gameField);
+
         hammer.get('swipe').set({direction : Hammer.DIRECTION_DOWN});
+
         hammer.on('swipe', (eo) => {
             let firstColor = this.model.color;
             let secondColor = this.model.secondBulletColor;
