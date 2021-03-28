@@ -541,7 +541,7 @@ body {
 /* After Game */
 
 .close {
-    background: url("./storage/backgrounds/bgclose.jpg");
+    background: url("./storage/backgrounds/score-background.jpg");
     background-size: cover;
 
     display: flex;

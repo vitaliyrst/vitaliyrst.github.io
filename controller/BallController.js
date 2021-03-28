@@ -52,7 +52,6 @@ class BallController {
 
         ball.setPosition(this.spacing);
         this.path = ball.path;
-
     }
 
     /**
@@ -61,6 +60,8 @@ class BallController {
      */
     createFasterBalls() {
         if (this.balls.length < 30 && this.fasterBallsState) {
+            /*this.music.chant.play();
+            this.music.rolling.play();*/
             let speed = 12;
             for (let i = 0; i < this.balls.length; i++) {
                 this.balls[i].update(speed);
@@ -74,7 +75,9 @@ class BallController {
 
                 ball.setPosition(this.spacing);
             }
-        }
+        } /*else {
+            this.music.main.play();
+        }*/
     }
 
     /**
@@ -104,8 +107,6 @@ class BallController {
      * Создание случайного шара (случайный цвет)
      */
     getRandomBall() {
-
-        let i = 1;
         this.totalBalls--;
         this.ballCounter++;
         return new BallModel();
@@ -118,6 +119,12 @@ class BallController {
         main.src = './storage/sounds/main.mp3';
         main.play();
 
+        let chant = new Audio();
+        chant.src = './storage/sounds/chant.ogg';
+
+        let rolling = new Audio();
+        rolling.src = './storage/sounds/rolling.ogg';
+
         let win = new Audio();
         win.src = './storage/sounds/win.mp3';
 
@@ -127,21 +134,28 @@ class BallController {
         let clearBall = new Audio();
         clearBall.src = './storage/sounds/clear-ball.mp3';
 
+        let destroyBall = new Audio();
+        destroyBall.src = './storage/sounds/destroy.ogg';
+
         let shifted = new Audio();
-        shifted.src = './storage/sounds/shifted.mp3';
+        shifted.src = './storage/sounds/shifted.ogg';
 
         let score = new Audio();
         score.src = './storage/sounds/score.mp3';
 
         musicArray.main = main;
+        musicArray.chant = chant;
+        musicArray.rolling = rolling;
         musicArray.win = win;
         musicArray.end = end;
         musicArray.clearBall = clearBall;
+        musicArray.destroyBall = destroyBall;
         musicArray.shifted = shifted;
         musicArray.score = score;
 
         return musicArray;
     }
+
     /**
      * @method
      * @param index {Number}
@@ -353,6 +367,7 @@ class BallController {
 
         this.balls.splice(index, tempBalls.length);
         this.views.splice(index, tempBalls.length)
+        this.frog.colors = this.checkColor();
 
         if (this.balls[index - 1] &&
             this.balls[index] &&
@@ -480,6 +495,16 @@ class BallController {
             this.ballNeedShift = false;
             this.multiplierCombo = 1;
         }
+    }
+
+    checkColor() {
+        let colorArray = [];
+
+        for (let i = 0; i < this.balls.length; i++) {
+            colorArray.push(this.balls[i].color);
+        }
+
+        return Array.from(new Set(colorArray));
     }
 
     shooting() {
