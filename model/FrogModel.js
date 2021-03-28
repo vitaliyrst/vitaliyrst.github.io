@@ -64,6 +64,8 @@ class FrogModel extends GameModel {
         this.frogTop = height / this.data.offsetFrogTop;
         this.bulletLeft = this.frogLeft + this.frogWidth / 2;
         this.bulletTop = this.frogTop + this.frogHeight / 2;
+        this.secondBulletLeft =  this.frogLeft + this.frogWidth / 2;
+        this.secondBulletTop =  this.frogTop + this.frogHeight / 2;
     }
 
     stopBullet() {
