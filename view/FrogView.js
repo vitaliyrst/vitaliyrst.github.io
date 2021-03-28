@@ -14,6 +14,8 @@ class FrogView extends GameView {
         super();
         this.model = model;
         this.color = this.model.color;
+        this.secondColor = this.model.secondBulletColor;
+
     }
 
     drawFrog() {
@@ -103,9 +105,53 @@ class FrogView extends GameView {
         this.tickCount++;
     }
 
+    drawSecondBall() {
+        let bulletImage = new Image();
+        bulletImage.src = this.secondColor;
+        this.context.save();
+        this.context.beginPath();
+
+        this.context.arc(
+            this.model.frogLeft + this.model.frogWidth / 2,
+            this.model.frogTop + this.model.frogHeight / 2,
+            this.model.frogWidth / 2 + 2, 0, Math.PI * 2, false
+        );
+        this.context.closePath();
+
+        this.context.translate(
+            this.model.secondBulletLeft, this.model.secondBulletTop
+        );
+
+        this.context.rotate(this.model.frogAngle);
+
+        this.context.beginPath();
+        this.context.arc(
+            0,
+            -this.model.frogHeight / 5,
+            this.model.bulletRadius / 2 + 1, 0, Math.PI * 2, false)
+        this.context.closePath();
+        this.context.clip();
+        this.context.fill();
+
+
+        this.context.translate(0, 0);
+
+        this.context.drawImage(
+            bulletImage,
+            0, 0,
+            30, 30,
+            -this.model.bulletRadius / 2 - 2, -this.model.frogHeight / 5 - this.model.bulletRadius / 2 - 1,
+            this.model.bulletRadius + 3, this.model.bulletRadius + 3
+        );
+
+        this.context.restore();
+    };
+
+
     draw() {
         this.drawFrog();
         this.drawBullet();
+        this.drawSecondBall();
     }
 }
 

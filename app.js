@@ -1,6 +1,6 @@
 import {GameController} from "./controller/GameController.js";
 import {Spa} from "./classes/Spa.js";
-import {Records} from "./classes/Records.js";
+import {Player} from "./classes/Player.js";
 
 
 
@@ -45,8 +45,8 @@ async function ready() {
         .then(result => JSON.parse(result.result))
         .catch(error => console.log('error', error));
 
-    let records = new Records();
-    records.setRecords(await recordsArray);
+    let player = new Player();
+    player.setRecords(await recordsArray);
 
     for (let i = 0; i < recordsArray.length; i++) {
         let state = localStorage.getItem('checknew');
@@ -57,7 +57,7 @@ async function ready() {
     }
 
 
-    spa.checkPlayer(records, recordsArray);
+    spa.checkPlayer(player, recordsArray);
     spa.readyState = 1;
     /*spa.run(run);*/
     return spa;

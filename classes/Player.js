@@ -1,4 +1,4 @@
-class Records {
+class Player {
     constructor() {
         this.score = 0;
         this.setPlayer();
@@ -58,7 +58,7 @@ class Records {
         gameScore.textContent = `SCORE : ${this.score}`;
     }
 
-    getExtraScore(path, lastBallPathSection) {
+    getExtraScore(path, lastBallPathSection, level) {
         let gameField = document.querySelector('.zuma_field');
 
         let canvas = document.getElementById('canvas');
@@ -81,15 +81,15 @@ class Records {
             setTimeout(() => {
                 divExtraScore.style.left = x - width - offsetLeft + 'px';
                 divExtraScore.style.top = y - height - offsetTop + 'px';
-                this.score += 10;
+                this.score += 1 * level;
                 divExtraScore.textContent = `+ ${this.score}`;
 
-                if (i + 36 > path.length) {
+                if (i + 72 > path.length) {
                     setTimeout(() => {
                         divExtraScore.remove();
                     }, 200);
                 }
-            }, count += 45);
+            }, count += 40);
         }
     }
 
@@ -203,4 +203,4 @@ class Records {
     }
 }
 
-export {Records}
+export {Player}

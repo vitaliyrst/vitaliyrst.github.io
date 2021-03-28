@@ -7,6 +7,7 @@ class FrogController {
         this.view = new FrogView(this.model);
         this.moveFrog();
         this.shot();
+        this.swapColor();
     }
 
     moveFrog() {
@@ -17,7 +18,7 @@ class FrogController {
 
             this.model.updateFrogAngle(clientX, clientY);
             if (this.model.bulletState === 0) {
-                this.model.updateBulletAngle(clientX, clientY)
+                this.model.updateBulletAngle(clientX, clientY);
             }
         });
     }
@@ -55,15 +56,34 @@ class FrogController {
             this.model.bulletLeft + this.model.bulletRadius > canvas.offsetWidth ||
             this.model.bulletTop + this.model.bulletRadius > canvas.offsetHeight) {
             this.model.restartBullet();
-            this.view.color = this.model.color
+            this.view.secondColor = this.model.secondBulletColor;
+            this.view.color = this.model.color;
         }
     }
 
     stopBullet() {
         if (this.model.down === 1) {
             this.model.stopBullet();
+            this.view.secondColor = this.model.secondBulletColor;
             this.view.color = this.model.color;
         }
+    }
+
+    swapColor() {
+        window.oncontextmenu = function (eo) {
+                return false;
+        }
+        window.addEventListener('mousedown', (eo) =>{
+           if (eo.button === 2) {
+               let firstColor = this.model.color;
+               let secondColor = this.model.secondBulletColor;
+
+               this.model.color = secondColor;
+               this.model.secondBulletColor = firstColor;
+               this.view.color = secondColor;
+               this.view.secondColor = firstColor;
+           }
+        });
     }
 
     draw() {

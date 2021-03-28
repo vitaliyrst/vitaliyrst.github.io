@@ -1,12 +1,12 @@
 import {BallModel} from "../model/BallModel.js";
 import {BallView} from "../view/BallView.js";
-import {Records} from "../classes/Records.js";
+import {Player} from "../classes/Player.js";
 
 class BallController {
     constructor(totalBalls, frog) {
         this.frog = frog;
         this.totalBalls = totalBalls;
-        this.records = new Records();
+        this.player = new Player();
 
         this.balls = [];
         this.spacing = 36;
@@ -199,7 +199,7 @@ class BallController {
 
             if (this.gameEnd) {
                 setTimeout(() => {
-                    this.records.nextLevel('lose');
+                    this.player.nextLevel('lose');
                 }, 500);
             }
             // конец игры, отключаем музыку, запрещаем стрелять, играем музыку проигрыша, удаляем ссылки на шары
@@ -359,11 +359,11 @@ class BallController {
         let tempScore = 0;
 
         for (let i = 0; i < tempBalls.length; i++) {
-            tempScore += 10;
+            tempScore += 10 + this.frog.level;
         }
 
-        tempScore *= this.multiplierCombo;
-        this.records.score += tempScore;
+        tempScore *= this.multiplierCombo * this.frog.level;
+        this.player.score += tempScore;
 
         this.balls.splice(index, tempBalls.length);
         this.views.splice(index, tempBalls.length)
@@ -402,7 +402,7 @@ class BallController {
 
             this.frog.canShoot = 0;
 
-            this.records.getExtraScore(this.path, this.balls[this.balls.length - 1].getPathSection());
+            this.player.getExtraScore(this.path, this.balls[this.balls.length - 1].getPathSection(), this.frog.level);
 
             let currentLevel = localStorage.getItem('level');
             let nextLevel = this.frog.level + 1;
@@ -414,13 +414,13 @@ class BallController {
             }
 
             setTimeout(() => {
-                this.records.checkScore(this.records.score);
+                this.player.checkScore(this.player.score);
                 this.music.win.play();
-                this.records.nextLevel(
+                this.player.nextLevel(
                     'win',
                     this.frog.level,
                     this.ballCounter,
-                    this.records.score,
+                    this.player.score,
                     this.comboCounter
                 );
             }, 5000);
@@ -558,7 +558,7 @@ class BallController {
     }
 
     draw() {
-        this.records.updateGameScore();
+        this.player.updateGameScore();
         if (this.ballNeedShift) {
             this.shiftOfTwoTails();
         }
