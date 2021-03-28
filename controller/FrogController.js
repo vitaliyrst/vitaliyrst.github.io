@@ -31,7 +31,9 @@ class FrogController {
             if (!this.model.bulletState && this.model.canShoot) {
                 this.model.bulletSpeed = this.model.frogWidth / 10;
                 this.model.bulletState = 1;
-                this.gunSound().play();
+                if(localStorage.getItem('sound') === 'on') {
+                    this.gunSound().play();
+                }
             }
         });
     }
