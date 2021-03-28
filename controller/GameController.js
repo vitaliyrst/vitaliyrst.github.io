@@ -53,7 +53,7 @@ class GameController {
         if (this.ballController.gameEnd) {
             setTimeout(() => {
                 this.gameStatus = 0;
-            }, 0);
+            }, 300);
         }
         if (this.gameStatus) {
             this.view.draw();

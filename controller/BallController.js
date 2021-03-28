@@ -118,6 +118,7 @@ class BallController {
         let main = new Audio();
         main.src = './storage/sounds/main.mp3';
         main.play();
+        main.loop = true;
 
         let chant = new Audio();
         chant.src = './storage/sounds/chant.ogg';
