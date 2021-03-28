@@ -276,9 +276,7 @@ class Spa {
             buttonSound.style.backgroundImage = 'url("./storage/social/volume-off.png")';
 
             buttonSound.addEventListener('click', () => {
-                console.log(buttonSound)
                 let sound = localStorage.getItem('sound');
-                console.log(sound)
                 if (sound === 'on') {
                     buttonSound.style.backgroundImage = 'url("./storage/social/volume-off.png")';
                     localStorage.setItem('sound', 'off');
@@ -311,7 +309,7 @@ class Spa {
 
             } else if (re.test(inputName) && !same) {
                 localStorage.setItem('name', inputName);
-                localStorage.setItem('create', '1');
+                localStorage.setItem('live', '1');
                 localStorage.setItem('sound', 'on');
                 localStorage.setItem('level', '1');
                 records.setPlayer();

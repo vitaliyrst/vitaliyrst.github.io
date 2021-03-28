@@ -352,16 +352,16 @@ class BallController {
      * Удаление шаров совпадении более двух шаров одного цвета (+комбо)
      */
     clearBalls(index, tempBalls) {
+        this.currentCombo++;
         this.checkWinGame(tempBalls);
 
-        this.currentCombo++;
         let tempScore = 0;
 
         for (let i = 0; i < tempBalls.length; i++) {
-            tempScore += 10 + this.frog.level;
+            tempScore += 1 + this.frog.level;
         }
 
-        tempScore *= this.multiplierCombo * this.frog.level;
+        tempScore *= this.multiplierCombo * (Math.round(this.frog.level / 2));
         this.player.score += tempScore;
 
         this.balls.splice(index, tempBalls.length);
@@ -496,7 +496,6 @@ class BallController {
                         }
                         this.comboCounter += this.currentCombo;
                         this.currentCombo = 0;
-                        this.music[3].play();
                     }
                 }
             }
@@ -585,6 +584,7 @@ class BallController {
      */
     draw() {
         this.player.updateGameScore();
+
         if (this.ballNeedShift) {
             this.shiftOfTwoTails();
         }

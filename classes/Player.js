@@ -47,12 +47,11 @@ class Player {
         if (score > localStorageScore) {
             localStorage.setItem('score', score);
             this.setPlayer();
+            this.updateTable('KLUBKOU_ZUMA_RECORDS', [localStorage.getItem('name'), String(this.score)])
+                .then(result => this.setRecords(result));
         } else {
             localStorage.setItem('score', localStorageScore);
         }
-
-        this.updateTable('KLUBKOU_ZUMA_RECORDS', [localStorage.getItem('name'), String(this.score)])
-            .then(result => this.setRecords(result));
     }
 
     updateGameScore() {
@@ -149,7 +148,7 @@ class Player {
 
         let newRecords = await this.checkTop(records, value);
 
-        newRecords.sort(function (a, b) {
+        await newRecords.sort(function (a, b) {
             return (a[1] < b[1]) ? 1 : (a[1] > b[1]) ? -1 : 0;
         });
 
@@ -168,10 +167,11 @@ class Player {
             body: urlencodedRecordsUpdate
         }
 
-        fetch('https://fe.it-academy.by/AjaxStringStorage2.php', requestOptionsUpdate)
+        await fetch('https://fe.it-academy.by/AjaxStringStorage2.php', requestOptionsUpdate)
             .then(response => response.json())
             .then(result => result)
             .catch(error => console.log('error', error));
+
         return records;
     }
 
