@@ -73,15 +73,21 @@ async function ready() {
 
 ready().then(spa => spa.run(run));
 
+
+let dt = 1000 / 60;
+let timeTarget = 0;
+
 function run() {
     let gameController = new GameController();
 
     function work() {
         gameController.draw();
-        window.requestAnimationFrame(work);
+        if (Date.now() >= timeTarget) {
+            timeTarget += dt;
+        }
+        requestAnimationFrame(work);
     }
-
-    window.requestAnimationFrame(work);
+    requestAnimationFrame(work);
 }
 
 /*let arr = [['1', '100'],['2', '99'] , ['3', '98'],['4', '97'] , ['5', '96']];

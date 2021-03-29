@@ -10,7 +10,7 @@ let data = {
         ],
         offsetFrogLeft : 2.55,
         offsetFrogTop : 3.55,
-        totalBalls: 100,
+        totalBalls: 110,
         points: [
             {"x": 770, "y": -45}, {"x": 833, "y": 0}, {"x": 878, "y": 38}, {"x": 916, "y": 74},
             {"x": 946, "y": 116}, {"x": 965, "y": 167}, {"x": 940, "y": 216}, {"x": 920, "y": 265},
@@ -49,7 +49,7 @@ let data = {
         ],
         offsetFrogLeft : 3.6,
         offsetFrogTop : 2.8,
-        totalBalls: 50,
+        totalBalls: 110,
         points: [
             {"x": -45, "y": 33}, {"x": 0, "y": 34}, {"x": 52, "y": 35}, {"x": 104, "y": 35},
             {"x": 156, "y": 37}, {"x": 209, "y": 38}, {"x": 260, "y": 39}, {"x": 312, "y": 44},
@@ -94,7 +94,7 @@ let data = {
         ],
         offsetFrogLeft : 2.48,
         offsetFrogTop : 2.8,
-        totalBalls: 100,
+        totalBalls: 105,
         points: [
             {"x": 124, "y": -45}, {"x": 124, "y": 0}, {"x": 123, "y": 32}, {"x": 123, "y": 82},
             {"x": 124, "y": 150}, {"x": 158, "y": 165}, {"x": 198, "y": 128}, {"x": 230, "y": 88},
@@ -130,7 +130,7 @@ let data = {
         ],
         offsetFrogLeft : 2.55,
         offsetFrogTop : 2.5,
-        totalBalls: 120,
+        totalBalls: 110,
         points: [
             {"x": -40, "y": 399}, {"x": 0, "y": 361}, {"x": 24, "y": 323}, {"x": 46, "y": 277},
             {"x": 72, "y": 232}, {"x": 100, "y": 190}, {"x": 128, "y": 147}, {"x": 155, "y": 109},
@@ -175,7 +175,7 @@ let data = {
         ],
         offsetFrogLeft : 2.45,
         offsetFrogTop : 2.75,
-        totalBalls: 85,
+        totalBalls: 90,
         points: [
             {"x": 150, "y": -40}, {"x": 149, "y": 0}, {"x": 149, "y": 30}, {"x": 148, "y": 81},
             {"x": 144, "y": 132}, {"x": 144, "y": 185}, {"x": 143, "y": 235}, {"x": 142, "y": 289},
@@ -293,7 +293,7 @@ let data = {
         ],
         offsetFrogLeft : 1.74,
         offsetFrogTop : 2.58,
-        totalBalls: 120,
+        totalBalls: 110,
         points: [
             {"x": 195, "y": -45}, {"x": 177, "y": 0}, {"x": 158, "y": 31}, {"x": 147, "y": 81},
             {"x": 145, "y": 133}, {"x": 140, "y": 184}, {"x": 138, "y": 235}, {"x": 143, "y": 286},
@@ -328,10 +328,11 @@ let data = {
             './storage/colors/PurpleBall.jpg',
             './storage/colors/RedBall.jpg',
             './storage/colors/WhiteBall.jpg',
+            './storage/colors/YellowBall.jpg',
         ],
         offsetFrogLeft : 2.7,
         offsetFrogTop : 2.5,
-        totalBalls: 120,
+        totalBalls: 105,
         points: [
             {"x": 135, "y": 808}, {"x": 127, "y": 768}, {"x": 120, "y": 725}, {"x": 114, "y": 686},
             {"x": 109, "y": 636}, {"x": 104, "y": 584}, {"x": 102, "y": 533}, {"x": 98, "y": 480},
