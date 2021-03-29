@@ -267,6 +267,7 @@ class BallController {
         ball.setPosition(insertPosition);
 
         this.balls.splice(index, 0, ball);
+
         this.frog.colors = this.checkColor();
         let view = new BallView(ball);
         this.views.splice(index, 0, view);
@@ -353,6 +354,7 @@ class BallController {
      */
     clearBalls(index, tempBalls) {
         this.currentCombo++;
+
         this.checkWinGame(tempBalls);
 
         let tempScore = 0;
@@ -365,8 +367,11 @@ class BallController {
         this.player.score += tempScore;
 
         this.balls.splice(index, tempBalls.length);
-        this.views.splice(index, tempBalls.length)
-        this.frog.colors = this.checkColor();
+        this.views.splice(index, tempBalls.length);
+
+        if (!this.gameEnd) {
+            this.frog.colors = this.checkColor();
+        }
 
         if (this.balls[index - 1] &&
             this.balls[index] &&
@@ -387,7 +392,6 @@ class BallController {
             }
             this.comboCounter += this.currentCombo;
             this.currentCombo = 0;
-
 
             if (this.sound === 'on') {
                 this.music.clearBall.currentTime = 0;

@@ -47,11 +47,11 @@ class Player {
         if (score > localStorageScore) {
             localStorage.setItem('score', score);
             this.setPlayer();
-            this.updateTable('KLUBKOU_ZUMA_RECORDS', [localStorage.getItem('name'), String(this.score)])
-                .then(result => this.setRecords(result));
         } else {
             localStorage.setItem('score', localStorageScore);
         }
+        this.updateTable('KLUBKOU_ZUMA_RECORDS', [localStorage.getItem('name'), String(this.score)])
+            .then(result => this.setRecords(result));
     }
 
     updateGameScore() {
@@ -99,6 +99,7 @@ class Player {
 
     checkTop(records, value) {
         let nameIndex = null;
+
         for (let i = 0; i < records.length; i++) {
             if (records[i][0] === value[0]) {
                 nameIndex = i;
@@ -107,20 +108,21 @@ class Player {
         }
 
         if (nameIndex !== null) {
-            if (records[nameIndex][1] <= value[1]) {
+            if (Number(records[nameIndex][1]) <= Number(value[1])) {
                 records[nameIndex][1] = value[1];
                 return records;
-            } else if (records[nameIndex[1] >= value[1]]) {
+            } else if (Number(records[nameIndex][1]) >= Number(value[1])) {
                 return records;
             }
         } else {
             for (let j = 0; j < records.length; j++) {
-                if (value[1] > records[j][1]) {
+                if (Number(value[1]) > Number(records[j][1])) {
                     records.splice(j, 0, value);
                     return records;
                 }
             }
         }
+
         return records;
     }
 
@@ -146,10 +148,11 @@ class Player {
             .then(result => JSON.parse(result.result))
             .catch(error => console.log('error', error))
 
+
         let newRecords = await this.checkTop(records, value);
 
         await newRecords.sort(function (a, b) {
-            return (a[1] < b[1]) ? 1 : (a[1] > b[1]) ? -1 : 0;
+            return (Number(a[1]) < Number(b[1])) ? 1 : (Number(a[1]) > Number(b[1])) ? -1 : 0;
         });
 
         let myHeadersUpdate = new Headers();
