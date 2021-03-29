@@ -4,9 +4,9 @@ let data = {
         levelBg: './storage/levels/1.jpg',
         ballsColor: [
             './storage/colors/BlueBall.jpg',
-           /* './storage/colors/WhiteBall.jpg',
+            './storage/colors/WhiteBall.jpg',
             './storage/colors/PurpleBall.jpg',
-            './storage/colors/YellowBall.jpg',*/
+            './storage/colors/YellowBall.jpg',
         ],
         offsetFrogLeft : 2.55,
         offsetFrogTop : 3.55,
@@ -43,9 +43,9 @@ let data = {
         levelBg: './storage/levels/2.jpg',
         ballsColor: [
             './storage/colors/BlueBall.jpg',
-            /*'./storage/colors/GreenBall.jpg',
+            './storage/colors/GreenBall.jpg',
             './storage/colors/PurpleBall.jpg',
-            './storage/colors/RedBall.jpg',*/
+            './storage/colors/RedBall.jpg',
         ],
         offsetFrogLeft : 3.6,
         offsetFrogTop : 2.8,
@@ -88,9 +88,9 @@ let data = {
         levelBg: './storage/levels/3.jpg',
         ballsColor: [
             './storage/colors/BlueBall.jpg',
-            /*'./storage/colors/RedBall.jpg',
+            './storage/colors/RedBall.jpg',
             './storage/colors/WhiteBall.jpg',
-            './storage/colors/YellowBall.jpg',*/
+            './storage/colors/YellowBall.jpg',
         ],
         offsetFrogLeft : 2.48,
         offsetFrogTop : 2.8,
@@ -324,10 +324,10 @@ let data = {
         levelBg: './storage/levels/9.jpg',
         ballsColor: [
             './storage/colors/BlueBall.jpg',
-            /*'./storage/colors/GreenBall.jpg',
+            './storage/colors/GreenBall.jpg',
             './storage/colors/PurpleBall.jpg',
             './storage/colors/RedBall.jpg',
-            './storage/colors/WhiteBall.jpg',*/
+            './storage/colors/WhiteBall.jpg',
         ],
         offsetFrogLeft : 2.7,
         offsetFrogTop : 2.5,

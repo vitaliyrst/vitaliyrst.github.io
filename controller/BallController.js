@@ -360,10 +360,10 @@ class BallController {
         let tempScore = 0;
 
         for (let i = 0; i < tempBalls.length; i++) {
-            tempScore += 1 + this.frog.level;
+            tempScore += 10 + this.frog.level
         }
 
-        tempScore *= this.multiplierCombo * (Math.round(this.frog.level / 2));
+        tempScore *= this.multiplierCombo * this.frog.level;
         this.player.score += tempScore;
 
         this.balls.splice(index, tempBalls.length);

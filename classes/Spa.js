@@ -309,7 +309,7 @@ class Spa {
 
             } else if (re.test(inputName) && !same) {
                 localStorage.setItem('name', inputName);
-                localStorage.setItem('hello', '1');
+                localStorage.setItem('newplayer', '1');
                 localStorage.setItem('sound', 'on');
                 localStorage.setItem('level', '1');
                 records.setPlayer();
