@@ -168,6 +168,7 @@ class BallController {
             if (this.balls[i + 1].getPathSection() - this.balls[i].getPathSection() <= this.spacing) {
 
                 if (this.balls[i + 1].getPathSection() - this.balls[i].getPathSection() < this.spacing) {
+
                     this.balls[i + 1].update(4);
                 }
 
@@ -175,6 +176,14 @@ class BallController {
             } else {
                 break;
             }
+        }
+
+        for (let i = this.balls.length - 1; i > 0; i --) {
+
+            if (this.balls[i].getPathSection() - this.balls[i - 1].getPathSection() < this.spacing) {
+                this.balls[i].update(4);
+            }
+
         }
 
         // Обновление позиции шаров за тик
@@ -449,6 +458,7 @@ class BallController {
         } else {
             this.shiftedBalls.push(ball);
         }
+
         setTimeout(() => {
             this.ballNeedShift = true;
 
