@@ -58,7 +58,7 @@ async function ready() {
     player.setRecords(await recordsArray);
 
     for (let i = 0; i < recordsArray.length; i++) {
-        let state = localStorage.getItem('newplayer');
+        let state = localStorage.getItem('initplayer');
         if (localStorage.getItem('name') !== recordsArray[i][0] && state !== '1') {
             localStorage.clear();
             location.hash = 'Menu';
@@ -72,7 +72,6 @@ async function ready() {
 }
 
 ready().then(spa => spa.run(run));
-
 
 let dt = 1000 / 60;
 let timeTarget = 0;
