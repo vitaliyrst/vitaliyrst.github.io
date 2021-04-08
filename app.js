@@ -58,7 +58,7 @@ async function ready() {
     player.setRecords(await recordsArray);
 
     for (let i = 0; i < recordsArray.length; i++) {
-        let state = localStorage.getItem('initplayer');
+        let state = localStorage.getItem('projready');
         if (localStorage.getItem('name') !== recordsArray[i][0] && state !== '1') {
             localStorage.clear();
             location.hash = 'Menu';
@@ -73,7 +73,7 @@ async function ready() {
 
 ready().then(spa => spa.run(run));
 
-let dt = 1000 / 60;
+/*let dt = 1000 / 60;
 let timeTarget = 0;
 
 function run() {
@@ -81,10 +81,33 @@ function run() {
 
     function work() {
         gameController.draw();
+
         if (Date.now() >= timeTarget) {
             timeTarget += dt;
         }
         requestAnimationFrame(work);
+    }
+    requestAnimationFrame(work);
+}*/
+
+
+function run() {
+    let now;
+    let delta;
+    let then = Date.now();
+    let interval = 1000 / 62;
+    let gameController = new GameController();
+
+    function work() {
+        requestAnimationFrame(work);
+        now = Date.now();
+        delta = now - then;
+
+        if (delta > interval) {
+
+            then = now - (delta % interval);
+            gameController.draw();
+        }
     }
     requestAnimationFrame(work);
 }
